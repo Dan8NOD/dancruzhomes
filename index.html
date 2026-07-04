@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Dan Cruz Homes — custom home builder specializing in large minimalist builds and adaptive reuse in Chicago.">
+  <meta name="description" content="Dan Cruz Homes — custom home builder specializing in large minimalist builds and adaptive reuse in Chicago. West Loop, Lincoln Park, Pilsen.">
   <meta property="og:image" content="https://dancruzhomes.com/logo.png">
   <title>Dan Cruz Homes</title>
   <style>
@@ -11,27 +11,60 @@
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #fff; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; }
     h1 { font-size: 3rem; margin-bottom: 1rem; font-weight: 300; letter-spacing: -0.02em; }
     .subtitle { color: #888; margin-bottom: 4rem; font-size: 1.1rem; }
-    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 800px; width: 100%; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 900px; width: 100%; }
     .card { background: #1a1a1a; border: 1px solid #333; border-radius: 12px; padding: 2rem; text-decoration: none; color: inherit; transition: all 0.2s; }
     .card:hover { border-color: #666; transform: translateY(-4px); }
     .card h2 { font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 500; }
     .card p { color: #aaa; line-height: 1.6; }
-    
+    .portfolio { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; max-width: 900px; width: 100%; margin-top: 3rem; }
+    .folio { background: linear-gradient(135deg, #1a1a1a 0%, #222 100%); border: 1px solid #333; border-radius: 10px; padding: 1.5rem; }
+    .folio .hood { color: #c9a84c; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; font-weight: 600; }
+    .folio h3 { font-size: 1.05rem; margin-bottom: 0.4rem; font-weight: 500; }
+    .folio p { color: #888; font-size: 0.85rem; }
+    .section-label { color: #555; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; margin: 4rem 0 1.5rem; align-self: flex-start; }
+    .container { display: flex; flex-direction: column; align-items: center; width: 100%; }
   </style>
 </head>
 <body>
-  <h1>Dan Cruz Homes</h1>
-  <p class="subtitle">Minimalist living, maximum life.</p>
-  <div class="cards">
-        <div class="card">
-      <h2>Approach</h2>
-      <p>Every home is a negotiation between space and soul.</p>
+  <div class="container">
+    <h1>Dan Cruz Homes</h1>
+    <p class="subtitle">Minimalist living, maximum life.</p>
+    <div class="cards">
+      <div class="card">
+        <h2>Approach</h2>
+        <p>Every home is a negotiation between space and soul.</p>
+      </div>
+      <div class="card">
+        <h2>Specialty</h2>
+        <p>Large minimalist builds and adaptive reuse — turning Chicago's overlooked spaces into intentional homes.</p>
+      </div>
+      <div class="card">
+        <h2>Process</h2>
+        <p>AI-assisted design, human-crafted execution. From sketch to keys.</p>
+      </div>
     </div>
-    <div class="card">
-      <h2>Portfolio</h2>
-      <p>Coming soon.</p>
+    <p class="section-label">Active Projects</p>
+    <div class="portfolio">
+      <div class="folio">
+        <div class="hood">West Loop</div>
+        <h3>Minimalist Loft</h3>
+        <p>3,400 sqft · ICF construction · Pre-build phase</p>
+      </div>
+      <div class="folio">
+        <div class="hood">Lincoln Park</div>
+        <h3>Adaptive Reuse — Coach House</h3>
+        <p>1,200 sqft · Garage → ADU · Permitting</p>
+      </div>
+      <div class="folio">
+        <div class="hood">Pilsen</div>
+        <h3>Two-Flat Conversion</h3>
+        <p>4,200 sqft · Multi-unit minimalist · Planning</p>
+      </div>
     </div>
+    <p style="margin-top:3rem;color:#666;font-size:0.9rem">
+      <a href="mailto:hello@negotiatorsondemand.com?subject=Dan%20Cruz%20Homes" style="color:#888;text-decoration:none;border:1px solid #444;padding:0.6rem 1.5rem;border-radius:6px;">Inquire</a>
+    </p>
+    <footer style="text-align:center;color:#555;padding:2rem 1rem 3rem;font-size:0.85rem">&copy; 2026 FatCat Asset Management</footer>
   </div>
-  <footer style="text-align:center;color:#555;padding:2rem 1rem 3rem;font-size:0.85rem">&copy; 2026 FatCat Asset Management</footer>
 </body>
 </html>
