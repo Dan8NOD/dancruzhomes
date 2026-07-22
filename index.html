@@ -3,178 +3,225 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dan Cruz Homes</title>
+<title>Dan Cruz Homes — Large Minimalist Homes</title>
+<meta name="description" content="Dan Cruz Homes. Large minimalist homes built in Chicago. 3,000–8,000 sq ft. Production-builder process, custom-builder finish.">
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+:root{--ink:#0a0a0a;--ink-2:#141414;--line:#262626;--line-2:#333;--paper:#f5f0e6;--gold:#c9a84c;--gold-2:#b89530;--muted:#8a8a8a;--max:1200px;--gutter:32px}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--ink);color:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
 
-body {
-  background: #0a0a0a;
-  color: #fff;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  line-height: 1.6;
-  padding: 2rem 1rem;
-}
+/* ── nav ── */
+.nav{display:flex;justify-content:space-between;align-items:center;padding:20px var(--gutter);border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--ink);z-index:10}
+.nav .logo{font-size:14px;font-weight:600;letter-spacing:.18em;text-transform:uppercase}
+.nav .logo .dot{color:var(--gold);margin-left:2px}
+.nav .links{display:flex;gap:24px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.nav .links a:hover{color:#fff}
+@media(max-width:640px){.nav .links{display:none}}
 
-.container {
-  max-width: 900px;
-  margin: 0 auto;
-}
+/* ── hero ── */
+.hero{padding:96px var(--gutter) 80px;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+.hero .eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;display:flex;align-items:center;gap:12px}
+.hero .eyebrow::after{content:"";flex:1;height:1px;background:var(--line);margin-left:8px}
+.hero h1{font-size:clamp(48px,9vw,128px);font-weight:300;line-height:.95;letter-spacing:-.02em;max-width:14ch;margin-bottom:32px}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero .lede{font-size:20px;color:var(--muted);max-width:46ch;margin-bottom:40px;line-height:1.5}
+.hero .actions{display:flex;gap:16px;flex-wrap:wrap}
+.btn{display:inline-block;padding:16px 28px;font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;border:1px solid transparent;transition:background .2s,border-color .2s,color .2s;cursor:pointer}
+.btn.primary{background:var(--gold);color:var(--ink)}
+.btn.primary:hover{background:var(--gold-2)}
+.btn.ghost{border-color:var(--line-2);color:#fff}
+.btn.ghost:hover{border-color:var(--gold);color:var(--gold)}
 
-h1 {
-  font-size: 3rem;
-  font-weight: 300;
-  margin-bottom: 0.5rem;
-}
+/* ── sections ── */
+section{padding:96px 0;border-bottom:1px solid var(--line)}
+section .eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+section h2{font-size:clamp(32px,5vw,56px);font-weight:300;line-height:1.05;letter-spacing:-.01em;margin-bottom:20px;max-width:18ch}
+section .lede{font-size:18px;color:var(--muted);max-width:54ch;margin-bottom:48px}
 
-.subtitle {
-  font-size: 1.25rem;
-  color: #888;
-  margin-bottom: 3rem;
-}
+/* ── spec grid ── */
+.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0;border:1px solid var(--line)}
+.specs .cell{padding:32px 24px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.specs .cell:last-child{border-right:none}
+@media(max-width:640px){.specs .cell{border-right:none;border-bottom:1px solid var(--line)}}
+.specs .k{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.specs .v{font-size:24px;font-weight:500}
+.specs .sub{color:var(--muted);font-size:13px;margin-top:4px}
 
-h2 {
-  font-size: 1.75rem;
-  font-weight: 400;
-  margin: 3rem 0 1.5rem;
-}
+/* ── process ── */
+.process{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px}
+.step{padding:24px;border-left:1px solid var(--line)}
+.step .n{font-family:'Georgia',serif;font-size:48px;color:var(--gold);font-weight:300;line-height:1;margin-bottom:12px}
+.step h3{font-size:16px;margin-bottom:8px;font-weight:600}
+.step p{color:var(--muted);font-size:14px}
 
-.card {
-  background: #1a1a1a;
-  border: 1px solid #333;
-  padding: 1.5rem;
-  margin-bottom: 1rem;
-  transition: border-color 0.2s;
-}
+/* ── projects ── */
+.projects{display:grid;gap:32px}
+.project{display:grid;grid-template-columns:1fr;gap:0;border:1px solid var(--line);transition:border-color .2s}
+.project:hover{border-color:var(--gold)}
+@media(min-width:760px){.project{grid-template-columns:1.4fr 1fr}}
+.project .shot{background:var(--ink-2);aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px;letter-spacing:.16em;text-transform:uppercase;position:relative;overflow:hidden}
+.project .body{padding:36px 32px;display:flex;flex-direction:column;justify-content:space-between}
+.project .hood{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.project h3{font-size:28px;font-weight:300;line-height:1.15;margin-bottom:16px}
+.project ul{list-style:none;color:var(--muted);font-size:14px;margin-bottom:20px}
+.project ul li{padding:6px 0;border-bottom:1px dashed var(--line)}
+.project ul li:last-child{border-bottom:none}
+.project ul li b{color:#fff;font-weight:500;display:inline-block;min-width:130px}
 
-.card:hover {
-  border-color: #666;
-}
+/* ── lead form ── */
+.lead{padding:96px var(--gutter);background:var(--ink-2);text-align:center;border-bottom:1px solid var(--line)}
+.lead h2{font-size:clamp(28px,4vw,40px);font-weight:300;margin-bottom:16px}
+.lead p{color:var(--muted);max-width:48ch;margin:0 auto 32px;font-size:17px}
+.lead form{display:flex;gap:12px;justify-content:center;max-width:560px;margin:0 auto;flex-wrap:wrap}
+.lead input[type=email]{flex:1;min-width:240px;padding:14px 18px;background:var(--ink);border:1px solid var(--line-2);color:#fff;font-size:15px;border-radius:0}
+.lead input[type=email]:focus{outline:none;border-color:var(--gold)}
+.lead button{padding:14px 28px;background:var(--gold);color:var(--ink);border:none;font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
+.lead button:hover{background:var(--gold-2)}
 
-.card h3 {
-  font-size: 1.25rem;
-  font-weight: 500;
-  margin-bottom: 0.75rem;
-}
-
-.card p {
-  color: #888;
-  font-size: 1rem;
-}
-
-.folio {
-  background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
-  border: 1px solid #333;
-  padding: 1.5rem;
-  margin-bottom: 1rem;
-  transition: border-color 0.2s;
-}
-
-.folio:hover {
-  border-color: #666;
-}
-
-.hood {
-  color: #c9a84c;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  margin-bottom: 0.5rem;
-}
-
-.folio h3 {
-  font-size: 1.25rem;
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-}
-
-.folio p {
-  color: #888;
-  font-size: 1rem;
-}
-
-.btn {
-  display: inline-block;
-  background: #c9a84c;
-  color: #0a0a0a;
-  text-decoration: none;
-  padding: 0.875rem 2rem;
-  margin: 2rem 0;
-  font-weight: 500;
-  transition: opacity 0.2s;
-}
-
-.btn:hover {
-  opacity: 0.9;
-}
-
-footer {
-  margin-top: 4rem;
-  padding-top: 2rem;
-  border-top: 1px solid #333;
-  color: #888;
-  font-size: 0.875rem;
-}
-
-@media (max-width: 600px) {
-  h1 {
-    font-size: 2rem;
-  }
-  
-  .subtitle {
-    font-size: 1.125rem;
-  }
-}
+/* ── footer ── */
+footer{padding:48px var(--gutter);color:var(--muted);font-size:12px;letter-spacing:.12em;text-transform:uppercase;border-top:1px solid var(--line)}
+footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;max-width:var(--max);margin:0 auto}
+footer a{color:var(--muted);border-bottom:1px solid var(--line-2)}
+footer a:hover{color:var(--gold);border-color:var(--gold)}
 </style>
 </head>
 <body>
-<div class="container">
-  <h1>Dan Cruz Homes</h1>
-  <p class="subtitle">Minimalist living, maximum life.</p>
 
-  <div class="card">
-    <h3>Approach</h3>
-    <p>Every home is a negotiation between space and soul.</p>
+<nav class="nav">
+  <div class="logo">DAN CRUZ HOMES<span class="dot">.</span></div>
+  <div class="links">
+    <a href="#specs">Specs</a>
+    <a href="#process">Process</a>
+    <a href="#projects">Projects</a>
+    <a href="#inquire">Inquire</a>
   </div>
+</nav>
 
-  <div class="card">
-    <h3>Specialty</h3>
-    <p>Large minimalist builds and adaptive reuse — turning Chicago's overlooked spaces into intentional homes.</p>
+<!-- ── HERO ── -->
+<header class="hero">
+  <div class="eyebrow">Chicago · Production Custom · Est. 2026</div>
+  <h1>Large homes, <em>quiet walls.</em></h1>
+  <p class="lede">Minimalist homes, 3,000 to 8,000 square feet, built one at a time in Chicago's best neighborhoods. The discipline of production. The finish of a single commission.</p>
+  <div class="actions">
+    <a href="#inquire" class="btn primary">Start a conversation →</a>
+    <a href="#projects" class="btn ghost">See active builds</a>
   </div>
+</header>
 
-  <div class="card">
-    <h3>Process</h3>
-    <p>AI-assisted design, human-crafted execution. From sketch to keys.</p>
+<!-- ── SPECS ── -->
+<section id="specs">
+  <div class="wrap">
+    <div class="eyebrow">What we build</div>
+    <h2>The spec is the spec.</h2>
+    <p class="lede">No kitchen islands that don't sit right. No stair runs you can't carry a couch up. Everything is sized, sequenced, and finished to a single standard.</p>
+    <div class="specs">
+      <div class="cell"><div class="k">Footprint</div><div class="v">3,000–8,000</div><div class="sub">square feet</div></div>
+      <div class="cell"><div class="k">Bedrooms</div><div class="v">3 – 6</div><div class="sub">full suites</div></div>
+      <div class="cell"><div class="k">Lot</div><div class="v">Standard</div><div class="sub">Chicago urban grid</div></div>
+      <div class="cell"><div class="k">Build cycle</div><div class="v">9 – 14 mo</div><div class="sub">permit to keys</div></div>
+      <div class="cell"><div class="k">Style</div><div class="v">Minimalist</div><div class="sub">quiet materials, large planes</div></div>
+      <div class="cell"><div class="k">Energy</div><div class="v">ICF + ERV</div><div class="sub">tight envelope, fresh air</div></div>
+    </div>
   </div>
+</section>
 
-  <h2>Active Projects</h2>
-
-  <div class="folio">
-    <div class="hood">West Loop</div>
-    <h3>Minimalist Loft</h3>
-    <p>3,400 sqft · ICF construction · Pre-build phase</p>
+<!-- ── PROCESS ── -->
+<section id="process">
+  <div class="wrap">
+    <div class="eyebrow">How a build runs</div>
+    <h2>Production-builder process, single-builder finish.</h2>
+    <p class="lede">Schedule pressure is the enemy of good homes. The discipline here is that every project follows the same four-step path — and that's why they finish on time.</p>
+    <div class="process">
+      <div class="step"><div class="n">01</div><h3>Site & Program</h3><p>Lot walk, code check, budget guardrails. 30 days. We say yes or no on the lot before you pay an architect.</p></div>
+      <div class="step"><div class="n">02</div><h3>Design & Permit</h3><p>Floor plan locked to spec. Drawings to plan review in 60 days. No custom millwork theatre — only durable choices.</p></div>
+      <div class="step"><div class="n">03</div><h3>Build</h3><p>One trade at a time, one floor a week. Subcontractors are paid by phase, not by draw — they finish faster.</p></div>
+      <div class="step"><div class="n">04</div><h3>Commissioning</h3><p>ERV balance, HVAC commissioning, final punch list. White-glove walkthrough before keys hand over.</p></div>
+    </div>
   </div>
+</section>
 
-  <div class="folio">
-    <div class="hood">Lincoln Park</div>
-    <h3>Adaptive Reuse — Coach House</h3>
-    <p>1,200 sqft · Garage → ADU · Permitting</p>
+<!-- ── PROJECTS ── -->
+<section id="projects">
+  <div class="wrap">
+    <div class="eyebrow">Active Builds</div>
+    <h2>On the boards and on the lot.</h2>
+    <p class="lede">Three active projects. Two in pre-build, one in permitting. Walkthroughs available for qualified buyers with a lot under contract.</p>
+
+    <div class="projects">
+      <div class="project">
+        <div class="shot">PROJECT RENDER · 3,400 SQFT</div>
+        <div class="body">
+          <div>
+            <div class="hood">West Loop</div>
+            <h3>Minimalist Loft</h3>
+            <ul>
+              <li><b>Footprint</b>3,400 sqft · 4 bed / 3.5 bath</li>
+              <li><b>Envelope</b>ICF exterior · triple-pane glass</li>
+              <li><b>Status</b>Pre-build · demo permits issued</li>
+            </ul>
+          </div>
+          <a href="#inquire" class="btn ghost">Inquire on a similar build →</a>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="shot">PROJECT RENDER · 1,200 SQFT</div>
+        <div class="body">
+          <div>
+            <div class="hood">Lincoln Park</div>
+            <h3>Adaptive Reuse — Coach House</h3>
+            <ul>
+              <li><b>Footprint</b>1,200 sqft · 1 bed / 1.5 bath</li>
+              <li><b>Type</b>Detached garage → ADU</li>
+              <li><b>Status</b>Permitting · 6 weeks to break ground</li>
+            </ul>
+          </div>
+          <a href="#inquire" class="btn ghost">Inquire on a similar build →</a>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="shot">PROJECT RENDER · 4,200 SQFT</div>
+        <div class="body">
+          <div>
+            <div class="hood">Pilsen</div>
+            <h3>Two-Flat Conversion</h3>
+            <ul>
+              <li><b>Footprint</b>4,200 sqft · 6 bed / 4 bath</li>
+              <li><b>Type</b>Multi-unit minimalist</li>
+              <li><b>Status</b>Planning · financing in place</li>
+            </ul>
+          </div>
+          <a href="#inquire" class="btn ghost">Inquire on a similar build →</a>
+        </div>
+      </div>
+    </div>
   </div>
+</section>
 
-  <div class="folio">
-    <div class="hood">Pilsen</div>
-    <h3>Two-Flat Conversion</h3>
-    <p>4,200 sqft · Multi-unit minimalist · Planning</p>
-  </div>
-
-  <a href="mailto:hello@negotiatorsondemand.com?subject=Dan%20Cruz%20Homes" class="btn">Inquire</a>
-
-  <footer>
-    © 2026 FatCat Asset Management
-  </footer>
+<!-- ── INQUIRE ── -->
+<div class="lead" id="inquire">
+  <h2>Bring the lot.</h2>
+  <p>Drop your email. We'll get on the phone within 24 hours and tell you whether the address is a yes or a no. No pitch, no deck.</p>
+  <form action="mailto:hello@negotiatorsondemand.com?subject=Dan%20Cruz%20Homes%20—%20inquiry" method="post" enctype="text/plain">
+    <input type="email" name="email" placeholder="you@example.com" required>
+    <button type="submit">Send →</button>
+  </form>
 </div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="row">
+    <span>© 2026 · DAN CRUZ HOMES · CHICAGO</span>
+    <span>
+      <a href="https://negotiatorsondemand.com">negotiatorsondemand.com</a> ·
+      <a href="https://tiktok.com/@negotiatorsondemand">TikTok</a>
+    </span>
+  </div>
+</footer>
+
 </body>
 </html>
