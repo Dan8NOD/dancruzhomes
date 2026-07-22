@@ -97,6 +97,7 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
     <a href="#process">Process</a>
     <a href="#communities">Communities</a>
     <a href="#inquire">Inquire</a>
+    <a href="#agents">For Agents</a>
   </div>
 </nav>
 
@@ -219,6 +220,38 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
     <button type="submit">Send →</button>
   </form>
 </div>
+
+<!-- ── AGENTS ── -->
+<!-- PONYTAIL: agent-to-agent referral page. This is for LICENSED agents in
+     other states — not consumers. Kept as a separate section so the consumer
+     flow stays clean (Hero → Specs → Process → Communities → Inquire).
+     Compliance: IL Real Estate License Act 225 ILCS 441/ allows IL licensed
+     brokers to pay referral fees to out-of-state licensed brokers under a
+     written referral agreement. We do NOT advertise referral fees to
+     consumers — that's unlicensed activity in every state we know of. -->
+<section id="agents" style="padding:96px var(--gutter);background:var(--ink-2);border-bottom:1px solid var(--line);border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="eyebrow" style="font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:18px">For licensed agents · Nationwide</div>
+    <h2 style="font-size:clamp(32px,5vw,56px);font-weight:300;line-height:1.05;letter-spacing:-.01em;margin-bottom:20px;max-width:18ch">Got a buyer or seller who needs a custom build?</h2>
+    <p style="color:var(--muted);font-size:18px;max-width:54ch;margin-bottom:32px">I'm an Illinois licensed broker. If your client is looking at Chicago, the Midwest, or anywhere I'd consider building, I'll co-broker the deal with you under a formal written referral agreement and a referral fee on close.</p>
+
+    <ul style="list-style:none;color:var(--muted);font-size:15px;margin:0 0 32px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px 24px">
+      <li>· <b style="color:#fff">Licensed in IL</b> — sponsorship/brokerage on file</li>
+      <li>· <b style="color:#fff">Co-broker</b>, not a buyer-rep — your client stays yours</li>
+      <li>· <b style="color:#fff">Referral fee on close</b> — formal 50-state written agreement</li>
+      <li>· <b style="color:#fff">Markets:</b> Chicago + Midwest corridor (Milwaukee, Madison, Iowa City, Indy, Detroit)</li>
+    </ul>
+
+    <form action="mailto:hello@negotiatorsondemand.com?subject=Agent%20Referral%20—%20[your%20state]%20—%20[client%20market]" method="post" enctype="text/plain" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;max-width:760px">
+      <input type="text" name="agent_name" placeholder="Your name" required style="padding:14px 18px;background:var(--ink);border:1px solid var(--line-2);color:#fff;font-size:15px;border-radius:0">
+      <input type="text" name="brokerage" placeholder="Brokerage · License #" required style="padding:14px 18px;background:var(--ink);border:1px solid var(--line-2);color:#fff;font-size:15px;border-radius:0">
+      <input type="email" name="agent_email" placeholder="Email" required style="padding:14px 18px;background:var(--ink);border:1px solid var(--line-2);color:#fff;font-size:15px;border-radius:0">
+      <input type="text" name="client_market" placeholder="Client's target market (city, state)" required style="padding:14px 18px;background:var(--ink);border:1px solid var(--line-2);color:#fff;font-size:15px;border-radius:0">
+      <button type="submit" style="grid-column:1/-1;padding:14px 28px;background:var(--gold);color:var(--ink);border:none;font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;cursor:pointer">Open a referral →</button>
+    </form>
+    <p style="color:var(--muted);font-size:12px;letter-spacing:.05em;margin-top:18px;max-width:60ch">No consumer solicitation, no public co-marketing. This section is for licensed real estate professionals only. We'll respond within one business day with the IL referral agreement PDF.</p>
+  </div>
+</section>
 
 <!-- ── FOOTER ── -->
 <footer>
