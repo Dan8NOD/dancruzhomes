@@ -62,7 +62,13 @@ section .lede{font-size:18px;color:var(--muted);max-width:54ch;margin-bottom:48p
 .project{display:grid;grid-template-columns:1fr;gap:0;border:1px solid var(--line);transition:border-color .2s}
 .project:hover{border-color:var(--gold)}
 @media(min-width:760px){.project{grid-template-columns:1.4fr 1fr}}
-.project .shot{background:var(--ink-2);aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px;letter-spacing:.16em;text-transform:uppercase;position:relative;overflow:hidden}
+.project .shot{background:linear-gradient(135deg,#1a1a1e 0%,#101014 60%,#0c0c10 100%);aspect-ratio:16/10;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;gap:8px;padding:24px 28px;color:var(--muted);font-size:11px;letter-spacing:.22em;text-transform:uppercase;position:relative;overflow:hidden;border-right:1px solid var(--line)}
+.project .shot::before{content:'';position:absolute;inset:0;background:
+  repeating-linear-gradient(90deg,transparent 0 79px,rgba(201,168,76,.06) 79px 80px),
+  repeating-linear-gradient(0deg,transparent 0 79px,rgba(201,168,76,.06) 79px 80px);pointer-events:none}
+.project .shot .plan{font-family:Georgia,serif;font-size:56px;font-weight:300;color:rgba(201,168,76,.55);line-height:1;letter-spacing:-.02em;text-transform:none}
+.project .shot .tag{color:var(--gold);font-size:10px;letter-spacing:.26em;border:1px solid rgba(201,168,76,.35);padding:4px 10px}
+@media(max-width:759px){.project .shot{border-right:none;border-bottom:1px solid var(--line)}}
 .project .body{padding:36px 32px;display:flex;flex-direction:column;justify-content:space-between}
 .project .hood{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
 .project h3{font-size:28px;font-weight:300;line-height:1.15;margin-bottom:16px}
@@ -160,7 +166,7 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
 
     <div class="projects">
       <div class="project">
-        <div class="shot">PROJECT RENDER · 3,400 SQFT</div>
+        <div class="shot"><span class="tag">Render · Pre-build</span><span class="plan">3,400 sqft</span><span>West Loop · Chicago</span></div>
         <div class="body">
           <div>
             <div class="hood">West Loop</div>
@@ -176,7 +182,7 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
       </div>
 
       <div class="project">
-        <div class="shot">PROJECT RENDER · 1,200 SQFT</div>
+        <div class="shot"><span class="tag">Render · Permitting</span><span class="plan">1,200 sqft</span><span>Lincoln Park · Chicago</span></div>
         <div class="body">
           <div>
             <div class="hood">Lincoln Park</div>
@@ -192,7 +198,7 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
       </div>
 
       <div class="project">
-        <div class="shot">PROJECT RENDER · 4,200 SQFT</div>
+        <div class="shot"><span class="tag">Render · Planning</span><span class="plan">4,200 sqft</span><span>Pilsen · Chicago</span></div>
         <div class="body">
           <div>
             <div class="hood">Pilsen</div>
