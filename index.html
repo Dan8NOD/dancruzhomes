@@ -331,11 +331,12 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
 <div class="lead" id="inquire">
   <h2>Bring the lot.</h2>
   <p>Drop your email and the lot address. We'll get on the phone within 24 hours and tell you whether the address is a yes or a no — including a base price range before you sign anything.</p>
-  <form action="mailto:hello@negotiatorsondemand.com?subject=Dan%20Cruz%20Homes%20—%20lot%20inquiry" method="post" enctype="text/plain">
+  <form id="lotInquiryForm" onsubmit="return submitLeadForm(event, 'lotInquiryForm', 'lot_inquiry')">
     <input type="email" name="email" placeholder="you@example.com" required>
     <input type="text" name="lot" placeholder="Lot address (optional)" style="flex:1;min-width:200px;padding:14px 18px;background:var(--ink);border:1px solid var(--line-2);color:#fff;font-size:15px;border-radius:0">
-    <button type="submit">Send →</button>
+    <button type="submit">Send &rarr;</button>
   </form>
+  <div class="lead-status" id="lotInquiryFormStatus" style="display:none;margin-top:10px;font-size:13px"></div>
 </div>
 
 <!-- ── AGENTS ── -->
@@ -351,7 +352,7 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
   <div class="wrap">
     <div class="eyebrow" style="font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:18px">For Real Estate Professionals · Nationwide</div>
     <h2 style="font-size:clamp(32px,5vw,56px);font-weight:300;line-height:1.05;letter-spacing:-.01em;margin-bottom:20px;max-width:18ch">Partner with an Illinois broker who draws inbound from a daily content engine.</h2>
-    <p style="color:var(--muted);font-size:18px;max-width:60ch;margin-bottom:32px">I run a negotiation-training content platform (MixMatch, NOD News, books on Amazon) that pulls qualified buyers into the Chicago ecosystem. They come inbound through a daily content cadence and a 28-tool practice app — not paid ads. When those visitors ask about homes outside Illinois, I refer them to a licensed broker in their state. You service the lead, I receive a referral fee at close.</p>
+    <p style="color:var(--muted);font-size:18px;max-width:60ch;margin-bottom:32px">I run a negotiation-training content platform (MixMatch, NOD News, books on Amazon) that pulls qualified buyers into the Chicago ecosystem. They come inbound through a daily content cadence and a 31-tool practice app — not paid ads. When those visitors ask about homes outside Illinois, I refer them to a licensed broker in their state. You service the lead, I receive a referral fee at close.</p>
 
     <ul style="list-style:none;color:var(--muted);font-size:15px;margin:0 0 32px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px 24px">
       <li>· <b style="color:#fff">Licensed in IL</b> — managing broker sponsorship on file</li>
@@ -360,13 +361,14 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
       <li>· <b style="color:#fff">Currently expanding</b> — priority markets: Midwest corridor, Texas, Florida, Carolinas, Mountain West; select EU (Bucharest)</li>
     </ul>
 
-    <form action="mailto:hello@negotiatorsondemand.com?subject=Partner%20Application%20—%20[your%20state]%20—%20[brokerage]" method="post" enctype="text/plain" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;max-width:760px">
+    <form id="partnerForm" onsubmit="return submitLeadForm(event, 'partnerForm', 'broker_partner')" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;max-width:760px">
       <input type="text" name="agent_name" placeholder="Your name" required style="padding:14px 18px;background:var(--ink);border:1px solid var(--line-2);color:#fff;font-size:15px;border-radius:0">
       <input type="text" name="brokerage" placeholder="Brokerage · State · License #" required style="padding:14px 18px;background:var(--ink);border:1px solid var(--line-2);color:#fff;font-size:15px;border-radius:0">
       <input type="email" name="agent_email" placeholder="Email" required style="padding:14px 18px;background:var(--ink);border:1px solid var(--line-2);color:#fff;font-size:15px;border-radius:0">
       <input type="text" name="states_covered" placeholder="States / countries you cover" required style="padding:14px 18px;background:var(--ink);border:1px solid var(--line-2);color:#fff;font-size:15px;border-radius:0">
-      <button type="submit" style="grid-column:1/-1;padding:14px 28px;background:var(--gold);color:var(--ink);border:none;font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;cursor:pointer">Apply to partner →</button>
+      <button type="submit" style="grid-column:1/-1;padding:14px 28px;background:var(--gold);color:var(--ink);border:none;font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;cursor:pointer">Apply to partner &rarr;</button>
     </form>
+    <div class="lead-status" id="partnerFormStatus" style="display:none;margin-top:10px;font-size:13px;max-width:760px"></div>
     <p style="color:var(--muted);font-size:12px;letter-spacing:.05em;margin-top:18px;max-width:60ch">For licensed brokers and broker-owners only. We respond within one business day with the referral agreement and a sample of the inbound profile we're generating. Spouses and personal contacts (incl. EU) considered case-by-case — start with the application.</p>
   </div>
 </section>
@@ -381,6 +383,69 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
     </span>
   </div>
 </footer>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     Lead capture — was mailto: (unreliable on mobile, easy to silently
+     lose). Posts directly to the shared Supabase project's lead_submissions
+     table using the public anon key (RLS explicitly allows anonymous
+     INSERT on this table — checked live, no server route needed). Reads
+     go through the service key elsewhere; this key can only ever write.
+     ══════════════════════════════════════════════════════════════════════ -->
+<script>
+(function(){
+  var SUPABASE_URL = 'https://iubxycckgrplbpdbncfk.supabase.co';
+  var SUPABASE_ANON_KEY = 'sb_publishable_L92hXORLG-Df4WiZxVq-6Q_X3AB47yl';
+
+  window.submitLeadForm = function(event, formId, formType){
+    event.preventDefault();
+    var form = document.getElementById(formId);
+    var statusEl = document.getElementById(formId + 'Status');
+    var data = new FormData(form);
+    var payload = { site: 'dancruzhomes.com', form_type: formType, status: 'new' };
+
+    if(formType === 'lot_inquiry'){
+      payload.email = data.get('email');
+      payload.message = data.get('lot') || null;
+    } else if(formType === 'broker_partner'){
+      payload.name = data.get('agent_name');
+      payload.email = data.get('agent_email');
+      payload.message = data.get('states_covered');
+      payload.props = { brokerage: data.get('brokerage') };
+    }
+
+    var btn = form.querySelector('button[type="submit"]');
+    var originalText = btn.textContent;
+    btn.disabled = true; btn.textContent = 'Sending…';
+
+    fetch(SUPABASE_URL + '/rest/v1/lead_submissions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify(payload)
+    }).then(function(r){
+      btn.disabled = false; btn.textContent = originalText;
+      if(!r.ok) throw new Error('Request failed: ' + r.status);
+      form.reset();
+      form.style.display = 'none';
+      statusEl.style.display = 'block';
+      statusEl.style.color = '#c9a84c';
+      statusEl.textContent = "Got it — we'll be in touch within 24 hours.";
+    }).catch(function(err){
+      btn.disabled = false; btn.textContent = originalText;
+      statusEl.style.display = 'block';
+      statusEl.style.color = '#ff6b6b';
+      statusEl.textContent = 'Something went wrong sending that — email hello@negotiatorsondemand.com directly instead.';
+      console.warn('Lead submit failed:', err.message);
+    });
+
+    return false;
+  };
+})();
+</script>
 
 </body>
 </html>
