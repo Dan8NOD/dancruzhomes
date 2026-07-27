@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Property Readiness Grader — Dan Cruz Homes</title>
+<meta name="description" content="Selling your current home to fund your new build? Grade its readiness to sell — auto-calculating, built by dan cruz.">
+<link rel="icon" href="nod-coin.png">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Georgia', serif;
+    background: #0a0a0a;
+    color: #e8e0d0;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  .container { max-width: 780px; margin: 0 auto; }
+
+  /* ─── NOD brand header ─── */
+  .nod-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 0 0 20px; margin-bottom: 24px; border-bottom: 1px solid #2a3a4a;
+  }
+  .nod-header .logo-icon {
+    width: 36px; height: 36px;
+    background: url('nod-coin.png') center/cover, #c9a84c; border-radius: 50%;
+    box-shadow: 0 0 16px rgba(200,169,110,0.35); flex-shrink: 0;
+  }
+  .nod-header .brand-name { font-size: 18px; font-weight: 800; color: #f0e8d8; letter-spacing: -0.5px; }
+  .nod-header .brand-sub { font-size: 10px; color: #c9a84c; letter-spacing: 2px; text-transform: uppercase; font-family: -apple-system, sans-serif; }
+  .nod-header .back-link { margin-left: auto; font-size: 11px; color: #8a9aaa; text-decoration: none; font-family: -apple-system, sans-serif; letter-spacing: 0.5px; }
+  .nod-header .back-link:hover { color: #c9a84c; }
+
+  /* Header */
+  .header { text-align: center; padding: 20px 0 30px; margin-bottom: 28px; border-bottom: 1px solid #2a3a4a; }
+  .header-brand { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #c9a84c; margin-bottom: 10px; }
+  .header h1 { font-size: 32px; font-weight: normal; color: #f0e8d8; line-height: 1.2; margin-bottom: 8px; }
+  .header p { font-size: 14px; color: #8a9aaa; font-style: italic; }
+
+  /* Property Info */
+  .property-info {
+    background: #162030; border: 1px solid #2a3a4a; border-radius: 4px;
+    padding: 20px 24px; margin-bottom: 28px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  }
+  .property-info input {
+    background: #0a0a0a; border: 1px solid #2a3a4a; color: #e8e0d0;
+    padding: 10px 14px; font-size: 14px; font-family: 'Georgia', serif;
+    border-radius: 3px; width: 100%; outline: none; transition: border-color 0.2s;
+  }
+  .property-info input:focus { border-color: #c9a84c; }
+  .property-info input::placeholder { color: #4a5a6a; }
+  .property-info .full-width { grid-column: 1 / -1; }
+
+  /* Score panel */
+  .score-panel {
+    background: #1e2f40; border: 1px solid #2a3a4a; border-radius: 4px;
+    padding: 28px 24px; margin-bottom: 20px; text-align: center;
+    position: sticky; top: 20px; z-index: 5;
+  }
+  .score-label { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #8a9aaa; margin-bottom: 8px; }
+  .score-number { font-size: 72px; font-weight: normal; line-height: 1; margin-bottom: 4px; transition: color 0.3s; }
+  .score-max { font-size: 13px; color: #8a9aaa; margin-bottom: 20px; }
+  .score-bar-bg { background: #0a0a0a; border-radius: 2px; height: 6px; margin-bottom: 20px; overflow: hidden; }
+  .score-bar-fill { height: 100%; border-radius: 2px; transition: width 0.4s ease, background 0.3s; width: 0%; }
+  .score-verdict { font-size: 15px; color: #e8e0d0; margin-bottom: 6px; min-height: 22px; }
+  .score-advice { font-size: 12px; color: #8a9aaa; font-style: italic; line-height: 1.5; min-height: 36px; }
+
+  /* Section */
+  .section {
+    background: #162030; border: 1px solid #2a3a4a; border-radius: 4px;
+    margin-bottom: 20px; overflow: hidden;
+  }
+  .section-header {
+    background: #1e2f40; padding: 14px 20px; border-bottom: 1px solid #2a3a4a;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .section-title { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: #c9a84c; }
+  .section-pts { font-size: 11px; color: #8a9aaa; letter-spacing: 1px; }
+  .section-subtitle { padding: 12px 20px 4px; font-size: 12px; color: #8a9aaa; font-style: italic; }
+
+  .criteria { padding: 6px 20px 12px; }
+  .criterion {
+    display: flex; align-items: flex-start; gap: 14px; padding: 10px 0;
+    border-bottom: 1px solid #1e2f40; cursor: pointer;
+    transition: background 0.15s; margin: 0 -20px; padding-left: 20px; padding-right: 20px;
+  }
+  .criterion:last-child { border-bottom: none; }
+  .criterion:hover { background: #1a2a3a; }
+
+  .criterion input[type="checkbox"] {
+    appearance: none; width: 18px; height: 18px; min-width: 18px;
+    border: 1px solid #3a4a5a; border-radius: 2px; background: #0a0a0a;
+    cursor: pointer; position: relative; margin-top: 2px; transition: all 0.15s;
+  }
+  .criterion input[type="checkbox"]:checked { background: #c9a84c; border-color: #c9a84c; }
+  .criterion input[type="checkbox"]:checked::after {
+    content: '✓'; position: absolute; top: -1px; left: 2px;
+    font-size: 13px; color: #0a0a0a; font-weight: bold;
+  }
+  .criterion-text { flex: 1; font-size: 14px; color: #c8d0d8; line-height: 1.5; padding-top: 1px; }
+  .criterion-pts { font-size: 13px; font-weight: bold; min-width: 48px; text-align: right; padding-top: 2px; }
+  .criterion-pts.pos { color: #c9a84c; }
+  .criterion-pts.neg { color: #d06060; }
+
+  .section-subtotal {
+    padding: 10px 20px; background: #1e2f40; border-top: 1px solid #2a3a4a;
+    display: flex; justify-content: space-between; font-size: 12px; color: #8a9aaa;
+  }
+  .section-subtotal span:last-child { color: #c9a84c; font-weight: bold; }
+
+  /* Notes */
+  .notes-area {
+    background: #162030; border: 1px solid #2a3a4a; border-radius: 4px;
+    padding: 20px; margin-bottom: 20px;
+  }
+  .notes-area label { display: block; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #c9a84c; margin-bottom: 10px; }
+  .notes-area textarea {
+    width: 100%; background: #0a0a0a; border: 1px solid #2a3a4a; color: #e8e0d0;
+    padding: 12px 14px; font-size: 14px; font-family: 'Georgia', serif;
+    border-radius: 3px; resize: vertical; min-height: 80px; outline: none;
+  }
+  .notes-area textarea:focus { border-color: #c9a84c; }
+
+  /* Actions */
+  .actions { display: flex; gap: 12px; margin-bottom: 20px; }
+  .btn {
+    flex: 1; padding: 14px; font-size: 12px; letter-spacing: 2px;
+    text-transform: uppercase; font-family: 'Georgia', serif;
+    border: none; border-radius: 3px; cursor: pointer; transition: all 0.2s;
+  }
+  .btn-primary { background: #c9a84c; color: #0a0a0a; }
+  .btn-primary:hover { background: #dfc080; }
+  .btn-secondary { background: transparent; color: #8a9aaa; border: 1px solid #2a3a4a; }
+  .btn-secondary:hover { border-color: #8a9aaa; color: #e8e0d0; }
+
+  /* CTA */
+  .cta-banner {
+    background: linear-gradient(135deg, #1e2f40 0%, #162030 100%);
+    border: 1px solid #c9a84c; border-radius: 4px; padding: 24px;
+    text-align: center; margin-bottom: 20px;
+  }
+  .cta-banner .cta-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: #c9a84c; margin-bottom: 8px; }
+  .cta-banner .cta-heading { font-size: 18px; color: #f0e8d8; margin-bottom: 6px; }
+  .cta-banner .cta-body { font-size: 13px; color: #8a9aaa; line-height: 1.5; margin-bottom: 16px; }
+  .cta-button {
+    display: inline-block; padding: 14px 32px; background: #c9a84c; color: #0a0a0a;
+    text-decoration: none; font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+    border-radius: 3px; font-family: 'Georgia', serif; font-weight: bold; transition: background 0.2s;
+  }
+  .cta-button:hover { background: #dfc080; }
+
+  /* Save indicator */
+  .save-indicator { text-align: center; font-size: 11px; color: #8a9aaa; margin-bottom: 20px; min-height: 18px; }
+
+  /* Footer */
+  .footer { text-align: center; padding: 20px 0; border-top: 1px solid #2a3a4a; font-size: 11px; color: #6a7a8a; }
+  .footer a { color: #c9a84c; text-decoration: none; }
+
+  @media print {
+    body { background: white; color: black; }
+    .nod-header, .cta-banner, .actions, .save-indicator, .footer { display: none; }
+    .score-panel { position: static; border: 1px solid #ccc; }
+    .section, .section-header, .property-info, .notes-area { background: white; border: 1px solid #ccc; }
+    .section-title, .criterion-pts, .section-subtotal span:last-child, .header-brand, .brand-sub { color: #8b6914; }
+    .criterion-pts.neg { color: #a03030; }
+    .score-number { color: black !important; }
+    .criterion-text { color: #333; }
+    input, textarea { background: white; border: 1px solid #ccc; color: black; }
+    input::placeholder { color: #999; }
+  }
+
+  @media (max-width: 600px) {
+    .property-info { grid-template-columns: 1fr; }
+    .property-info .full-width { grid-column: 1; }
+    .score-number { font-size: 56px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- NOD brand header -->
+  <div class="nod-header">
+    <div class="logo-icon" aria-hidden="true"></div>
+    <div>
+      <div class="brand-name">Dan Cruz Homes</div>
+      <div class="brand-sub">Property Readiness Tools</div>
+    </div>
+    <a href="index.html" class="back-link">← Back to Dan Cruz Homes</a>
+  </div>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-brand">Property Readiness Grader</div>
+    <h1>How Ready Is Your Property to Sell?</h1>
+    <p>A self-assessment to predict how well your home will sell</p>
+  </div>
+
+  <!-- Score Panel -->
+  <div class="score-panel">
+    <div class="score-label">Total Score</div>
+    <div class="score-number" id="scoreNumber">0</div>
+    <div class="score-max" id="scoreMax">out of 100 points</div>
+    <div class="score-bar-bg">
+      <div class="score-bar-fill" id="scoreBar"></div>
+    </div>
+    <div class="score-verdict" id="scoreVerdict">Complete the scorecard below</div>
+    <div class="score-advice" id="scoreAdvice"></div>
+  </div>
+
+  <!-- Property Info -->
+  <div class="property-info">
+    <input class="full-width" type="text" id="ownerName" placeholder="Prepared for: Owner Name">
+    <input class="full-width" type="text" id="propertyAddress" placeholder="Property Address">
+    <input type="text" id="agentName" placeholder="Agent: dan cruz">
+    <input type="date" id="scoreDate">
+  </div>
+
+  <!-- PART 1: CONDITION -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">Part 1 · Condition of Property</span>
+    </div>
+    <div class="section-subtitle">How well does your property meet the following criteria?</div>
+    <div class="criteria" id="part1">
+      <label class="criterion"><input type="checkbox" data-pts="2" data-section="1"><span class="criterion-text">Your property has better than average curb appeal</span><span class="criterion-pts pos">+2</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="2" data-section="1"><span class="criterion-text">Your interior is light, bright and clean</span><span class="criterion-pts pos">+2</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="2" data-section="1"><span class="criterion-text">Your rooms are uncluttered and look as large as possible</span><span class="criterion-pts pos">+2</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="2" data-section="1"><span class="criterion-text">Your decorating is attractive and neutral</span><span class="criterion-pts pos">+2</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="2" data-section="1"><span class="criterion-text">You don't have any pets</span><span class="criterion-pts pos">+2</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="2" data-section="1"><span class="criterion-text">Your home is free of any unpleasant odors</span><span class="criterion-pts pos">+2</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="-5" data-section="1"><span class="criterion-text">You have pets that may interfere with showings</span><span class="criterion-pts neg">−5</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="-10" data-section="1"><span class="criterion-text">Your floor plan is obsolete or outdated</span><span class="criterion-pts neg">−10</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="-10" data-section="1"><span class="criterion-text">Your home is in substandard condition for the area</span><span class="criterion-pts neg">−10</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="-10" data-section="1"><span class="criterion-text">Your home is in dire need of updating</span><span class="criterion-pts neg">−10</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="-10" data-section="1"><span class="criterion-text">Your home is adjacent to an obvious eye-sore</span><span class="criterion-pts neg">−10</span></label>
+    </div>
+    <div class="section-subtotal"><span>Condition Subtotal</span><span id="sub1">0</span></div>
+  </div>
+
+  <!-- PART 2: LOCATION -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">Part 2 · Location, Location, Location</span>
+    </div>
+    <div class="section-subtitle">How well does your property compare to similar properties?</div>
+    <div class="criteria" id="part2">
+      <label class="criterion"><input type="checkbox" data-pts="2" data-section="2"><span class="criterion-text">Your property is in the low end of a prestigious neighborhood</span><span class="criterion-pts pos">+2</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="2" data-section="2"><span class="criterion-text">Your street has excellent curb appeal</span><span class="criterion-pts pos">+2</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="2" data-section="2"><span class="criterion-text">Your property has an excellent and valued view</span><span class="criterion-pts pos">+2</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="2" data-section="2"><span class="criterion-text">Your area has a reputation as an excellent school system</span><span class="criterion-pts pos">+2</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="2" data-section="2"><span class="criterion-text">Your area has shopping within close proximity</span><span class="criterion-pts pos">+2</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="2" data-section="2"><span class="criterion-text">Your property is located within a gated community</span><span class="criterion-pts pos">+2</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="5" data-section="2"><span class="criterion-text">Your neighboring properties are well cared for</span><span class="criterion-pts pos">+5</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="-10" data-section="2"><span class="criterion-text">Your property is located near high traffic or noise issues</span><span class="criterion-pts neg">−10</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="-10" data-section="2"><span class="criterion-text">Your area has been stigmatized by crime or other issues</span><span class="criterion-pts neg">−10</span></label>
+    </div>
+    <div class="section-subtotal"><span>Location Subtotal</span><span id="sub2">0</span></div>
+  </div>
+
+  <!-- PART 3: AVAILABILITY -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">Part 3 · Availability &amp; Access to Show</span>
+    </div>
+    <div class="section-subtitle">How easy will it be for prospective buyers to see your home?</div>
+    <div class="criteria" id="part3">
+      <label class="criterion"><input type="checkbox" data-pts="2" data-section="3"><span class="criterion-text">No time or day restrictions on potential showings</span><span class="criterion-pts pos">+2</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="2" data-section="3"><span class="criterion-text">No pets to deal with in order to show property</span><span class="criterion-pts pos">+2</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="2" data-section="3"><span class="criterion-text">Your home will always be in a "ready to show" condition</span><span class="criterion-pts pos">+2</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="2" data-section="3"><span class="criterion-text">No occupants on premise during showings</span><span class="criterion-pts pos">+2</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="-10" data-section="3"><span class="criterion-text">Requirement of listing agent present for all showings</span><span class="criterion-pts neg">−10</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="-10" data-section="3"><span class="criterion-text">Tenant advance notification required prior to showings</span><span class="criterion-pts neg">−10</span></label>
+    </div>
+    <div class="section-subtotal"><span>Availability Subtotal</span><span id="sub3">0</span></div>
+  </div>
+
+  <!-- PART 4: MARKETING -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">Part 4 · Marketing &amp; Exposure</span>
+    </div>
+    <div class="section-subtitle">How will your property get exposed to potential buyers?</div>
+    <div class="criteria" id="part4">
+      <label class="criterion"><input type="checkbox" data-pts="2" data-section="4"><span class="criterion-text">A 'For Sale' sign will be visibly placed in the yard</span><span class="criterion-pts pos">+2</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="2" data-section="4"><span class="criterion-text">An easily accessed brochure box will be available</span><span class="criterion-pts pos">+2</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="2" data-section="4"><span class="criterion-text">Your property will be included in the local MLS database</span><span class="criterion-pts pos">+2</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="2" data-section="4"><span class="criterion-text">Your information will be uploaded to multiple web sites</span><span class="criterion-pts pos">+2</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="2" data-section="4"><span class="criterion-text">An industry awareness campaign will be launched</span><span class="criterion-pts pos">+2</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="4" data-section="4" data-exclusive="4"><span class="criterion-text">A full service sales commission will be offered</span><span class="criterion-pts pos">+4</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="-20" data-section="4" data-exclusive="4"><span class="criterion-text">A below average sales commission will be offered</span><span class="criterion-pts neg">−20</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="10" data-section="4" data-exclusive="4"><span class="criterion-text">An above average sales commission will be offered</span><span class="criterion-pts pos">+10</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="10" data-section="4"><span class="criterion-text">A selling incentive will be offered to the selling agent</span><span class="criterion-pts pos">+10</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="-20" data-section="4"><span class="criterion-text">An abbreviated listing time frame</span><span class="criterion-pts neg">−20</span></label>
+    </div>
+    <div class="section-subtotal"><span>Marketing Subtotal</span><span id="sub4">0</span></div>
+  </div>
+
+  <!-- PART 5: TERMS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">Part 5 · Acceptable Terms</span>
+    </div>
+    <div class="section-subtitle">What terms will you offer to make your property more attractive?</div>
+    <div class="criteria" id="part5">
+      <label class="criterion"><input type="checkbox" data-pts="2" data-section="5"><span class="criterion-text">Acceptance of low-down FHA or VA type loans</span><span class="criterion-pts pos">+2</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="2" data-section="5"><span class="criterion-text">Reduce the borrower's interest rate with buy down</span><span class="criterion-pts pos">+2</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="2" data-section="5"><span class="criterion-text">Consider any type of seller assisted financing</span><span class="criterion-pts pos">+2</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="2" data-section="5"><span class="criterion-text">Offer to pay at least half of buyer's closing costs</span><span class="criterion-pts pos">+2</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="2" data-section="5"><span class="criterion-text">Willingness to cooperate on buyer's requested repairs</span><span class="criterion-pts pos">+2</span></label>
+    </div>
+    <div class="section-subtotal"><span>Terms Subtotal</span><span id="sub5">0</span></div>
+  </div>
+
+  <!-- PART 6: PRICING -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">Part 6 · Pricing Your Home to Sell</span>
+    </div>
+    <div class="section-subtitle">How will your pricing compare with competing properties?</div>
+    <div class="criteria" id="part6">
+      <label class="criterion"><input type="checkbox" data-pts="20" data-section="6" data-exclusive="6"><span class="criterion-text">Your home is priced 5% to 10% lower than others</span><span class="criterion-pts pos">+20</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="30" data-section="6" data-exclusive="6"><span class="criterion-text">Your home is priced 10% to 20% lower than others</span><span class="criterion-pts pos">+30</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="5" data-section="6" data-exclusive="6"><span class="criterion-text">Your home is priced equal to others</span><span class="criterion-pts pos">+5</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="-20" data-section="6" data-exclusive="6"><span class="criterion-text">Your home is priced 5% to 10% above others</span><span class="criterion-pts neg">−20</span></label>
+      <label class="criterion"><input type="checkbox" data-pts="-30" data-section="6" data-exclusive="6"><span class="criterion-text">Your home is priced 10% to 20% above others</span><span class="criterion-pts neg">−30</span></label>
+    </div>
+    <div class="section-subtotal"><span>Pricing Subtotal</span><span id="sub6">0</span></div>
+  </div>
+
+  <!-- Notes -->
+  <div class="notes-area">
+    <label>Notes &amp; Recommendations</label>
+    <textarea id="notes" placeholder="Enter your observations, recommendations, or action items for this property..."></textarea>
+  </div>
+
+  <!-- Save indicator -->
+  <div class="save-indicator" id="saveIndicator">💾 Auto-saved to your browser</div>
+
+  <!-- Actions -->
+  <div class="actions">
+    <button class="btn btn-primary" onclick="window.print()">🖨 Print Report</button>
+    <button class="btn btn-secondary" onclick="resetForm()">↺ Reset</button>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-banner">
+    <div class="cta-label">Ready to List?</div>
+    <div class="cta-heading">Let's turn your score into a sold sign</div>
+    <div class="cta-body">I'll walk through this scorecard with you, build a pricing strategy tailored to your property, and write the listing that gets buyers through the door.</div>
+    <a href="https://calendly.com/negotiatorsondemand/virtualcoffeewithdan" target="_blank" rel="noopener" class="cta-button">📅 Book a Call with dan cruz</a>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    Dan Cruz Homes · <a href="index.html">Home</a> · <a href="https://negotiatorsondemand.com">negotiatorsondemand.com</a> · <a href="https://tiktok.com/@negotiatorsondemand" target="_blank" rel="noopener">TikTok</a> · Built by dan cruz
+  </div>
+
+</div>
+
+<script>
+'use strict';
+const STORAGE_KEY = 'nod_scorecard_v2';
+const VISITOR_KEY = 'nod_scorecard_visitor_id';
+const SECTION_NAMES = {
+  1: 'Condition of Property',
+  2: 'Location',
+  3: 'Availability & Access',
+  4: 'Marketing & Exposure',
+  5: 'Acceptable Terms',
+  6: 'Pricing',
+};
+
+// ponytail: thresholds straight from the source doc (60/70/80/90/100)
+const VERDICTS = [
+  [100, 'Start Packing', 'You have done everything right — go ahead and start packing!', '#7ec8a0'],
+  [90,  'Sells Quickly', 'Your home has a strong chance of selling and should sell quicker than other homes on the market.', '#a8c88a'],
+  [80,  'Sells, But Slower', 'Your home has a good chance of selling but may take substantially longer than other homes currently on the market.', '#c9a84c'],
+  [70,  'May Need Adjustments', 'Your home has a chance of selling but may need rapid price adjustments depending on market reaction.', '#e8a050'],
+  [0,   'Serious Work Needed', 'Your home probably won\'t sell at the price you\'re asking. Serious adjustments needed to get it sold.', '#d06060'],
+];
+
+const $ = id => document.getElementById(id);
+
+function update() {
+  let total = 0;
+  const subs = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
+
+  document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+    if (cb.checked) {
+      const pts = parseInt(cb.dataset.pts);
+      const sec = parseInt(cb.dataset.section);
+      total += pts; subs[sec] += pts;
+    }
+  });
+
+  const v = VERDICTS.find(([min]) => total >= min);
+
+  $('scoreNumber').textContent = total;
+  $('scoreNumber').style.color = v[3];
+  $('scoreBar').style.width = Math.max(0, Math.min(total, 100)) + '%';
+  $('scoreBar').style.background = v[3];
+  $('scoreVerdict').textContent = total ? v[1] : 'Complete the scorecard below';
+  $('scoreAdvice').textContent = total ? v[2] : '';
+
+  Object.keys(subs).forEach(s => { const el = $('sub' + s); if (el) el.textContent = subs[s]; });
+
+  saveState();
+}
+
+function sectionScoreSnapshot() {
+  const subs = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
+  document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+    if (!cb.checked) return;
+    const pts = parseInt(cb.dataset.pts);
+    const sec = parseInt(cb.dataset.section);
+    subs[sec] += pts;
+  });
+  return Object.fromEntries(Object.entries(subs).map(([section, score]) => [
+    section,
+    { label: SECTION_NAMES[section], score },
+  ]));
+}
+
+function answerSnapshot() {
+  return [...document.querySelectorAll('input[type="checkbox"]')].map((cb, index) => {
+    const row = cb.closest('.criterion');
+    return {
+      index,
+      section: cb.dataset.section,
+      label: row?.querySelector('.criterion-text')?.textContent?.trim() || '',
+      points: parseInt(cb.dataset.pts) || 0,
+      checked: cb.checked,
+    };
+  });
+}
+
+function scorecardVisitorId() {
+  try {
+    let id = localStorage.getItem(VISITOR_KEY);
+    if (!id) {
+      id = (crypto.randomUUID && crypto.randomUUID()) || `visitor-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+      localStorage.setItem(VISITOR_KEY, id);
+    }
+    return id;
+  } catch(e) {
+    return null;
+  }
+}
+
+// Exclusive groups: pricing tier & commission level — checking one unchecks the others
+document.querySelectorAll('input[data-exclusive]').forEach(cb => {
+  cb.addEventListener('change', () => {
+    if (!cb.checked) return;
+    document.querySelectorAll(`input[data-exclusive="${cb.dataset.exclusive}"]`).forEach(other => {
+      if (other !== cb) other.checked = false;
+    });
+  });
+});
+
+// ─── localStorage persistence ───
+function saveState() {
+  const data = {
+    checkboxes: [...document.querySelectorAll('input[type="checkbox"]')].map(cb => cb.checked),
+    ownerName: $('ownerName').value,
+    propertyAddress: $('propertyAddress').value,
+    agentName: $('agentName').value,
+    scoreDate: $('scoreDate').value,
+    notes: $('notes').value,
+  };
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) { /* quota exceeded, silent */ }
+  $('saveIndicator').textContent = '💾 Auto-saved to your browser';
+  syncToCloud(data);
+}
+
+// ─── Supabase sync — ponytail: debounced insert-only snapshots, fire-and-forget ───
+let _syncT = null, _sb = null;
+function syncToCloud(data) {
+  clearTimeout(_syncT);
+  _syncT = setTimeout(async () => {
+    try {
+      if (!_sb) {
+        await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm').then(m => {
+          _sb = m.createClient('https://iubxycckgrplbpdbncfk.supabase.co', 'sb_publishable_L92hXORLG-Df4WiZxVq-6Q_X3AB47yl');
+        });
+      }
+      const score = parseInt($('scoreNumber').textContent) || 0;
+      const { error } = await _sb.from('marketability_submissions').insert({
+        owner_name: data.ownerName || null,
+        property_address: data.propertyAddress || null,
+        agent_name: data.agentName || null,
+        score_date: data.scoreDate || null,
+        total_score: score,
+        verdict: $('scoreVerdict').textContent,
+        advice: $('scoreAdvice').textContent || null,
+        section_scores: sectionScoreSnapshot(),
+        answers: { ...data, criteria: answerSnapshot() },
+        notes: data.notes || null,
+        site: 'dancruzhomes.com',
+        visitor_id: scorecardVisitorId(),
+      });
+      if (error) throw error;
+      $('saveIndicator').textContent = '💾 Saved to browser + cloud';
+    } catch(e) {
+      $('saveIndicator').textContent = '💾 Saved to browser; cloud sync pending';
+    }
+  }, 1200);
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return false;
+    const data = JSON.parse(raw);
+    if (!data.checkboxes) return false;
+
+    document.querySelectorAll('input[type="checkbox"]').forEach((cb, i) => {
+      cb.checked = !!data.checkboxes[i];
+    });
+    if (data.ownerName) $('ownerName').value = data.ownerName;
+    if (data.propertyAddress) $('propertyAddress').value = data.propertyAddress;
+    if (data.agentName) $('agentName').value = data.agentName;
+    if (data.scoreDate) $('scoreDate').value = data.scoreDate;
+    if (data.notes) $('notes').value = data.notes;
+    return true;
+  } catch(e) { return false; }
+}
+
+function resetForm() {
+  document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+  $('ownerName').value = $('propertyAddress').value = '';
+  $('agentName').value = 'dan cruz';
+  $('scoreDate').value = new Date().toISOString().split('T')[0];
+  $('notes').value = '';
+  update();
+}
+
+// ─── init ───
+document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.addEventListener('change', update));
+['ownerName', 'propertyAddress', 'agentName', 'scoreDate', 'notes'].forEach(id => {
+  $(id).addEventListener('input', saveState);
+});
+
+// Try load saved state; if not, set defaults
+if (!loadState()) {
+  $('scoreDate').value = new Date().toISOString().split('T')[0];
+  $('agentName').value = 'dan cruz';
+}
+update();
+</script>
+</body>
+</html>
