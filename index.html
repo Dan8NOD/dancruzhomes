@@ -3,22 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dan Cruz Homes — Large Minimalist Homes · Chicago</title>
-<meta name="description" content="Dan Cruz Homes. Large minimalist homes in Chicago neighborhoods. Price from day one. Production-builder process.">
+<title>Dan Cruz Homes — Large Minimalist Homes · Midwest</title>
+<meta name="description" content="Dan Cruz Homes. Large minimalist homes across the Midwest. 50 homes planned. Production-builder process. The price you see is the price you pay.">
 <style>
-:root{--ink:#0a0a0a;--ink-2:#141414;--line:#262626;--line-2:#333;--paper:#f5f0e6;--gold:#c9a84c;--gold-2:#b89530;--muted:#8a8a8a;--max:1200px;--gutter:32px}
+:root{--ink:#1a1a1a;--ink-2:#333;--line:#d4cdb8;--line-2:#c0b89e;--paper:#f5f0e6;--paper-2:#ede6d6;--gold:#9a7d2e;--gold-2:#806820;--muted:#6b6b6b;--max:1200px;--gutter:32px}
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{background:var(--ink);color:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+html,body{background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
 img{max-width:100%;height:auto;display:block}
 a{color:inherit;text-decoration:none}
 .wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
 
 /* ── nav ── */
-.nav{display:flex;justify-content:space-between;align-items:center;padding:20px var(--gutter);border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--ink);z-index:10}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:20px var(--gutter);border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--paper);z-index:10}
 .nav .logo{font-size:14px;font-weight:600;letter-spacing:.18em;text-transform:uppercase}
 .nav .logo .dot{color:var(--gold);margin-left:2px}
 .nav .links{display:flex;gap:24px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
-.nav .links a:hover{color:#fff}
+.nav .links a:hover{color:var(--ink)}
 @media(max-width:640px){.nav .links{display:none}}
 
 /* ── hero ── */
@@ -27,19 +27,19 @@ a{color:inherit;text-decoration:none}
 .hero .eyebrow::after{content:"";flex:1;height:1px;background:var(--line);margin-left:8px}
 .hero h1{font-size:clamp(48px,9vw,128px);font-weight:300;line-height:.95;letter-spacing:-.02em;max-width:14ch;margin-bottom:32px}
 .hero h1 em{font-style:normal;color:var(--gold)}
-.hero .lede{font-size:20px;color:var(--muted);max-width:46ch;margin-bottom:40px;line-height:1.5}
+.hero .lede{font-size:20px;color:var(--ink-2);max-width:46ch;margin-bottom:40px;line-height:1.5}
 .hero .actions{display:flex;gap:16px;flex-wrap:wrap}
 .btn{display:inline-block;padding:16px 28px;font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;border:1px solid transparent;transition:background .2s,border-color .2s,color .2s;cursor:pointer}
-.btn.primary{background:var(--gold);color:var(--ink)}
+.btn.primary{background:var(--gold);color:#fff}
 .btn.primary:hover{background:var(--gold-2)}
-.btn.ghost{border-color:var(--line-2);color:#fff}
+.btn.ghost{border-color:var(--line-2);color:var(--ink)}
 .btn.ghost:hover{border-color:var(--gold);color:var(--gold)}
 
 /* ── sections ── */
 section{padding:96px 0;border-bottom:1px solid var(--line)}
 section .eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
 section h2{font-size:clamp(32px,5vw,56px);font-weight:300;line-height:1.05;letter-spacing:-.01em;margin-bottom:20px;max-width:18ch}
-section .lede{font-size:18px;color:var(--muted);max-width:54ch;margin-bottom:48px}
+section .lede{font-size:18px;color:var(--ink-2);max-width:54ch;margin-bottom:48px}
 
 /* ── spec grid ── */
 .specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0;border:1px solid var(--line)}
@@ -55,36 +55,36 @@ section .lede{font-size:18px;color:var(--muted);max-width:54ch;margin-bottom:48p
 .step{padding:24px;border-left:1px solid var(--line)}
 .step .n{font-family:'Georgia',serif;font-size:48px;color:var(--gold);font-weight:300;line-height:1;margin-bottom:12px}
 .step h3{font-size:16px;margin-bottom:8px;font-weight:600}
-.step p{color:var(--muted);font-size:14px}
+.step p{color:var(--ink-2);font-size:14px}
 
 /* ── projects ── */
 .projects{display:grid;gap:32px}
 .project{display:grid;grid-template-columns:1fr;gap:0;border:1px solid var(--line);transition:border-color .2s}
 .project:hover{border-color:var(--gold)}
 @media(min-width:760px){.project{grid-template-columns:1.4fr 1fr}}
-.project .shot{background:linear-gradient(135deg,#1a1a1e 0%,#101014 60%,#0c0c10 100%);aspect-ratio:16/10;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;gap:8px;padding:24px 28px;color:var(--muted);font-size:11px;letter-spacing:.22em;text-transform:uppercase;position:relative;overflow:hidden;border-right:1px solid var(--line)}
+.project .shot{background:linear-gradient(135deg,var(--paper-2) 0%,#e0d9c6 60%,#d4cdb8 100%);aspect-ratio:16/10;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;gap:8px;padding:24px 28px;color:var(--muted);font-size:11px;letter-spacing:.22em;text-transform:uppercase;position:relative;overflow:hidden;border-right:1px solid var(--line)}
 .project .shot::before{content:'';position:absolute;inset:0;background:
-  repeating-linear-gradient(90deg,transparent 0 79px,rgba(201,168,76,.06) 79px 80px),
-  repeating-linear-gradient(0deg,transparent 0 79px,rgba(201,168,76,.06) 79px 80px);pointer-events:none}
-.project .shot .plan{font-family:Georgia,serif;font-size:56px;font-weight:300;color:rgba(201,168,76,.55);line-height:1;letter-spacing:-.02em;text-transform:none}
-.project .shot .tag{color:var(--gold);font-size:10px;letter-spacing:.26em;border:1px solid rgba(201,168,76,.35);padding:4px 10px}
+  repeating-linear-gradient(90deg,transparent 0 79px,rgba(154,125,46,.08) 79px 80px),
+  repeating-linear-gradient(0deg,transparent 0 79px,rgba(154,125,46,.08) 79px 80px);pointer-events:none}
+.project .shot .plan{font-family:Georgia,serif;font-size:56px;font-weight:300;color:rgba(154,125,46,.6);line-height:1;letter-spacing:-.02em;text-transform:none}
+.project .shot .tag{color:var(--gold);font-size:10px;letter-spacing:.26em;border:1px solid rgba(154,125,46,.35);padding:4px 10px}
 @media(max-width:759px){.project .shot{border-right:none;border-bottom:1px solid var(--line)}}
 .project .body{padding:36px 32px;display:flex;flex-direction:column;justify-content:space-between}
 .project .hood{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
 .project h3{font-size:28px;font-weight:300;line-height:1.15;margin-bottom:16px}
-.project ul{list-style:none;color:var(--muted);font-size:14px;margin-bottom:20px}
+.project ul{list-style:none;color:var(--ink-2);font-size:14px;margin-bottom:20px}
 .project ul li{padding:6px 0;border-bottom:1px dashed var(--line)}
 .project ul li:last-child{border-bottom:none}
-.project ul li b{color:#fff;font-weight:500;display:inline-block;min-width:130px}
+.project ul li b{color:var(--ink);font-weight:500;display:inline-block;min-width:130px}
 
 /* ── lead form ── */
-.lead{padding:96px var(--gutter);background:var(--ink-2);text-align:center;border-bottom:1px solid var(--line)}
+.lead{padding:96px var(--gutter);background:var(--paper-2);text-align:center;border-bottom:1px solid var(--line)}
 .lead h2{font-size:clamp(28px,4vw,40px);font-weight:300;margin-bottom:16px}
-.lead p{color:var(--muted);max-width:48ch;margin:0 auto 32px;font-size:17px}
+.lead p{color:var(--ink-2);max-width:48ch;margin:0 auto 32px;font-size:17px}
 .lead form{display:flex;gap:12px;justify-content:center;max-width:560px;margin:0 auto;flex-wrap:wrap}
-.lead input[type=email]{flex:1;min-width:240px;padding:14px 18px;background:var(--ink);border:1px solid var(--line-2);color:#fff;font-size:15px;border-radius:0}
+.lead input[type=email]{flex:1;min-width:240px;padding:14px 18px;background:var(--paper);border:1px solid var(--line-2);color:var(--ink);font-size:15px;border-radius:0}
 .lead input[type=email]:focus{outline:none;border-color:var(--gold)}
-.lead button{padding:14px 28px;background:var(--gold);color:var(--ink);border:none;font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
+.lead button{padding:14px 28px;background:var(--gold);color:#fff;border:none;font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
 .lead button:hover{background:var(--gold-2)}
 
 /* ── footer ── */
@@ -103,6 +103,7 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
     <a href="#specs">Specs</a>
     <a href="#process">Process</a>
     <a href="#communities">Communities</a>
+    <a href="#pipeline">Pipeline</a>
     <a href="#inquire">Inquire</a>
     <a href="#agents">For Agents</a>
   </div>
@@ -110,7 +111,7 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
 
 <!-- ── HERO ── -->
 <header class="hero">
-  <div class="eyebrow">Chicago · Production Custom · Est. 2026</div>
+  <div class="eyebrow">Midwest · Production Custom · Est. 2026</div>
   <h1>Find the home you'll <em>actually want</em> to live in.</h1>
   <p class="lede">Send a lot address. I'll send back a price, a floor plan, and a finish spec — before you sign anything. No upgrades sold after contract, no surprise change orders.</p>
   <div class="actions">
@@ -232,7 +233,7 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
 
 <!-- PONYTAIL: single signature promise banner — Lennar's "Everything's
      Included" equivalent. The differentiator vs. every other Chicago builder. -->
-<section style="padding:32px var(--gutter);background:var(--gold);color:var(--ink);text-align:center;border-bottom:1px solid var(--line);border-top:1px solid var(--line)">
+<section style="padding:32px var(--gutter);background:var(--gold);color:#fff;text-align:center;border-bottom:1px solid var(--line);border-top:1px solid var(--line)">
   <strong style="letter-spacing:.18em;text-transform:uppercase;font-size:13px">What's included: the price you see is the price you pay.</strong>
   <span style="margin-left:16px;font-size:14px;opacity:.8">Every finish, every fixture — no upgrade theater after contract.</span>
 </section>
@@ -242,7 +243,7 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
   <div class="wrap" style="max-width:900px;margin:0 auto;text-align:center">
     <div class="eyebrow" style="font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:16px">Free tool · Property Readiness Grader</div>
     <h2 style="font-size:clamp(28px,4vw,42px);font-weight:300;line-height:1.15;margin-bottom:18px">Selling your current home to build the new one? Know your score before you list.</h2>
-    <p style="color:var(--muted);font-size:16px;max-width:60ch;margin:0 auto 28px">A 6-part self-assessment — condition, location, showing access, marketing, terms, and pricing — the same scorecard I use with my own listing clients. Auto-calculating, takes 5 minutes, no signup.</p>
+    <p style="color:var(--ink-2);font-size:16px;max-width:60ch;margin:0 auto 28px">A 6-part self-assessment — condition, location, showing access, marketing, terms, and pricing — the same scorecard I use with my own listing clients. Auto-calculating, takes 5 minutes, no signup.</p>
     <a href="grader.html" class="btn primary" style="display:inline-block">Grade my property &rarr;</a>
   </div>
 </section>
@@ -338,13 +339,54 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
   </div>
 </section>
 
+<!-- ── PIPELINE: 50-HOME MIDWEST VISION ── -->
+<section id="pipeline" style="background:var(--paper-2)">
+  <div class="wrap">
+    <div class="eyebrow">The 50-home plan</div>
+    <h2>50 minimalist homes across the Midwest.</h2>
+    <p class="lede">Three phases. Same spec, same process, same fixed price. Every home is a keys-handover on a fixed date — whether it's the first or the fiftieth.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px">
+      <div style="padding:28px 24px;border:1px solid var(--line);background:var(--paper)">
+        <div style="font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Phase 1 · 2026–2027</div>
+        <div style="font-family:Georgia,serif;font-size:36px;color:var(--gold);font-weight:300;line-height:1;margin-bottom:12px">7</div>
+        <h3 style="font-size:20px;font-weight:600;margin-bottom:8px">Chicago Launch</h3>
+        <p style="color:var(--ink-2);font-size:14px;line-height:1.5">Current active builds + immediate pipeline. Urban lots, infill, adaptive reuse. All within Cook County.</p>
+      </div>
+      <div style="padding:28px 24px;border:1px solid var(--line);background:var(--paper)">
+        <div style="font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Phase 2 · 2027–2028</div>
+        <div style="font-family:Georgia,serif;font-size:36px;color:var(--gold);font-weight:300;line-height:1;margin-bottom:12px">18</div>
+        <h3 style="font-size:20px;font-weight:600;margin-bottom:8px">Midwest Corridor</h3>
+        <p style="color:var(--ink-2);font-size:14px;line-height:1.5">Expansion into Indiana, Wisconsin, Iowa, Michigan. Partner brokerages in each state. Same spec, scaled production.</p>
+      </div>
+      <div style="padding:28px 24px;border:1px solid var(--line);background:var(--paper)">
+        <div style="font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Phase 3 · 2028–2030</div>
+        <div style="font-family:Georgia,serif;font-size:36px;color:var(--gold);font-weight:300;line-height:1;margin-bottom:12px">25</div>
+        <h3 style="font-size:20px;font-weight:600;margin-bottom:8px">Full Midwest + Select Markets</h3>
+        <p style="color:var(--ink-2);font-size:14px;line-height:1.5">Texas, Florida, Carolinas, Mountain West. Owned and operated brokerages. 50 homes total — the full vision.</p>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:32px">
+      <div style="padding:16px 20px;border:1px solid var(--line);display:flex;justify-content:space-between;align-items:center"><span style="font-weight:600;font-size:14px">Illinois</span><span style="font-family:Georgia,serif;color:var(--gold);font-size:20px;font-weight:300">7</span></div>
+      <div style="padding:16px 20px;border:1px solid var(--line);display:flex;justify-content:space-between;align-items:center"><span style="font-weight:600;font-size:14px">Indiana</span><span style="font-family:Georgia,serif;color:var(--gold);font-size:20px;font-weight:300">5</span></div>
+      <div style="padding:16px 20px;border:1px solid var(--line);display:flex;justify-content:space-between;align-items:center"><span style="font-weight:600;font-size:14px">Wisconsin</span><span style="font-family:Georgia,serif;color:var(--gold);font-size:20px;font-weight:300">5</span></div>
+      <div style="padding:16px 20px;border:1px solid var(--line);display:flex;justify-content:space-between;align-items:center"><span style="font-weight:600;font-size:14px">Iowa</span><span style="font-family:Georgia,serif;color:var(--gold);font-size:20px;font-weight:300">4</span></div>
+      <div style="padding:16px 20px;border:1px solid var(--line);display:flex;justify-content:space-between;align-items:center"><span style="font-weight:600;font-size:14px">Michigan</span><span style="font-family:Georgia,serif;color:var(--gold);font-size:20px;font-weight:300">4</span></div>
+      <div style="padding:16px 20px;border:1px solid var(--line);display:flex;justify-content:space-between;align-items:center"><span style="font-weight:600;font-size:14px">Texas</span><span style="font-family:Georgia,serif;color:var(--gold);font-size:20px;font-weight:300">8</span></div>
+      <div style="padding:16px 20px;border:1px solid var(--line);display:flex;justify-content:space-between;align-items:center"><span style="font-weight:600;font-size:14px">Florida</span><span style="font-family:Georgia,serif;color:var(--gold);font-size:20px;font-weight:300">6</span></div>
+      <div style="padding:16px 20px;border:1px solid var(--line);display:flex;justify-content:space-between;align-items:center"><span style="font-weight:600;font-size:14px">Carolinas</span><span style="font-family:Georgia,serif;color:var(--gold);font-size:20px;font-weight:300">5</span></div>
+      <div style="padding:16px 20px;border:1px solid var(--line);display:flex;justify-content:space-between;align-items:center"><span style="font-weight:600;font-size:14px">Mountain West</span><span style="font-family:Georgia,serif;color:var(--gold);font-size:20px;font-weight:300">4</span></div>
+      <div style="padding:16px 20px;border:1px solid var(--line);display:flex;justify-content:space-between;align-items:center"><span style="font-weight:600;font-size:14px">EU (Bucharest)</span><span style="font-family:Georgia,serif;color:var(--gold);font-size:20px;font-weight:300">2</span></div>
+    </div>
+  </div>
+</section>
+
 <!-- ── INQUIRE ── -->
 <div class="lead" id="inquire">
   <h2>Bring the lot.</h2>
   <p>Drop your email and the lot address. We'll get on the phone within 24 hours and tell you whether the address is a yes or a no — including a base price range before you sign anything.</p>
   <form id="lotInquiryForm" onsubmit="return submitLeadForm(event, 'lotInquiryForm', 'lot_inquiry')">
     <input type="email" name="email" placeholder="you@example.com" required>
-    <input type="text" name="lot" placeholder="Lot address (optional)" style="flex:1;min-width:200px;padding:14px 18px;background:var(--ink);border:1px solid var(--line-2);color:#fff;font-size:15px;border-radius:0">
+    <input type="text" name="lot" placeholder="Lot address (optional)" style="flex:1;min-width:200px;padding:14px 18px;background:var(--paper);border:1px solid var(--line-2);color:var(--ink);font-size:15px;border-radius:0">
     <button type="submit">Send &rarr;</button>
   </form>
   <div class="lead-status" id="lotInquiryFormStatus" style="display:none;margin-top:10px;font-size:13px"></div>
@@ -359,25 +401,25 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
      NOT promise consumers a referral fee. IL Real Estate License Act
      225 ILCS 441/ allows referral fees to out-of-state licensed brokers
      under a written agreement on file at both brokerages. -->
-<section id="agents" style="padding:96px var(--gutter);background:var(--ink-2);border-bottom:1px solid var(--line);border-top:1px solid var(--line)">
+<section id="agents" style="padding:96px var(--gutter);background:var(--paper-2);border-bottom:1px solid var(--line);border-top:1px solid var(--line)">
   <div class="wrap">
     <div class="eyebrow" style="font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:18px">For Real Estate Professionals · Nationwide</div>
     <h2 style="font-size:clamp(32px,5vw,56px);font-weight:300;line-height:1.05;letter-spacing:-.01em;margin-bottom:20px;max-width:18ch">Partner with an Illinois broker who draws inbound from a daily content engine.</h2>
-    <p style="color:var(--muted);font-size:18px;max-width:60ch;margin-bottom:32px">I run a negotiation-training content platform (MixMatch, NOD News, books on Amazon) that pulls qualified buyers into the Chicago ecosystem. They come inbound through a daily content cadence and a 31-tool practice app — not paid ads. When those visitors ask about homes outside Illinois, I refer them to a licensed broker in their state. You service the lead, I receive a referral fee at close.</p>
+    <p style="color:var(--ink-2);font-size:18px;max-width:60ch;margin-bottom:32px">I run a negotiation-training content platform (MixMatch, NOD News, books on Amazon) that pulls qualified buyers into the Chicago ecosystem. They come inbound through a daily content cadence and a 31-tool practice app — not paid ads. When those visitors ask about homes outside Illinois, I refer them to a licensed broker in their state. You service the lead, I receive a referral fee at close.</p>
 
-    <ul style="list-style:none;color:var(--muted);font-size:15px;margin:0 0 32px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px 24px">
-      <li>· <b style="color:#fff">Licensed in IL</b> — managing broker sponsorship on file</li>
-      <li>· <b style="color:#fff">Co-brokered deal</b> — your client stays yours</li>
-      <li>· <b style="color:#fff">Written referral agreement</b> — one-pager, signed before any lead moves</li>
-      <li>· <b style="color:#fff">Currently expanding</b> — priority markets: Midwest corridor, Texas, Florida, Carolinas, Mountain West; select EU (Bucharest)</li>
+    <ul style="list-style:none;color:var(--ink-2);font-size:15px;margin:0 0 32px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px 24px">
+      <li>· <b style="color:var(--ink)">Licensed in IL</b> — managing broker sponsorship on file</li>
+      <li>· <b style="color:var(--ink)">Co-brokered deal</b> — your client stays yours</li>
+      <li>· <b style="color:var(--ink)">Written referral agreement</b> — one-pager, signed before any lead moves</li>
+      <li>· <b style="color:var(--ink)">Currently expanding</b> — priority markets: Midwest corridor, Texas, Florida, Carolinas, Mountain West; select EU (Bucharest)</li>
     </ul>
 
     <form id="partnerForm" onsubmit="return submitLeadForm(event, 'partnerForm', 'broker_partner')" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;max-width:760px">
-      <input type="text" name="agent_name" placeholder="Your name" required style="padding:14px 18px;background:var(--ink);border:1px solid var(--line-2);color:#fff;font-size:15px;border-radius:0">
-      <input type="text" name="brokerage" placeholder="Brokerage · State · License #" required style="padding:14px 18px;background:var(--ink);border:1px solid var(--line-2);color:#fff;font-size:15px;border-radius:0">
-      <input type="email" name="agent_email" placeholder="Email" required style="padding:14px 18px;background:var(--ink);border:1px solid var(--line-2);color:#fff;font-size:15px;border-radius:0">
-      <input type="text" name="states_covered" placeholder="States / countries you cover" required style="padding:14px 18px;background:var(--ink);border:1px solid var(--line-2);color:#fff;font-size:15px;border-radius:0">
-      <button type="submit" style="grid-column:1/-1;padding:14px 28px;background:var(--gold);color:var(--ink);border:none;font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;cursor:pointer">Apply to partner &rarr;</button>
+      <input type="text" name="agent_name" placeholder="Your name" required style="padding:14px 18px;background:var(--paper);border:1px solid var(--line-2);color:var(--ink);font-size:15px;border-radius:0">
+      <input type="text" name="brokerage" placeholder="Brokerage · State · License #" required style="padding:14px 18px;background:var(--paper);border:1px solid var(--line-2);color:var(--ink);font-size:15px;border-radius:0">
+      <input type="email" name="agent_email" placeholder="Email" required style="padding:14px 18px;background:var(--paper);border:1px solid var(--line-2);color:var(--ink);font-size:15px;border-radius:0">
+      <input type="text" name="states_covered" placeholder="States / countries you cover" required style="padding:14px 18px;background:var(--paper);border:1px solid var(--line-2);color:var(--ink);font-size:15px;border-radius:0">
+      <button type="submit" style="grid-column:1/-1;padding:14px 28px;background:var(--gold);color:#fff;border:none;font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;cursor:pointer">Apply to partner &rarr;</button>
     </form>
     <div class="lead-status" id="partnerFormStatus" style="display:none;margin-top:10px;font-size:13px;max-width:760px"></div>
     <p style="color:var(--muted);font-size:12px;letter-spacing:.05em;margin-top:18px;max-width:60ch">For licensed brokers and broker-owners only. We respond within one business day with the referral agreement and a sample of the inbound profile we're generating. Spouses and personal contacts (incl. EU) considered case-by-case — start with the application.</p>
@@ -387,7 +429,7 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
 <!-- ── FOOTER ── -->
 <footer>
   <div class="row">
-    <span>© 2026 · DAN CRUZ HOMES · CHICAGO</span>
+    <span>© 2026 · DAN CRUZ HOMES · MIDWEST</span>
     <span>
       <a href="https://negotiatorsondemand.com">negotiatorsondemand.com</a> ·
       <a href="https://tiktok.com/@negotiatorsondemand">TikTok</a>
@@ -443,7 +485,7 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
       form.reset();
       form.style.display = 'none';
       statusEl.style.display = 'block';
-      statusEl.style.color = '#c9a84c';
+      statusEl.style.color = 'var(--gold-2)';
       statusEl.textContent = "Got it — we'll be in touch within 24 hours.";
     }).catch(function(err){
       btn.disabled = false; btn.textContent = originalText;
