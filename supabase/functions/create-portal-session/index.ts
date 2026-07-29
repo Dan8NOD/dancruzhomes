@@ -32,7 +32,8 @@ serve(async (req) => {
     if (!user) return json({ error: 'Not signed in' }, 401)
 
     const supa = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY)
-    const { data: sub } = await supa.from('subscriptions').select('stripe_customer_id').eq('user_id', user.id).maybeSingle()
+    const { data: sub, error: subErr } = await supa.from('subscriptions').select('stripe_customer_id').eq('user_id', user.id).maybeSingle()
+    if (subErr) throw subErr // distinct from "genuinely no subscription" — surfaces as a retryable 500, not a misleading 404
     if (!sub?.stripe_customer_id) return json({ error: 'No subscription found' }, 404)
 
     const { return_url } = await req.json()

@@ -52,7 +52,7 @@ serve(async (req) => {
         const userId = session.client_reference_id || session.metadata?.user_id
         const email = session.customer_email || session.metadata?.email
         if (!userId) break
-        await supa.from('subscriptions').upsert({
+        const { error } = await supa.from('subscriptions').upsert({
           user_id: userId,
           email,
           status: 'active',
@@ -60,6 +60,7 @@ serve(async (req) => {
           stripe_subscription_id: session.subscription,
           updated_at: new Date().toISOString(),
         }, { onConflict: 'user_id' })
+        if (error) throw error
         break
       }
 
@@ -69,7 +70,7 @@ serve(async (req) => {
         const userId = sub.metadata?.user_id
         if (!userId) break
         const status = (sub.status === 'active' || sub.status === 'trialing') ? 'active' : sub.status
-        await supa.from('subscriptions').upsert({
+        const { error } = await supa.from('subscriptions').upsert({
           user_id: userId,
           status,
           stripe_customer_id: sub.customer,
@@ -77,6 +78,7 @@ serve(async (req) => {
           current_period_end: sub.current_period_end ? new Date(sub.current_period_end * 1000).toISOString() : null,
           updated_at: new Date().toISOString(),
         }, { onConflict: 'user_id' })
+        if (error) throw error
         break
       }
 
@@ -84,14 +86,21 @@ serve(async (req) => {
         const sub = event.data.object as any
         const userId = sub.metadata?.user_id
         if (!userId) break
-        await supa.from('subscriptions').update({
+        const { error } = await supa.from('subscriptions').update({
           status: 'canceled',
           updated_at: new Date().toISOString(),
         }).eq('user_id', userId)
+        if (error) throw error
         break
       }
     }
   } catch (err) {
+    // ponytail: a non-2xx here is what makes Stripe automatically retry —
+    // a real payment already happened, so a transient DB error must not be
+    // swallowed into a false "200 OK, all good" or the customer gets
+    // charged with no record of it and no access, permanently, since
+    // Stripe never retries a webhook that returned success.
+    console.error('stripe-webhook DB write failed:', err)
     return new Response(JSON.stringify({ error: String(err) }), { status: 500 })
   }
 
