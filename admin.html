@@ -225,28 +225,41 @@ async function saveFeedback(id) {
   }
 }
 
-(async function boot() {
-  const { data: { session } } = await sb().auth.getSession();
-  if (!session) { $('loginGate').style.display = 'block'; return; }
-  currentUser = session.user;
+async function boot() {
+  try {
+    const { data: { session } } = await sb().auth.getSession();
+    if (!session) { $('loginGate').style.display = 'block'; return; }
+    currentUser = session.user;
 
-  const { data: profile } = await sb().from('profiles').select('is_admin').eq('user_id', currentUser.id).maybeSingle();
-  if (!profile?.is_admin) {
+    const { data: profile } = await sb().from('profiles').select('is_admin').eq('user_id', currentUser.id).maybeSingle();
+    if (!profile?.is_admin) {
+      $('loginGate').style.display = 'none';
+      $('deniedGate').style.display = 'block';
+      return;
+    }
+
     $('loginGate').style.display = 'none';
-    $('deniedGate').style.display = 'block';
-    return;
+    $('userEmail').textContent = currentUser.email;
+    $('appContainer').style.display = 'block';
+
+    const { data, error } = await sb().from('properties').select('*').order('updated_at', { ascending: false });
+    allRows = data || [];
+    renderStats();
+    renderStateFilter();
+    renderList();
+  } catch (e) {
+    console.error('boot() failed:', e);
+    $('loginGate').style.display = 'none';
+    $('appContainer').style.display = 'none';
+    document.body.insertAdjacentHTML('beforeend', '<div style="max-width:420px;margin:80px auto;text-align:center;color:#6b6b6b;font-family:-apple-system,sans-serif;font-size:14px">Something went wrong loading this page. Refresh to try again.</div>');
   }
+}
 
-  $('loginGate').style.display = 'none';
-  $('userEmail').textContent = currentUser.email;
-  $('appContainer').style.display = 'block';
-
-  const { data, error } = await sb().from('properties').select('*').order('updated_at', { ascending: false });
-  allRows = data || [];
-  renderStats();
-  renderStateFilter();
-  renderList();
-})();
+// See the matching comment in grader.html — the Supabase client loads via
+// <script defer>, which only runs after parsing finishes; DOMContentLoaded
+// is spec-guaranteed to fire after that, so it's the correct point to call
+// anything that touches sb() from this trailing inline script.
+document.addEventListener('DOMContentLoaded', boot);
 </script>
 </body>
 </html>
