@@ -82,16 +82,20 @@ a{color:inherit;text-decoration:none}
 .nav{display:flex;justify-content:space-between;align-items:center;padding:20px var(--gutter);border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--paper);z-index:10}
 .nav .logo{font-size:14px;font-weight:600;letter-spacing:.18em;text-transform:uppercase}
 .nav .logo .dot{color:var(--gold);margin-left:2px}
-.nav .links{display:flex;gap:24px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.nav .links{display:flex;gap:24px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
 .nav .links a:hover{color:var(--ink)}
-/* Hamburger — hidden on desktop, the only nav affordance under 640px */
+/* Hamburger — hidden on desktop, the only nav affordance under 900px.
+   (Raised from 640px when an 8th link was added — at narrower desktop/
+   tablet widths 8 items no longer fit on one line and were wrapping
+   mid-label instead of the row wrapping as a whole; the tested hamburger
+   pattern below the breakpoint sidesteps that regardless of item count.) */
 .nav-toggle{display:none;background:none;border:1px solid var(--line-2);color:var(--ink);padding:9px 11px;cursor:pointer;border-radius:3px;line-height:0}
 .nav-toggle:hover{border-color:var(--gold);color:var(--gold)}
 .nav-toggle svg{width:18px;height:18px;display:block;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
-@media(max-width:640px){
+@media(max-width:900px){
   .nav{flex-wrap:wrap}
   .nav-toggle{display:block}
-  .nav .links{display:none;flex-basis:100%;flex-direction:column;gap:0;margin-top:16px;border-top:1px solid var(--line);max-height:70vh;overflow-y:auto}
+  .nav .links{display:none;flex-basis:100%;flex-direction:column;gap:0;margin-top:16px;border-top:1px solid var(--line);max-height:70vh;overflow-y:auto;white-space:normal}
   .nav .links.open{display:flex}
   .nav .links a{padding:15px 2px;border-bottom:1px solid var(--line);font-size:13px}
   .nav .links a:last-child{border-bottom:none}
@@ -168,6 +172,18 @@ footer{padding:48px var(--gutter);color:var(--muted);font-size:12px;letter-spaci
 footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;max-width:var(--max);margin:0 auto}
 footer a{color:var(--muted);border-bottom:1px solid var(--line-2)}
 footer a:hover{color:var(--gold);border-color:var(--gold)}
+
+/* ── visually hidden but screen-reader-accessible labels ── */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* ── notes teaser grid ── */
+.notes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
+.note-card{padding:28px 24px;border:1px solid var(--line);transition:border-color .2s}
+.note-card:hover{border-color:var(--gold)}
+.note-card .kicker{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.note-card h3{font-size:20px;font-weight:500;line-height:1.25;margin-bottom:10px}
+.note-card p{color:var(--ink-2);font-size:14px;line-height:1.55;margin-bottom:16px}
+.note-card .read{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
 </style>
 <!-- ponytail: AEO — JSON-LD RealEstateAgent -->
 <script type="application/ld+json">
@@ -195,6 +211,7 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
   </button>
   <div class="links" id="navLinks">
     <a href="grader.html" style="color:var(--gold)">Grader</a>
+    <a href="#brokerage">Buy / Sell</a>
     <a href="#specs">Specs</a>
     <a href="#process">Process</a>
     <a href="#communities">Communities</a>
@@ -368,6 +385,53 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
   </div>
 </section>
 
+<!-- ── BROKERAGE — the licensed listing / buyer-rep side of the business.
+     Distinct from the build pipeline above: this is for people who want to
+     list their current Chicago home or buy an existing one, not build new. ── -->
+<section id="brokerage" style="background:var(--paper-2)">
+  <div class="wrap">
+    <div class="eyebrow">Licensed in Illinois · Chicago</div>
+    <h2 style="max-width:22ch">Not building? I still sell and represent buyers.</h2>
+    <p class="lede">I'm an asset manager who happens to hold a real estate license — every listing gets a data-driven pricing strategy, not a guess. If you're listing your current home or buying one that already exists, this is that service.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:0;border:1px solid var(--line);margin-bottom:40px">
+      <div style="padding:28px 24px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)">
+        <div style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">For sellers</div>
+        <p style="font-size:14px;color:var(--ink-2);line-height:1.5">A real CMA — active comps, sold comps, and the expired listings that show what overpricing costs. A price strategy with a reason behind it, not a number to make you feel good.</p>
+      </div>
+      <div style="padding:28px 24px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)">
+        <div style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">For buyers</div>
+        <p style="font-size:14px;color:var(--ink-2);line-height:1.5">Full representation on an existing home, including negotiation after inspection, appraisal gaps, and multiple-offer situations — the same tactics that show up in the MixMatch training app, applied to your deal.</p>
+      </div>
+      <div style="padding:28px 24px;border-bottom:1px solid var(--line)">
+        <div style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Why not the 1% agent</div>
+        <p style="font-size:14px;color:var(--ink-2);line-height:1.5">An agent who discounts their own fee before the work even starts is telling you what they'll do when it's time to negotiate <em>your</em> money. That's the part that costs more than commission ever does.</p>
+      </div>
+    </div>
+
+    <form id="brokerageForm" onsubmit="return submitLeadForm(event, 'brokerageForm', 'brokerage_inquiry')" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;max-width:760px">
+      <label for="brokerageName" class="sr-only">Your name</label>
+      <input type="text" id="brokerageName" name="name" placeholder="Your name" required style="padding:14px 18px;background:var(--paper);border:1px solid var(--line-2);color:var(--ink);font-size:15px;border-radius:0">
+      <label for="brokerageEmail" class="sr-only">Email</label>
+      <input type="email" id="brokerageEmail" name="email" placeholder="Email" required style="padding:14px 18px;background:var(--paper);border:1px solid var(--line-2);color:var(--ink);font-size:15px;border-radius:0">
+      <label for="brokeragePhone" class="sr-only">Phone (optional)</label>
+      <input type="tel" id="brokeragePhone" name="phone" placeholder="Phone (optional)" style="padding:14px 18px;background:var(--paper);border:1px solid var(--line-2);color:var(--ink);font-size:15px;border-radius:0">
+      <label for="brokerageIntent" class="sr-only">I'm looking to</label>
+      <select id="brokerageIntent" name="intent" required style="padding:14px 18px;background:var(--paper);border:1px solid var(--line-2);color:var(--ink);font-size:15px;border-radius:0">
+        <option value="" disabled selected>I'm looking to…</option>
+        <option value="sell">Sell my current home</option>
+        <option value="buy">Buy an existing home</option>
+        <option value="both">Both</option>
+      </select>
+      <label for="brokerageMessage" class="sr-only">Anything else? (optional)</label>
+      <input type="text" id="brokerageMessage" name="message" placeholder="Neighborhood / timeline (optional)" style="grid-column:1/-1;padding:14px 18px;background:var(--paper);border:1px solid var(--line-2);color:var(--ink);font-size:15px;border-radius:0">
+      <button type="submit" style="grid-column:1/-1;padding:14px 28px;background:var(--gold);color:#fff;border:none;font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;cursor:pointer">Talk to Dan &rarr;</button>
+    </form>
+    <div class="lead-status" id="brokerageFormStatus" style="display:none;margin-top:10px;font-size:13px;max-width:760px"></div>
+    <p style="color:var(--muted);font-size:12px;letter-spacing:.05em;margin-top:18px;max-width:60ch">Know someone else buying or selling? I'd rather earn the referral than compete for it — send them this page.</p>
+  </div>
+</section>
+
 <!-- ── SPECS ── -->
 <section id="specs">
   <div class="wrap">
@@ -505,12 +569,45 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
   <h2>Bring the lot.</h2>
   <p>Drop your email and the lot address. We'll get on the phone within 24 hours and tell you whether the address is a yes or a no — including a base price range before you sign anything.</p>
   <form id="lotInquiryForm" onsubmit="return submitLeadForm(event, 'lotInquiryForm', 'lot_inquiry')">
-    <input type="email" name="email" placeholder="you@example.com" required>
-    <input type="text" name="lot" placeholder="Lot address (optional)" style="flex:1;min-width:200px;padding:14px 18px;background:var(--paper);border:1px solid var(--line-2);color:var(--ink);font-size:15px;border-radius:0">
+    <label for="lotInquiryEmail" class="sr-only">Email address</label>
+    <input type="email" id="lotInquiryEmail" name="email" placeholder="you@example.com" required>
+    <label for="lotInquiryAddress" class="sr-only">Lot address (optional)</label>
+    <input type="text" id="lotInquiryAddress" name="lot" placeholder="Lot address (optional)" style="flex:1;min-width:200px;padding:14px 18px;background:var(--paper);border:1px solid var(--line-2);color:var(--ink);font-size:15px;border-radius:0">
     <button type="submit">Send &rarr;</button>
   </form>
   <div class="lead-status" id="lotInquiryFormStatus" style="display:none;margin-top:10px;font-size:13px"></div>
 </div>
+
+<!-- ── MARKET NOTES teaser — market updates, negotiation tips, neighborhood
+     spotlights. Full posts live on notes.html; append new <article> blocks
+     there by hand as they're written, same as the rest of this repo. ── -->
+<section id="notes">
+  <div class="wrap">
+    <div class="eyebrow">From the field</div>
+    <h2>Market Notes.</h2>
+    <p class="lede">What's actually happening in Chicago real estate, one negotiation tactic at a time, and the neighborhoods worth knowing — the same content that runs on TikTok, written down.</p>
+    <div class="notes-grid">
+      <a class="note-card" href="notes.html#reading-the-market">
+        <div class="kicker">Market Update</div>
+        <h3>How to read a market without the panic</h3>
+        <p>Months of supply, days on market, and the one number that actually predicts where prices go next.</p>
+        <div class="read">Read &rarr;</div>
+      </a>
+      <a class="note-card" href="notes.html#name-your-number">
+        <div class="kicker">Negotiation Tip</div>
+        <h3>Never name your number first</h3>
+        <p>Whoever anchors first sets the frame for the entire negotiation — in a home sale, in a salary talk, anywhere.</p>
+        <div class="read">Read &rarr;</div>
+      </a>
+      <a class="note-card" href="notes.html#west-loop-spotlight">
+        <div class="kicker">Neighborhood Spotlight</div>
+        <h3>West Loop, for people who actually live there</h3>
+        <p>Why a minimalist infill build works here — and what to check before you buy a converted loft.</p>
+        <div class="read">Read &rarr;</div>
+      </a>
+    </div>
+  </div>
+</section>
 
 <!-- ── AGENTS ── -->
 <!-- PONYTAIL: Recruits out-of-state agent PARTNERS, not consumer leads.
@@ -535,10 +632,14 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
     </ul>
 
     <form id="partnerForm" onsubmit="return submitLeadForm(event, 'partnerForm', 'broker_partner')" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;max-width:760px">
-      <input type="text" name="agent_name" placeholder="Your name" required style="padding:14px 18px;background:var(--paper);border:1px solid var(--line-2);color:var(--ink);font-size:15px;border-radius:0">
-      <input type="text" name="brokerage" placeholder="Brokerage · State · License #" required style="padding:14px 18px;background:var(--paper);border:1px solid var(--line-2);color:var(--ink);font-size:15px;border-radius:0">
-      <input type="email" name="agent_email" placeholder="Email" required style="padding:14px 18px;background:var(--paper);border:1px solid var(--line-2);color:var(--ink);font-size:15px;border-radius:0">
-      <input type="text" name="states_covered" placeholder="States / countries you cover" required style="padding:14px 18px;background:var(--paper);border:1px solid var(--line-2);color:var(--ink);font-size:15px;border-radius:0">
+      <label for="partnerName" class="sr-only">Your name</label>
+      <input type="text" id="partnerName" name="agent_name" placeholder="Your name" required style="padding:14px 18px;background:var(--paper);border:1px solid var(--line-2);color:var(--ink);font-size:15px;border-radius:0">
+      <label for="partnerBrokerage" class="sr-only">Brokerage, state, license number</label>
+      <input type="text" id="partnerBrokerage" name="brokerage" placeholder="Brokerage · State · License #" required style="padding:14px 18px;background:var(--paper);border:1px solid var(--line-2);color:var(--ink);font-size:15px;border-radius:0">
+      <label for="partnerEmail" class="sr-only">Email</label>
+      <input type="email" id="partnerEmail" name="agent_email" placeholder="Email" required style="padding:14px 18px;background:var(--paper);border:1px solid var(--line-2);color:var(--ink);font-size:15px;border-radius:0">
+      <label for="partnerStates" class="sr-only">States or countries you cover</label>
+      <input type="text" id="partnerStates" name="states_covered" placeholder="States / countries you cover" required style="padding:14px 18px;background:var(--paper);border:1px solid var(--line-2);color:var(--ink);font-size:15px;border-radius:0">
       <button type="submit" style="grid-column:1/-1;padding:14px 28px;background:var(--gold);color:#fff;border:none;font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;cursor:pointer">Apply to partner &rarr;</button>
     </form>
     <div class="lead-status" id="partnerFormStatus" style="display:none;margin-top:10px;font-size:13px;max-width:760px"></div>
@@ -546,11 +647,28 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
   </div>
 </section>
 
+<!-- ── NEWSLETTER — monthly market update, reuses the .lead component and
+     calls the subscribe-convertkit Edge Function directly (already deployed,
+     already used from grader.html's consent flow; this is its first
+     anonymous, no-account entry point). ── -->
+<div class="lead" id="newsletter">
+  <h2>Get the market update.</h2>
+  <p>One market data point, one negotiation tip or deal story, one question. Once a month, under 200 words, unsubscribe anytime.</p>
+  <form id="newsletterForm" onsubmit="return submitNewsletterForm(event)">
+    <label for="newsletterEmail" class="sr-only">Email address</label>
+    <input type="email" id="newsletterEmail" name="email" placeholder="you@example.com" required>
+    <button type="submit">Subscribe &rarr;</button>
+  </form>
+  <div class="lead-status" id="newsletterFormStatus" style="display:none;margin-top:10px;font-size:13px"></div>
+  <p style="color:var(--muted);font-size:11px;letter-spacing:.05em;margin-top:14px">By subscribing you agree to receive periodic emails from Dan Cruz Homes / Fat Cat Asset Management. Unsubscribe anytime from any email.</p>
+</div>
+
 <!-- ── FOOTER ── -->
 <footer>
   <div class="row">
     <span>© 2026 · DAN CRUZ HOMES · MIDWEST</span>
     <span>
+      <a href="notes.html">Market Notes</a> ·
       <a href="https://negotiatorsondemand.com">negotiatorsondemand.com</a> ·
       <a href="https://tiktok.com/@negotiatorsondemand">TikTok</a>
     </span>
@@ -584,6 +702,12 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
       payload.email = data.get('agent_email');
       payload.message = data.get('states_covered');
       payload.props = { brokerage: data.get('brokerage') };
+    } else if(formType === 'brokerage_inquiry'){
+      payload.name = data.get('name');
+      payload.email = data.get('email');
+      payload.phone = data.get('phone') || null;
+      payload.message = data.get('message') || null;
+      payload.props = { intent: data.get('intent') };
     }
 
     var btn = form.querySelector('button[type="submit"]');
@@ -613,6 +737,41 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
       statusEl.style.color = '#ff6b6b';
       statusEl.textContent = 'Something went wrong sending that — email hello@negotiatorsondemand.com directly instead.';
       console.warn('Lead submit failed:', err.message);
+    });
+
+    return false;
+  };
+
+  // Newsletter — separate from lead capture: goes to ConvertKit via the
+  // already-deployed subscribe-convertkit Edge Function, not lead_submissions.
+  window.submitNewsletterForm = function(event){
+    event.preventDefault();
+    var form = document.getElementById('newsletterForm');
+    var statusEl = document.getElementById('newsletterFormStatus');
+    var email = form.email.value;
+
+    var btn = form.querySelector('button[type="submit"]');
+    var originalText = btn.textContent;
+    btn.disabled = true; btn.textContent = 'Subscribing…';
+
+    fetch(SUPABASE_URL + '/functions/v1/subscribe-convertkit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY },
+      body: JSON.stringify({ email: email })
+    }).then(function(r){
+      btn.disabled = false; btn.textContent = originalText;
+      if(!r.ok) throw new Error('Request failed: ' + r.status);
+      form.reset();
+      form.style.display = 'none';
+      statusEl.style.display = 'block';
+      statusEl.style.color = 'var(--gold-2)';
+      statusEl.textContent = "You're in — the next market update lands on the 1st.";
+    }).catch(function(err){
+      btn.disabled = false; btn.textContent = originalText;
+      statusEl.style.display = 'block';
+      statusEl.style.color = '#ff6b6b';
+      statusEl.textContent = 'Something went wrong — email hello@negotiatorsondemand.com to be added manually.';
+      console.warn('Newsletter subscribe failed:', err.message);
     });
 
     return false;
