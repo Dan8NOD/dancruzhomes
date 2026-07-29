@@ -7,17 +7,22 @@ Pages (`CNAME`), `main` is live the moment it's pushed.
 ## Pages
 
 - **`index.html`** — marketing homepage (large minimalist home builder,
-  Midwest, 50-home pipeline). Two lead forms, MixMatch cross-promo, agent
-  partner recruitment section.
+  Midwest, 50-home pipeline). Three lead forms (lot inquiry, buy/sell
+  brokerage inquiry, agent partner application), a newsletter signup,
+  MixMatch cross-promo, Market Notes teaser.
 - **`grader.html`** — Property Readiness Grader. A 6-part scorecard
   (condition, location, showing access, marketing, terms, pricing) —
   **free and unlimited, no account needed to grade**. Google sign-in is
   only required to *save* a property, and unlocks the $10/mo portal (save,
   reopen, share a read-only link, get feedback from Dan).
-- **`admin.html`** — internal, `noindex`. Dan-only view of every submitted
-  scorecard across every state, filterable by state (for routing referrals
-  to partner agents), with a per-property feedback box the homeowner sees
-  on their own copy.
+- **`notes.html`** — Market Notes. Hand-authored posts (market updates,
+  negotiation tactics, neighborhood spotlights) as `<article>` blocks on a
+  single page — no CMS, no per-post files. Append new ones by hand.
+- **`admin.html`** — internal, `noindex`. Two tabs: **Scorecards** (every
+  submitted Property Readiness scorecard, filterable by state, with a
+  per-property feedback box) and **Leads** (every `lead_submissions` row
+  for this site, filterable by form type — read-only, no status editing
+  yet).
 
 ## Data — Supabase project `iubxycckgrplbpdbncfk`
 
@@ -27,7 +32,7 @@ specific to avoid collisions.
 
 | Table | Written by | Purpose |
 | --- | --- | --- |
-| `lead_submissions` | `index.html`, anon insert | Both homepage forms — a single table, `form_type` column (`lot_inquiry` \| `broker_partner`) distinguishes them, not separate tables per form. |
+| `lead_submissions` | `index.html`, anon insert | All homepage forms — a single table, `form_type` column (`lot_inquiry` \| `broker_partner` \| `brokerage_inquiry`) distinguishes them, not separate tables per form. Admin read via a dedicated policy — see [`supabase/lead_submissions_admin_policy.sql`](supabase/lead_submissions_admin_policy.sql), added because no admin-read policy existed before (only an owner-read policy, which anonymous submissions never satisfy). |
 | `profiles` | `grader.html` | One row per signed-in user: `is_admin` flag, `consented_at` (disclaimer/ConvertKit opt-in timestamp). |
 | `subscriptions` | Stripe webhook only | `$10/mo` portal access — `status`, Stripe customer/subscription IDs. Never written from the client. |
 | `properties` | `grader.html`, owner-scoped | The actual saved scorecards: answers, score, `share_token` (read-only share link), `agent_feedback` (written only via the `admin_set_feedback` RPC, not a direct column update). |

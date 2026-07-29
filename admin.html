@@ -86,6 +86,19 @@
   .row-detail .fb-status { font-size: 12px; color: #6b6b6b; }
 
   .empty-state { text-align: center; color: #6b6b6b; font-style: italic; padding: 60px 20px; }
+
+  .tabs { display: flex; gap: 8px; margin-bottom: 20px; font-family: -apple-system, sans-serif; }
+  .tabs button {
+    padding: 8px 18px; background: transparent; border: 1px solid #d4cdb8; border-radius: 3px;
+    font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: #6b6b6b; cursor: pointer;
+  }
+  .tabs button:hover { border-color: #9a7d2e; color: #9a7d2e; }
+  .tabs button.active { background: #9a7d2e; border-color: #9a7d2e; color: #fff; }
+
+  .row-badge {
+    display: inline-block; font-size: 10px; letter-spacing: .08em; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 3px; background: #ede6d6; border: 1px solid #d4cdb8; color: #6b6b6b;
+  }
 </style>
 </head>
 <body>
@@ -120,21 +133,46 @@
       </div>
     </div>
 
-    <h1 class="page-title">All Submissions</h1>
-    <p class="page-sub">Every homeowner's Property Readiness scorecard, any state. Click a row to view details and leave feedback.</p>
-
-    <div class="stats" id="stats"></div>
-
-    <div class="filters">
-      <label for="stateFilter" class="sr-only">Filter by state</label>
-      <select id="stateFilter" onchange="renderList()">
-        <option value="">All states</option>
-      </select>
-      <label for="searchBox" class="sr-only">Search address or owner</label>
-      <input type="text" id="searchBox" placeholder="Search address or owner…" oninput="renderList()">
+    <div class="tabs" role="tablist">
+      <button type="button" id="tabScorecards" class="active" onclick="showTab('scorecards')">Scorecards</button>
+      <button type="button" id="tabLeads" onclick="showTab('leads')">Leads</button>
     </div>
 
-    <div id="list"></div>
+    <div id="scorecardsPanel">
+      <h1 class="page-title">All Submissions</h1>
+      <p class="page-sub">Every homeowner's Property Readiness scorecard, any state. Click a row to view details and leave feedback.</p>
+
+      <div class="stats" id="stats"></div>
+
+      <div class="filters">
+        <label for="stateFilter" class="sr-only">Filter by state</label>
+        <select id="stateFilter" onchange="renderList()">
+          <option value="">All states</option>
+        </select>
+        <label for="searchBox" class="sr-only">Search address or owner</label>
+        <input type="text" id="searchBox" placeholder="Search address or owner…" oninput="renderList()">
+      </div>
+
+      <div id="list"></div>
+    </div>
+
+    <div id="leadsPanel" style="display:none">
+      <h1 class="page-title">Homepage Leads</h1>
+      <p class="page-sub">Lot inquiries, buy/sell inquiries, and broker partner applications submitted from dancruzhomes.com.</p>
+
+      <div class="stats" id="leadStats"></div>
+
+      <div class="filters">
+        <label for="leadTypeFilter" class="sr-only">Filter by form type</label>
+        <select id="leadTypeFilter" onchange="renderLeadList()">
+          <option value="">All types</option>
+        </select>
+        <label for="leadSearchBox" class="sr-only">Search name, email, or message</label>
+        <input type="text" id="leadSearchBox" placeholder="Search name, email, or message…" oninput="renderLeadList()">
+      </div>
+
+      <div id="leadList"></div>
+    </div>
   </div>
 </div>
 
@@ -147,7 +185,18 @@ function sb() { if (!_sb) _sb = window.supabase.createClient(SUPABASE_URL, SUPAB
 const $ = id => document.getElementById(id);
 
 let allRows = [];
+let leadRows = [];
 let currentUser = null;
+
+const FORM_TYPE_LABEL = { lot_inquiry: 'Lot Inquiry', broker_partner: 'Broker Partner', brokerage_inquiry: 'Buy / Sell' };
+
+function showTab(tab) {
+  const scorecards = tab === 'scorecards';
+  $('scorecardsPanel').style.display = scorecards ? 'block' : 'none';
+  $('leadsPanel').style.display = scorecards ? 'none' : 'block';
+  $('tabScorecards').classList.toggle('active', scorecards);
+  $('tabLeads').classList.toggle('active', !scorecards);
+}
 
 async function signInWithGoogle() {
   await sb().auth.signInWithOAuth({ provider: 'google', options: { redirectTo: window.location.href.split('?')[0] } });
@@ -220,6 +269,61 @@ function toggleRow(id) {
   el.classList.toggle('open');
 }
 
+function renderLeadStats() {
+  const total = leadRows.length;
+  const byType = {};
+  leadRows.forEach(r => { byType[r.form_type] = (byType[r.form_type] || 0) + 1; });
+  const typeStats = Object.keys(byType).map(t => `<div class="stat"><div class="stat-num">${byType[t]}</div><div class="stat-label">${escapeHtml(FORM_TYPE_LABEL[t] || t)}</div></div>`).join('');
+  $('leadStats').innerHTML = `<div class="stat"><div class="stat-num">${total}</div><div class="stat-label">Total Leads</div></div>${typeStats}`;
+}
+
+function renderLeadTypeFilter() {
+  const sel = $('leadTypeFilter');
+  const current = sel.value;
+  const types = [...new Set(leadRows.map(r => r.form_type).filter(Boolean))].sort();
+  sel.innerHTML = '<option value="">All types</option>' + types.map(t => `<option value="${t}">${escapeHtml(FORM_TYPE_LABEL[t] || t)}</option>`).join('');
+  sel.value = current;
+}
+
+function renderLeadList() {
+  const typeFilter = $('leadTypeFilter').value;
+  const q = $('leadSearchBox').value.trim().toLowerCase();
+  let rows = leadRows;
+  if (typeFilter) rows = rows.filter(r => r.form_type === typeFilter);
+  if (q) rows = rows.filter(r => (r.name || '').toLowerCase().includes(q) || (r.email || '').toLowerCase().includes(q) || (r.message || '').toLowerCase().includes(q));
+
+  const list = $('leadList');
+  if (!rows.length) {
+    list.innerHTML = '<div class="empty-state">No leads match.</div>';
+    return;
+  }
+
+  list.innerHTML = rows.map(r => `
+    <div class="row-card" data-id="${r.id}">
+      <div class="row-main" onclick="toggleLeadRow('${r.id}')">
+        <div class="row-left">
+          <div class="row-address">${escapeHtml(r.name || r.email || '(no name)')} <span class="row-badge">${escapeHtml(FORM_TYPE_LABEL[r.form_type] || r.form_type)}</span></div>
+          <div class="row-meta">${escapeHtml(r.email || 'no email')} · Submitted ${r.submitted_at ? new Date(r.submitted_at).toLocaleDateString() : ''}</div>
+        </div>
+      </div>
+      <div class="row-detail" id="lead-detail-${r.id}">
+        <div class="detail-grid">
+          <div><b>Email:</b> ${escapeHtml(r.email || '—')}</div>
+          <div><b>Phone:</b> ${escapeHtml(r.phone || '—')}</div>
+          <div><b>Status:</b> ${escapeHtml(r.status || '—')}</div>
+          <div><b>Details:</b> ${escapeHtml(r.props && Object.keys(r.props).length ? JSON.stringify(r.props) : '—')}</div>
+        </div>
+        <div style="font-size:13px;color:#333;margin-top:10px">${escapeHtml(r.message || '(no message)')}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleLeadRow(id) {
+  const el = $('lead-detail-' + id);
+  el.classList.toggle('open');
+}
+
 async function saveFeedback(id) {
   const text = $('fb-' + id).value;
   $('fb-status-' + id).textContent = 'Saving…';
@@ -253,6 +357,13 @@ async function boot() {
     renderStats();
     renderStateFilter();
     renderList();
+
+    const { data: leadData, error: leadError } = await sb().from('lead_submissions').select('*').eq('site', 'dancruzhomes.com').order('submitted_at', { ascending: false });
+    if (leadError) console.error('lead_submissions fetch failed:', leadError);
+    leadRows = leadData || [];
+    renderLeadStats();
+    renderLeadTypeFilter();
+    renderLeadList();
   } catch (e) {
     console.error('boot() failed:', e);
     $('loginGate').style.display = 'none';
