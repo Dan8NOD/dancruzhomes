@@ -5,6 +5,71 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dan Cruz Homes — Large Minimalist Homes · Midwest</title>
 <meta name="description" content="Dan Cruz Homes. Large minimalist homes across the Midwest. 50 homes planned. Production-builder process. The price you see is the price you pay.">
+<link rel="canonical" href="https://dancruzhomes.com/">
+<meta name="theme-color" content="#9a7d2e">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<!-- Link preview card — without these, sharing the URL in a text, an email to
+     a partner agent, or a TikTok bio renders as a bare unstyled link. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Dan Cruz Homes">
+<meta property="og:url" content="https://dancruzhomes.com/">
+<meta property="og:title" content="Dan Cruz Homes — Large Minimalist Homes · Midwest">
+<meta property="og:description" content="Fixed spec, fixed price, no change orders. 50 minimalist homes planned across the Midwest — plus a free Property Readiness Grader for any state.">
+<meta property="og:image" content="https://dancruzhomes.com/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Dan Cruz Homes — find the home you'll actually want to live in.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Dan Cruz Homes — Large Minimalist Homes · Midwest">
+<meta name="twitter:description" content="Fixed spec, fixed price, no change orders. Plus a free Property Readiness Grader for any state.">
+<meta name="twitter:image" content="https://dancruzhomes.com/og-card.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "GeneralContractor",
+  "name": "Dan Cruz Homes",
+  "url": "https://dancruzhomes.com/",
+  "description": "Large minimalist custom homes across the Midwest. 50 homes planned across three phases, single fixed spec, single fixed price, production-builder process — no upgrades sold after contract, no surprise change orders.",
+  "areaServed": {
+    "@type": "AdministrativeArea",
+    "name": "Midwestern United States"
+  },
+  "priceRange": "$$$"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What does Dan Cruz Homes build?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Large, minimalist custom homes across the Midwest — 3,000 to 8,000 sq ft, 3 to 6 bedrooms, ICF + ERV construction, 9 to 14 month build cycle. 50 homes are planned across three phases, all to the same fixed spec and fixed price."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does the price change after signing?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Every home is a keys-handover on a fixed date, at the price quoted at contract — no upgrades sold after contract, no surprise change orders."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I find out if my current home is ready to sell before I build?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use the free Property Readiness Grader at dancruzhomes.com/grader.html — a six-part scorecard (condition, location, showing access, marketing, terms, pricing) that's free and unlimited in any state."
+      }
+    }
+  ]
+}
+</script>
 <style>
 :root{--ink:#1a1a1a;--ink-2:#333;--line:#d4cdb8;--line-2:#c0b89e;--paper:#f5f0e6;--paper-2:#ede6d6;--gold:#9a7d2e;--gold-2:#806820;--muted:#6b6b6b;--max:1200px;--gutter:32px}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -19,7 +84,18 @@ a{color:inherit;text-decoration:none}
 .nav .logo .dot{color:var(--gold);margin-left:2px}
 .nav .links{display:flex;gap:24px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
 .nav .links a:hover{color:var(--ink)}
-@media(max-width:640px){.nav .links{display:none}}
+/* Hamburger — hidden on desktop, the only nav affordance under 640px */
+.nav-toggle{display:none;background:none;border:1px solid var(--line-2);color:var(--ink);padding:9px 11px;cursor:pointer;border-radius:3px;line-height:0}
+.nav-toggle:hover{border-color:var(--gold);color:var(--gold)}
+.nav-toggle svg{width:18px;height:18px;display:block;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+@media(max-width:640px){
+  .nav{flex-wrap:wrap}
+  .nav-toggle{display:block}
+  .nav .links{display:none;flex-basis:100%;flex-direction:column;gap:0;margin-top:16px;border-top:1px solid var(--line);max-height:70vh;overflow-y:auto}
+  .nav .links.open{display:flex}
+  .nav .links a{padding:15px 2px;border-bottom:1px solid var(--line);font-size:13px}
+  .nav .links a:last-child{border-bottom:none}
+}
 
 /* ── hero ── */
 .hero{padding:96px var(--gutter) 80px;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
@@ -98,7 +174,10 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
 
 <nav class="nav">
   <div class="logo">DAN CRUZ HOMES<span class="dot">.</span></div>
-  <div class="links">
+  <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  </button>
+  <div class="links" id="navLinks">
     <a href="grader.html" style="color:var(--gold)">Grader</a>
     <a href="#specs">Specs</a>
     <a href="#process">Process</a>
@@ -108,6 +187,31 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
     <a href="#agents">For Agents</a>
   </div>
 </nav>
+<script>
+(function(){
+  var toggle = document.getElementById('navToggle');
+  var links = document.getElementById('navLinks');
+  if(!toggle || !links) return;
+  function setOpen(open){
+    links.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  toggle.addEventListener('click', function(e){
+    e.stopPropagation();
+    setOpen(!links.classList.contains('open'));
+  });
+  // tapping a link navigates, so collapse behind it
+  links.addEventListener('click', function(e){
+    if(e.target.tagName === 'A') setOpen(false);
+  });
+  document.addEventListener('click', function(e){
+    if(links.classList.contains('open') && !links.contains(e.target)) setOpen(false);
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && links.classList.contains('open')){ setOpen(false); toggle.focus(); }
+  });
+})();
+</script>
 
 <!-- ── HERO ── -->
 <header class="hero">

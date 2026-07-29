@@ -1,0 +1,60 @@
+# dancruzhomes.com — robots.txt
+
+User-agent: *
+Allow: /
+Disallow: /admin.html
+
+# ── AI assistants / answer engines (explicit allow, belt-and-suspenders) ──
+User-agent: GPTBot
+Allow: /
+Disallow: /admin.html
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /admin.html
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /admin.html
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /admin.html
+
+User-agent: Claude-Web
+Allow: /
+Disallow: /admin.html
+
+User-agent: anthropic-ai
+Allow: /
+Disallow: /admin.html
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /admin.html
+
+User-agent: Perplexity-User
+Allow: /
+Disallow: /admin.html
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /admin.html
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /admin.html
+
+User-agent: Amazonbot
+Allow: /
+Disallow: /admin.html
+
+User-agent: Meta-ExternalAgent
+Allow: /
+Disallow: /admin.html
+
+User-agent: CCBot
+Allow: /
+Disallow: /admin.html
+
+Sitemap: https://dancruzhomes.com/sitemap.xml

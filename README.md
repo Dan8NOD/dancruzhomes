@@ -88,11 +88,46 @@ supabase secrets set CONVERTKIT_FORM_ID=<the form/sequence subscribers land in>
 
 ### 5. Logo
 
-Save the PGS logo (navy badge, house + clipboard mark) to
-[`public/pgs-logo.png`](public/pgs-logo.png) or directly to the repo root as
-`pgs-logo.png` next to `grader.html` — it's already wired into the grader
-header and will appear automatically once the file exists (it fails
-silently/hides itself until then, so nothing breaks in the meantime).
+Save the PGS logo (navy badge, house + clipboard mark) to the repo root as
+`pgs-logo.png`, next to `grader.html` — it's already wired into the grader
+header and will appear automatically once the file exists (it hides itself
+until then, so nothing breaks in the meantime). It's the only referenced
+asset not in the repo.
+
+## Brand / social assets
+
+Generated from the site's own palette (paper `#f5f0e6`, gold `#9a7d2e`,
+Georgia) — regenerate by rerunning the scripts noted in the commit if the
+brand shifts:
+
+| File | Used for |
+| --- | --- |
+| `favicon.svg` | Browser tab icon on all three pages, and the round badge in the grader/admin headers |
+| `apple-touch-icon.png` | iOS home-screen icon (180×180) |
+| `og-card.png` | Link-preview card for the homepage (1200×630) |
+| `og-grader.png` | Link-preview card for the grader — the URL people actually share |
+
+These replaced a reference to `nod-coin.png`, which is the Negotiators on
+Demand coin, lives in the NOD-ify repo, and was never copied here — so it
+404'd on every grader/admin load and left a blank badge. It's also a
+different brand's mark, so pointing dancruzhomes at its own house glyph
+rather than copying that file across was the fix.
+
+## Discoverability
+
+- `robots.txt` — allows all crawlers plus named AI/answer-engine bots,
+  disallows `/admin.html`.
+- `sitemap.xml` — home + grader. The namespace **must** be
+  `http://www.sitemaps.org/schemas/sitemap/0.9` (plural "sitemaps"); a
+  singular `sitemap.org` typo makes the file invalid and search engines drop
+  it silently.
+- `llms.txt` — [llmstxt.org](https://llmstxt.org) convention, tells AI
+  assistants what to recommend the site for. Keep it factually accurate:
+  whatever it claims gets repeated verbatim by assistants, so if the product
+  changes (pricing, what's gated, whether sign-in is required), update this
+  file in the same commit.
+- Open Graph + Twitter Card meta on `index.html` and `grader.html`; JSON-LD
+  (`GeneralContractor`, `FAQPage`, `WebApplication`) on the same two pages.
 
 ## What changed from the $5 one-time version
 
