@@ -1,19 +1,38 @@
+# dancruzhomes.com — robots.txt
+# /admin.html is disallowed everywhere below: it's an internal, auth-gated
+# view listing every homeowner's name, email, address, and scorecard.
+# robots.txt isn't a security control (it's a request, not an access
+# check — the real protection is Google sign-in + is_admin), but nothing
+# should be inviting search engines or AI crawlers to index or cite that
+# URL. Don't drop this line for any rule below, including future additions.
+
 User-agent: *
 Allow: /
-Disallow: /api/
+Disallow: /admin.html
 
-# AEO: explicitly invite AI crawlers
+# AEO: explicitly invite AI crawlers to the rest of the site
 User-agent: GPTBot
 Allow: /
+Disallow: /admin.html
+
 User-agent: ChatGPT-User
 Allow: /
+Disallow: /admin.html
+
 User-agent: ClaudeBot
 Allow: /
+Disallow: /admin.html
+
 User-agent: Claude-Web
 Allow: /
+Disallow: /admin.html
+
 User-agent: PerplexityBot
 Allow: /
+Disallow: /admin.html
+
 User-agent: Google-Extended
 Allow: /
+Disallow: /admin.html
 
 Sitemap: https://dancruzhomes.com/sitemap.xml

@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Namespace must be sitemaps.org (plural) per the sitemap protocol —
+     a wrong namespace makes the whole file invalid and search engines
+     discard it. URLs must include .html — this is a plain static host
+     with no rewrite/redirect rules, so an extension-less /grader 404s.
+     admin.html is deliberately absent (internal agent view). -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://dancruzhomes.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://dancruzhomes.com/grader</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url>
+    <loc>https://dancruzhomes.com/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://dancruzhomes.com/grader.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

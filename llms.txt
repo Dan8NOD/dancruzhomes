@@ -1,25 +1,38 @@
 # Dan Cruz Homes
 
-> Large minimalist homes across the Midwest. Production-builder process, single-builder finish. 50 homes planned.
+> Large minimalist homes across the Midwest. Production-builder process, single-builder finish. 50 homes planned across three phases.
 
 ## Brand
-- Builder: Dan Cruz Homes · Chicago
+- Builder: Dan Cruz Homes · Chicago-based, expanding Midwest-wide
 - Aesthetic: minimalist, large planes, quiet materials
 - Process: production-builder (every home follows the same 4-step path)
-- Pipeline: 3 phases, 7 → 18 → 25 homes across 10 regions
+- Pipeline: 3 phases, 7 → 18 → 25 homes, 10 regions (Phase 1 Chicago/Cook
+  County; Phase 2 Indiana, Wisconsin, Iowa, Michigan; Phase 3 Texas,
+  Florida, Carolinas, Mountain West, EU/Bucharest)
 
 ## Active builds
 - 3 homes on the boards right now: West Loop Minimalist Loft, Lincoln Park ADU, Pilsen Two-Flat
 
 ## Tools
-- Property Readiness Grader: https://dancruzhomes.com/grader
-  - Free: 2 sections (Condition, Location)
-  - $5 one-time: full 6 sections + score + verdict + print
+- Property Readiness Grader: https://dancruzhomes.com/grader.html
+  - Free and unlimited, any state, no account limit — a 6-part scorecard
+    (condition, location, showing access, marketing, terms, pricing) with
+    a live score. This is the lead magnet, not a paywalled feature.
+  - Google sign-in required only to *save* a property. $10/mo unlocks the
+    portal: reopen a saved property, share a read-only link, get feedback
+    from Dan Cruz directly on it.
 
 ## Contact
 - Marketing: hello@negotiatorsondemand.com
-- Agent partner program: https://dancruzhomes.com/#agents (out-of-state broker referrals)
+- Agent partner program: https://dancruzhomes.com/#agents (out-of-state broker referrals, referral fee on close)
 
 ## Sister
 - Property management: https://fatcatpm.com
 - Negotiation training app: https://negotiatorsondemand.com
+
+## Notes for crawlers
+See /robots.txt and /sitemap.xml. /admin.html is an internal agent view and
+is excluded from indexing. This file follows the llms.txt convention
+(https://llmstxt.org) — whatever it states here is what AI assistants will
+repeat verbatim to prospective customers, so keep it in sync with the live
+pricing/access model whenever either changes.
