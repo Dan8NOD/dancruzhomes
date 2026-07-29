@@ -12,6 +12,10 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Georgia', serif; background: #f5f0e6; color: #1a1a1a; min-height: 100vh; padding: 20px; }
   .container { max-width: 1000px; margin: 0 auto; }
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+  }
 
   #loginGate, #deniedGate {
     max-width: 420px; margin: 80px auto; text-align: center;
@@ -122,9 +126,11 @@
     <div class="stats" id="stats"></div>
 
     <div class="filters">
+      <label for="stateFilter" class="sr-only">Filter by state</label>
       <select id="stateFilter" onchange="renderList()">
         <option value="">All states</option>
       </select>
+      <label for="searchBox" class="sr-only">Search address or owner</label>
       <input type="text" id="searchBox" placeholder="Search address or owner…" oninput="renderList()">
     </div>
 
@@ -198,7 +204,7 @@ function renderList() {
           <div><b>State:</b> ${escapeHtml(r.state || '—')}</div>
           <div><b>Verdict:</b> ${escapeHtml(r.verdict || '—')}</div>
         </div>
-        <textarea id="fb-${r.id}" placeholder="Write feedback for this homeowner…">${escapeHtml(r.agent_feedback || '')}</textarea>
+        <textarea id="fb-${r.id}" aria-label="Feedback for ${escapeHtml(r.address || 'this property')}" placeholder="Write feedback for this homeowner…">${escapeHtml(r.agent_feedback || '')}</textarea>
         <div class="detail-actions">
           <button class="save-fb" onclick="saveFeedback('${r.id}')">Save Feedback</button>
           <a class="view-link" href="grader.html?share=${r.share_token}" target="_blank" rel="noopener">View Full Scorecard →</a>

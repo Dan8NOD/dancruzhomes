@@ -48,6 +48,16 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
+  /* Screen-reader-only: keeps a real programmatic label on inputs that are
+     visually identified by placeholder text alone (placeholders aren't a
+     substitute for a label — they vanish on input and aren't reliably
+     announced). position:absolute removes it from grid/flex flow so it
+     costs no layout space. */
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+  }
+
   body {
     font-family: 'Georgia', serif;
     background: #f5f0e6;
@@ -432,11 +442,16 @@
 
       <!-- Property Info -->
       <div class="property-info">
+        <label for="ownerName" class="sr-only">Prepared for: owner name</label>
         <input class="full-width" type="text" id="ownerName" placeholder="Prepared for: Owner Name">
+        <label for="propertyAddress" class="sr-only">Property address</label>
         <input class="full-width" type="text" id="propertyAddress" placeholder="Property Address">
         <div class="full-width info-row3">
+          <label for="propertyState" class="sr-only">State</label>
           <select id="propertyState"><option value="">State…</option></select>
+          <label for="agentName" class="sr-only">Agent</label>
           <input type="text" id="agentName" placeholder="Agent: dan cruz">
+          <label for="scoreDate" class="sr-only">Date</label>
           <input type="date" id="scoreDate">
         </div>
       </div>
@@ -555,7 +570,7 @@
 
       <!-- Notes -->
       <div class="notes-area">
-        <label>Notes &amp; Recommendations</label>
+        <label for="notes">Notes &amp; Recommendations</label>
         <textarea id="notes" placeholder="Enter your observations, recommendations, or action items for this property..."></textarea>
       </div>
 
