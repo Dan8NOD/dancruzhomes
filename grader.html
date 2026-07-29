@@ -331,6 +331,12 @@
     .score-number { font-size: 56px; }
     .property-card { flex-direction: column; align-items: flex-start; }
     .property-card .pc-score { text-align: left; }
+    /* The sticky score panel is ~470px tall with its bar/verdict/advice —
+       on a ~400px-tall visible viewport (after mobile chrome) that's most
+       of the screen, so checkbox rows scroll partly hidden behind it as
+       you go through all 46 criteria. Desktop has room for sticky to be a
+       nice touch; mobile doesn't, so it just scrolls in place instead. */
+    .score-panel { position: static; top: auto; }
   }
 </style>
 </head>
