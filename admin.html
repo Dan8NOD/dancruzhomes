@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Property Readiness Grader — Dan Cruz Homes</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="nod-coin.png">
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Georgia', serif; background: #f5f0e6; color: #1a1a1a; min-height: 100vh; padding: 20px; }
+  .container { max-width: 1000px; margin: 0 auto; }
+
+  #loginGate, #deniedGate {
+    max-width: 420px; margin: 80px auto; text-align: center;
+    background: #ede6d6; border: 1px solid #d4cdb8; border-radius: 6px; padding: 48px 32px;
+  }
+  #loginGate h1, #deniedGate h1 { font-size: 24px; font-weight: normal; margin-bottom: 10px; }
+  #loginGate p, #deniedGate p { font-size: 14px; color: #6b6b6b; margin-bottom: 28px; font-style: italic; }
+  .google-btn {
+    display: inline-flex; align-items: center; gap: 10px; padding: 12px 24px;
+    background: #9a7d2e; color: #fff; border: none; border-radius: 4px;
+    font-size: 14px; font-family: -apple-system, sans-serif; cursor: pointer;
+  }
+  .google-btn:hover { background: #7a6220; }
+  .google-btn svg { width: 18px; height: 18px; }
+  .back-link { color: #9a7d2e; text-decoration: none; font-family: -apple-system, sans-serif; font-size: 13px; }
+
+  .nod-header {
+    display: flex; align-items: center; gap: 12px; padding: 0 0 20px; margin-bottom: 24px;
+    border-bottom: 1px solid #d4cdb8;
+  }
+  .nod-header .logo-icon {
+    width: 36px; height: 36px; background: url('nod-coin.png') center/cover, #9a7d2e;
+    border-radius: 50%; box-shadow: 0 0 16px rgba(154,125,46,0.25); flex-shrink: 0;
+  }
+  .nod-header .brand-name { font-size: 18px; font-weight: 800; letter-spacing: -0.5px; }
+  .nod-header .brand-sub { font-size: 10px; color: #9a7d2e; letter-spacing: 2px; text-transform: uppercase; font-family: -apple-system, sans-serif; }
+  .nod-header .links { margin-left: auto; display: flex; gap: 16px; align-items: center; font-family: -apple-system, sans-serif; font-size: 12px; color: #6b6b6b; }
+  .nod-header button { background: transparent; border: 1px solid #d4cdb8; color: #6b6b6b; padding: 5px 12px; font-size: 11px; border-radius: 3px; cursor: pointer; font-family: -apple-system, sans-serif; }
+  .nod-header button:hover { border-color: #9a7d2e; color: #9a7d2e; }
+
+  h1.page-title { font-size: 28px; font-weight: normal; margin-bottom: 6px; }
+  .page-sub { font-size: 13px; color: #6b6b6b; font-style: italic; margin-bottom: 24px; }
+
+  .filters { display: flex; gap: 12px; margin-bottom: 20px; font-family: -apple-system, sans-serif; }
+  .filters select, .filters input {
+    padding: 8px 12px; border: 1px solid #d4cdb8; border-radius: 3px; background: #fff; font-size: 13px;
+  }
+
+  .stats { display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+  .stat { background: #ede6d6; border: 1px solid #d4cdb8; border-radius: 4px; padding: 14px 20px; font-family: -apple-system, sans-serif; }
+  .stat .stat-num { font-size: 24px; color: #9a7d2e; font-weight: bold; }
+  .stat .stat-label { font-size: 11px; color: #6b6b6b; text-transform: uppercase; letter-spacing: 1px; }
+
+  .row-card {
+    background: #ede6d6; border: 1px solid #d4cdb8; border-radius: 4px; margin-bottom: 14px; overflow: hidden;
+  }
+  .row-main { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; cursor: pointer; gap: 16px; }
+  .row-main:hover { background: #e6dfcd; }
+  .row-left { min-width: 0; }
+  .row-address { font-size: 16px; }
+  .row-meta { font-size: 12px; color: #6b6b6b; font-family: -apple-system, sans-serif; margin-top: 4px; }
+  .row-score { font-size: 28px; color: #9a7d2e; font-weight: bold; min-width: 56px; text-align: right; }
+  .row-detail { display: none; padding: 0 20px 20px; border-top: 1px solid #d4cdb8; font-family: -apple-system, sans-serif; }
+  .row-detail.open { display: block; }
+  .row-detail .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 13px; margin: 16px 0; }
+  .row-detail .detail-grid div b { color: #6b6b6b; font-weight: 600; }
+  .row-detail textarea {
+    width: 100%; min-height: 80px; padding: 10px 12px; border: 1px solid #d4cdb8; border-radius: 3px;
+    font-family: -apple-system, sans-serif; font-size: 13px; resize: vertical; margin-bottom: 10px;
+  }
+  .row-detail .detail-actions { display: flex; gap: 10px; align-items: center; }
+  .row-detail button.save-fb {
+    padding: 8px 18px; background: #9a7d2e; color: #fff; border: none; border-radius: 3px;
+    font-size: 12px; letter-spacing: 1px; text-transform: uppercase; cursor: pointer;
+  }
+  .row-detail button.save-fb:hover { background: #7a6220; }
+  .row-detail a.view-link { font-size: 12px; color: #9a7d2e; text-decoration: none; }
+  .row-detail .fb-status { font-size: 12px; color: #6b6b6b; }
+
+  .empty-state { text-align: center; color: #6b6b6b; font-style: italic; padding: 60px 20px; }
+</style>
+</head>
+<body>
+
+<div id="loginGate">
+  <h1>Admin</h1>
+  <p>Sign in with your Dan Cruz Homes admin account.</p>
+  <button class="google-btn" onclick="signInWithGoogle()">
+    <svg viewBox="0 0 24 24"><path fill="#fff" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.76h3.56c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#fff" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.56-2.76c-.98.66-2.23 1.06-3.72 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23z" opacity=".9"/><path fill="#fff" d="M5.84 14.1a6.6 6.6 0 0 1 0-4.2V7.06H2.18a11 11 0 0 0 0 9.88l3.66-2.84z" opacity=".8"/><path fill="#fff" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84C6.71 7.31 9.14 5.38 12 5.38z" opacity=".7"/></svg>
+    Sign in with Google
+  </button>
+</div>
+
+<div id="deniedGate" style="display:none">
+  <h1>Not authorized</h1>
+  <p>This account doesn't have admin access.</p>
+  <a class="back-link" href="grader.html">← Back to the grader</a>
+</div>
+
+<div id="appContainer" style="display:none">
+  <div class="container">
+    <div class="nod-header">
+      <div class="logo-icon" aria-hidden="true"></div>
+      <div>
+        <div class="brand-name">Dan Cruz Homes</div>
+        <div class="brand-sub">Admin</div>
+      </div>
+      <div class="links">
+        <span id="userEmail"></span>
+        <a class="back-link" href="grader.html">Grader →</a>
+        <button onclick="signOut()">Sign out</button>
+      </div>
+    </div>
+
+    <h1 class="page-title">All Submissions</h1>
+    <p class="page-sub">Every homeowner's Property Readiness scorecard, any state. Click a row to view details and leave feedback.</p>
+
+    <div class="stats" id="stats"></div>
+
+    <div class="filters">
+      <select id="stateFilter" onchange="renderList()">
+        <option value="">All states</option>
+      </select>
+      <input type="text" id="searchBox" placeholder="Search address or owner…" oninput="renderList()">
+    </div>
+
+    <div id="list"></div>
+  </div>
+</div>
+
+<script>
+'use strict';
+const SUPABASE_URL = 'https://iubxycckgrplbpdbncfk.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_L92hXORLG-Df4WiZxVq-6Q_X3AB47yl';
+let _sb = null;
+function sb() { if (!_sb) _sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); return _sb; }
+const $ = id => document.getElementById(id);
+
+let allRows = [];
+let currentUser = null;
+
+async function signInWithGoogle() {
+  await sb().auth.signInWithOAuth({ provider: 'google', options: { redirectTo: window.location.href.split('?')[0] } });
+}
+async function signOut() { await sb().auth.signOut(); location.reload(); }
+
+function escapeHtml(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+
+function renderStats() {
+  const total = allRows.length;
+  const avg = total ? Math.round(allRows.reduce((s, r) => s + (r.total_score || 0), 0) / total) : 0;
+  const states = new Set(allRows.map(r => r.state).filter(Boolean)).size;
+  $('stats').innerHTML = `
+    <div class="stat"><div class="stat-num">${total}</div><div class="stat-label">Submissions</div></div>
+    <div class="stat"><div class="stat-num">${avg}</div><div class="stat-label">Avg Score</div></div>
+    <div class="stat"><div class="stat-num">${states}</div><div class="stat-label">States</div></div>
+  `;
+}
+
+function renderStateFilter() {
+  const sel = $('stateFilter');
+  const current = sel.value;
+  const states = [...new Set(allRows.map(r => r.state).filter(Boolean))].sort();
+  sel.innerHTML = '<option value="">All states</option>' + states.map(s => `<option value="${s}">${s}</option>`).join('');
+  sel.value = current;
+}
+
+function renderList() {
+  const stateFilter = $('stateFilter').value;
+  const q = $('searchBox').value.trim().toLowerCase();
+  let rows = allRows;
+  if (stateFilter) rows = rows.filter(r => r.state === stateFilter);
+  if (q) rows = rows.filter(r => (r.address || '').toLowerCase().includes(q) || (r.owner_name || '').toLowerCase().includes(q) || (r.owner_email || '').toLowerCase().includes(q));
+
+  const list = $('list');
+  if (!rows.length) {
+    list.innerHTML = '<div class="empty-state">No submissions match.</div>';
+    return;
+  }
+
+  list.innerHTML = rows.map(r => `
+    <div class="row-card" data-id="${r.id}">
+      <div class="row-main" onclick="toggleRow('${r.id}')">
+        <div class="row-left">
+          <div class="row-address">${escapeHtml(r.address || '(no address yet)')}</div>
+          <div class="row-meta">${r.state ? escapeHtml(r.state) + ' · ' : ''}${escapeHtml(r.owner_name || r.owner_email || 'unknown owner')} · Updated ${r.updated_at ? new Date(r.updated_at).toLocaleDateString() : ''}</div>
+        </div>
+        <div class="row-score">${r.total_score ?? 0}</div>
+      </div>
+      <div class="row-detail" id="detail-${r.id}">
+        <div class="detail-grid">
+          <div><b>Owner:</b> ${escapeHtml(r.owner_name || '—')}</div>
+          <div><b>Email:</b> ${escapeHtml(r.owner_email || '—')}</div>
+          <div><b>State:</b> ${escapeHtml(r.state || '—')}</div>
+          <div><b>Verdict:</b> ${escapeHtml(r.verdict || '—')}</div>
+        </div>
+        <textarea id="fb-${r.id}" placeholder="Write feedback for this homeowner…">${escapeHtml(r.agent_feedback || '')}</textarea>
+        <div class="detail-actions">
+          <button class="save-fb" onclick="saveFeedback('${r.id}')">Save Feedback</button>
+          <a class="view-link" href="grader.html?share=${r.share_token}" target="_blank" rel="noopener">View Full Scorecard →</a>
+          <span class="fb-status" id="fb-status-${r.id}"></span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleRow(id) {
+  const el = $('detail-' + id);
+  el.classList.toggle('open');
+}
+
+async function saveFeedback(id) {
+  const text = $('fb-' + id).value;
+  $('fb-status-' + id).textContent = 'Saving…';
+  const { error } = await sb().rpc('admin_set_feedback', { p_id: id, p_feedback: text });
+  $('fb-status-' + id).textContent = error ? 'Failed — try again' : 'Saved ✓';
+  if (!error) {
+    const row = allRows.find(r => r.id === id);
+    if (row) row.agent_feedback = text;
+  }
+}
+
+(async function boot() {
+  const { data: { session } } = await sb().auth.getSession();
+  if (!session) { $('loginGate').style.display = 'block'; return; }
+  currentUser = session.user;
+
+  const { data: profile } = await sb().from('profiles').select('is_admin').eq('user_id', currentUser.id).maybeSingle();
+  if (!profile?.is_admin) {
+    $('loginGate').style.display = 'none';
+    $('deniedGate').style.display = 'block';
+    return;
+  }
+
+  $('loginGate').style.display = 'none';
+  $('userEmail').textContent = currentUser.email;
+  $('appContainer').style.display = 'block';
+
+  const { data, error } = await sb().from('properties').select('*').order('updated_at', { ascending: false });
+  allRows = data || [];
+  renderStats();
+  renderStateFilter();
+  renderList();
+})();
+</script>
+</body>
+</html>

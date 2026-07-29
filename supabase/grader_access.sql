@@ -1,3 +1,10 @@
+-- SUPERSEDED by supabase/portal_schema.sql (the $5 one-time flow this table
+-- backed was replaced by a $10/mo subscription — see subscriptions table).
+-- grader.html no longer reads or writes this table. Left in place rather
+-- than dropped in case rows already exist; safe to drop once confirmed
+-- empty. Also note: its RLS policy below allows anon to read every row in
+-- bulk (every customer's email) — don't reuse this pattern elsewhere.
+--
 -- ponytail: grader_access table — tracks who paid $5 for full grader access
 -- Run this in Supabase SQL editor
 

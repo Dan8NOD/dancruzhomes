@@ -20,13 +20,13 @@
 
   .container { max-width: 780px; margin: 0 auto; }
 
-  /* ─── Login gate ─── */
-  #loginGate {
+  /* ─── Login / consent gates ─── */
+  #loginGate, #consentGate {
     max-width: 420px; margin: 80px auto; text-align: center;
     background: #ede6d6; border: 1px solid #d4cdb8; border-radius: 6px; padding: 48px 32px;
   }
-  #loginGate h1 { font-size: 24px; font-weight: normal; color: #1a1a1a; margin-bottom: 10px; }
-  #loginGate p { font-size: 14px; color: #6b6b6b; margin-bottom: 28px; font-style: italic; }
+  #loginGate h1, #consentGate h1 { font-size: 24px; font-weight: normal; color: #1a1a1a; margin-bottom: 10px; }
+  #loginGate p, #consentGate p { font-size: 14px; color: #6b6b6b; margin-bottom: 28px; font-style: italic; }
   .google-btn {
     display: inline-flex; align-items: center; gap: 10px; padding: 12px 24px;
     background: #9a7d2e; color: #fff; border: none; border-radius: 4px;
@@ -36,12 +36,22 @@
   .google-btn:hover { background: #7a6220; }
   .google-btn svg { width: 18px; height: 18px; }
 
+  #consentGate { text-align: left; }
+  #consentGate h1 { text-align: center; }
+  #consentGate .fine-print { font-size: 13px; color: #4a4a4a; font-style: normal; line-height: 1.6; text-align: left; margin-bottom: 20px; }
+  #consentGate label { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: #1a1a1a; cursor: pointer; text-align: left; margin-bottom: 24px; font-style: normal; }
+  #consentGate input[type="checkbox"] { margin-top: 3px; }
+  #consentGate .btn-primary { width: 100%; }
+
   /* ─── Auth bar ─── */
   #authBar {
     display: flex; align-items: center; justify-content: flex-end; gap: 14px;
     padding: 0 0 14px; margin-bottom: 16px; border-bottom: 1px solid #d4cdb8;
     font-family: -apple-system, sans-serif; font-size: 12px; color: #6b6b6b;
+    flex-wrap: wrap;
   }
+  #authBar a { color: #9a7d2e; text-decoration: none; }
+  #authBar a:hover { color: #7a6220; text-decoration: underline; }
   #authBar .user-email { color: #1a1a1a; }
   #authBar button {
     background: transparent; border: 1px solid #d4cdb8; color: #6b6b6b;
@@ -62,7 +72,8 @@
   }
   .nod-header .brand-name { font-size: 18px; font-weight: 800; color: #1a1a1a; letter-spacing: -0.5px; }
   .nod-header .brand-sub { font-size: 10px; color: #9a7d2e; letter-spacing: 2px; text-transform: uppercase; font-family: -apple-system, sans-serif; }
-  .nod-header .back-link { margin-left: auto; font-size: 11px; color: #6b6b6b; text-decoration: none; font-family: -apple-system, sans-serif; letter-spacing: 0.5px; }
+  .nod-header .links { margin-left: auto; display: flex; gap: 16px; align-items: center; }
+  .nod-header .back-link { font-size: 11px; color: #6b6b6b; text-decoration: none; font-family: -apple-system, sans-serif; letter-spacing: 0.5px; }
   .nod-header .back-link:hover { color: #9a7d2e; }
 
   /* Header */
@@ -70,6 +81,29 @@
   .header-brand { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #9a7d2e; margin-bottom: 10px; }
   .header h1 { font-size: 32px; font-weight: normal; color: #1a1a1a; line-height: 1.2; margin-bottom: 8px; }
   .header p { font-size: 14px; color: #6b6b6b; font-style: italic; }
+  .header img.pgs-logo { max-height: 64px; margin: 0 auto 14px; display: block; }
+
+  /* Shared (read-only) banner */
+  #sharedBanner {
+    background: #1a1a1a; color: #f5f0e6; text-align: center; padding: 12px 16px;
+    border-radius: 4px; margin-bottom: 20px; font-family: -apple-system, sans-serif;
+    font-size: 12px; letter-spacing: 0.5px;
+  }
+  #sharedBanner b { color: #d4b96a; }
+
+  /* ─── Dashboard ─── */
+  .property-list { display: grid; gap: 14px; margin-bottom: 20px; }
+  .property-card {
+    background: #ede6d6; border: 1px solid #d4cdb8; border-radius: 4px;
+    padding: 18px 22px; display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; cursor: pointer; transition: border-color 0.15s;
+  }
+  .property-card:hover { border-color: #9a7d2e; }
+  .property-card .pc-main { flex: 1; min-width: 0; }
+  .property-card .pc-address { font-size: 16px; color: #1a1a1a; margin-bottom: 4px; }
+  .property-card .pc-meta { font-size: 12px; color: #6b6b6b; font-family: -apple-system, sans-serif; }
+  .property-card .pc-score { font-size: 28px; color: #9a7d2e; font-weight: bold; min-width: 56px; text-align: right; }
+  .empty-state { text-align: center; color: #6b6b6b; font-style: italic; padding: 40px 20px; }
 
   /* Property Info */
   .property-info {
@@ -77,14 +111,16 @@
     padding: 20px 24px; margin-bottom: 28px;
     display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
   }
-  .property-info input {
+  .property-info input, .property-info select {
     background: #f5f0e6; border: 1px solid #d4cdb8; color: #1a1a1a;
     padding: 10px 14px; font-size: 14px; font-family: 'Georgia', serif;
     border-radius: 3px; width: 100%; outline: none; transition: border-color 0.2s;
   }
-  .property-info input:focus { border-color: #9a7d2e; }
+  .property-info input:focus, .property-info select:focus { border-color: #9a7d2e; }
   .property-info input::placeholder { color: #a9a092; }
   .property-info .full-width { grid-column: 1 / -1; }
+  .info-row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  @media (max-width: 600px) { .info-row3 { grid-template-columns: 1fr; } }
 
   /* Score panel */
   .score-panel {
@@ -99,6 +135,14 @@
   .score-bar-fill { height: 100%; border-radius: 2px; transition: width 0.4s ease, background 0.3s; width: 0%; }
   .score-verdict { font-size: 15px; color: #1a1a1a; margin-bottom: 6px; min-height: 22px; }
   .score-advice { font-size: 12px; color: #6b6b6b; font-style: italic; line-height: 1.5; min-height: 36px; }
+
+  /* Feedback from agent */
+  .feedback-box {
+    background: #fbf3de; border: 1px solid #d4b96a; border-radius: 4px;
+    padding: 18px 22px; margin-bottom: 20px;
+  }
+  .feedback-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #9a7d2e; margin-bottom: 8px; font-family: -apple-system, sans-serif; }
+  .feedback-box .feedback-text { font-size: 14px; color: #1a1a1a; line-height: 1.6; white-space: pre-wrap; }
 
   /* Section */
   .section {
@@ -132,6 +176,7 @@
     content: '✓'; position: absolute; top: -1px; left: 2px;
     font-size: 13px; color: #fff; font-weight: bold;
   }
+  .criterion input[type="checkbox"]:disabled { cursor: default; opacity: 0.85; }
   .criterion-text { flex: 1; font-size: 14px; color: #333; line-height: 1.5; padding-top: 1px; }
   .criterion-pts { font-size: 13px; font-weight: bold; min-width: 48px; text-align: right; padding-top: 2px; }
   .criterion-pts.pos { color: #9a7d2e; }
@@ -156,6 +201,20 @@
   }
   .notes-area textarea:focus { border-color: #9a7d2e; }
 
+  /* Save bar */
+  .save-bar { display: flex; gap: 12px; margin-bottom: 12px; align-items: center; flex-wrap: wrap; }
+  .save-bar .save-status { font-size: 12px; color: #6b6b6b; font-family: -apple-system, sans-serif; }
+  .share-box { display: flex; gap: 8px; margin-bottom: 20px; }
+  .share-box input {
+    flex: 1; background: #ede6d6; border: 1px solid #d4cdb8; color: #1a1a1a;
+    padding: 10px 14px; font-size: 13px; border-radius: 3px; font-family: -apple-system, sans-serif;
+  }
+  .share-box button {
+    padding: 10px 18px; background: #9a7d2e; color: #fff; border: none; border-radius: 3px;
+    font-size: 12px; letter-spacing: 1px; text-transform: uppercase; cursor: pointer;
+  }
+  .share-box button:hover { background: #7a6220; }
+
   /* Actions */
   .actions { display: flex; gap: 12px; margin-bottom: 20px; }
   .btn {
@@ -165,6 +224,7 @@
   }
   .btn-primary { background: #9a7d2e; color: #fff; }
   .btn-primary:hover { background: #7a6220; }
+  .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
   .btn-secondary { background: transparent; color: #6b6b6b; border: 1px solid #d4cdb8; }
   .btn-secondary:hover { border-color: #9a7d2e; color: #9a7d2e; }
 
@@ -184,46 +244,45 @@
   }
   .cta-button:hover { background: #7a6220; }
 
-  /* Save indicator */
-  .save-indicator { text-align: center; font-size: 11px; color: #6b6b6b; margin-bottom: 20px; min-height: 18px; }
-
   /* Footer */
   .footer { text-align: center; padding: 20px 0; border-top: 1px solid #d4cdb8; font-size: 11px; color: #6b6b6b; }
   .footer a { color: #9a7d2e; text-decoration: none; }
 
-  /* ─── Paywall ─── */
-  #lockedWrap { position: relative; }
-  .locked .section:not(.free-section) .criteria { filter: blur(4px); pointer-events: none; }
-  .locked .section:not(.free-section) .section-subtotal { filter: blur(4px); pointer-events: none; }
-  #paywallOverlay {
-    position: absolute; top: 0; left: 0; right: 0; z-index: 10;
-    background: rgba(245,240,230,0.96); border: 1px solid #d4cdb8; border-radius: 6px;
-    text-align: center; padding: 40px 28px; margin-top: 8px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  /* ─── Subscribe modal ─── */
+  .modal-backdrop {
+    position: fixed; inset: 0; background: rgba(26,26,26,0.55); z-index: 50;
+    display: flex; align-items: center; justify-content: center; padding: 20px;
   }
-  #paywallOverlay h2 { font-size: 26px; font-weight: normal; color: #1a1a1a; margin-bottom: 12px; }
-  #paywallOverlay p { font-size: 14px; color: #6b6b6b; line-height: 1.6; margin-bottom: 22px; max-width: 460px; margin-left: auto; margin-right: auto; }
-  #paywallOverlay .price { font-size: 40px; color: #9a7d2e; font-weight: bold; margin-bottom: 4px; }
-  #paywallOverlay .price-sub { font-size: 12px; color: #6b6b6b; margin-bottom: 24px; letter-spacing: 0.5px; }
-  #paywallOverlay button {
-    padding: 14px 32px; background: #9a7d2e; color: #fff; border: none; border-radius: 3px;
+  .modal {
+    background: #f5f0e6; border: 1px solid #d4cdb8; border-radius: 6px;
+    max-width: 440px; width: 100%; padding: 36px 30px; text-align: center;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+  }
+  .modal h2 { font-size: 24px; font-weight: normal; color: #1a1a1a; margin-bottom: 12px; }
+  .modal p { font-size: 14px; color: #6b6b6b; line-height: 1.6; margin-bottom: 22px; }
+  .modal .price { font-size: 40px; color: #9a7d2e; font-weight: bold; margin-bottom: 4px; }
+  .modal .price-sub { font-size: 12px; color: #6b6b6b; margin-bottom: 24px; letter-spacing: 0.5px; }
+  .modal button {
+    padding: 14px 32px; border: none; border-radius: 3px;
     font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; font-family: 'Georgia', serif;
-    font-weight: bold; cursor: pointer; transition: background 0.2s;
+    font-weight: bold; cursor: pointer; transition: background 0.2s; display: block; width: 100%; margin-bottom: 10px;
   }
-  #paywallOverlay button:hover { background: #7a6220; }
-  #paywallOverlay .pw-loading { font-size: 13px; color: #6b6b6b; font-style: italic; }
+  .modal .modal-subscribe { background: #9a7d2e; color: #fff; }
+  .modal .modal-subscribe:hover { background: #7a6220; }
+  .modal .modal-close { background: transparent; color: #6b6b6b; font-size: 11px; text-transform: none; letter-spacing: 0; font-weight: normal; }
+  .modal .modal-loading { font-size: 13px; color: #6b6b6b; font-style: italic; }
 
   @media print {
     body { background: white; color: black; }
-    #loginGate, #authBar, .nod-header, .cta-banner, .actions, .save-indicator, .footer, #paywallOverlay { display: none; }
-    #appContainer { display: block !important; }
+    #loginGate, #consentGate, #authBar, .nod-header, .cta-banner, .actions, .save-bar, .share-box, .footer, .modal-backdrop, #sharedBanner, #dashboard { display: none !important; }
+    #appContainer, #formArea { display: block !important; }
     .score-panel { position: static; border: 1px solid #ccc; }
-    .section, .section-header, .property-info, .notes-area { background: white; border: 1px solid #ccc; }
+    .section, .section-header, .property-info, .notes-area, .feedback-box { background: white; border: 1px solid #ccc; }
     .section-title, .criterion-pts, .section-subtotal span:last-child, .header-brand, .brand-sub { color: #8b6914; }
     .criterion-pts.neg { color: #a03030; }
     .score-number { color: black !important; }
     .criterion-text { color: #333; }
-    input, textarea { background: white; border: 1px solid #ccc; color: black; }
+    input, textarea, select { background: white; border: 1px solid #ccc; color: black; }
     input::placeholder { color: #999; }
   }
 
@@ -231,6 +290,8 @@
     .property-info { grid-template-columns: 1fr; }
     .property-info .full-width { grid-column: 1; }
     .score-number { font-size: 56px; }
+    .property-card { flex-direction: column; align-items: flex-start; }
+    .property-card .pc-score { text-align: left; }
   }
 </style>
 </head>
@@ -246,12 +307,32 @@
   </button>
 </div>
 
+<!-- Consent / disclaimer gate — shown once, right after first login -->
+<div id="consentGate" style="display:none">
+  <h1>Before you start</h1>
+  <div class="fine-print">
+    You're signed in as <b id="consentEmail"></b>. Dan Cruz Homes / Fat Cat Asset
+    Management will save the property details you enter here, and will use your
+    email to send you your results plus periodic emails about related products
+    and services under the Fat Cat Asset Management umbrella (Dan Cruz Homes,
+    coaching, NOD tools, and similar). These emails go out through ConvertKit —
+    you can unsubscribe at any time from any email.
+  </div>
+  <label>
+    <input type="checkbox" id="consentCheck">
+    I understand and agree to receive these emails.
+  </label>
+  <button class="google-btn btn-primary" style="display:block" onclick="acceptDisclaimer()" id="consentBtn">Continue →</button>
+</div>
+
 <!-- App -->
 <div id="appContainer" style="display:none">
   <div class="container">
 
     <!-- Auth bar -->
     <div id="authBar">
+      <a href="#" id="dashboardLink" style="display:none" onclick="openDashboard();return false;">My Properties</a>
+      <a href="#" id="manageSubLink" style="display:none" onclick="openBillingPortal();return false;">Manage Subscription</a>
       <span class="user-email" id="userEmail"></span>
       <button onclick="signOut()">Sign out</button>
     </div>
@@ -263,80 +344,109 @@
         <div class="brand-name">Dan Cruz Homes</div>
         <div class="brand-sub">Property Readiness Tools</div>
       </div>
-      <a href="index.html" class="back-link">← Back to Dan Cruz Homes</a>
-    </div>
-
-    <!-- Header -->
-    <div class="header">
-      <div class="header-brand">Property Readiness Grader</div>
-      <h1>How Ready Is Your Property to Sell?</h1>
-      <p>A self-assessment to predict how well your home will sell</p>
-    </div>
-
-    <!-- Score Panel -->
-    <div class="score-panel">
-      <div class="score-label">Total Score</div>
-      <div class="score-number" id="scoreNumber">0</div>
-      <div class="score-max" id="scoreMax">out of 100 points</div>
-      <div class="score-bar-bg">
-        <div class="score-bar-fill" id="scoreBar"></div>
+      <div class="links">
+        <a href="admin.html" class="back-link" id="adminLink" style="display:none">Admin →</a>
+        <a href="index.html" class="back-link">← Back to Dan Cruz Homes</a>
       </div>
-      <div class="score-verdict" id="scoreVerdict">Complete the scorecard below</div>
-      <div class="score-advice" id="scoreAdvice"></div>
     </div>
 
-    <!-- Property Info -->
-    <div class="property-info">
-      <input class="full-width" type="text" id="ownerName" placeholder="Prepared for: Owner Name">
-      <input class="full-width" type="text" id="propertyAddress" placeholder="Property Address">
-      <input type="text" id="agentName" placeholder="Agent: dan cruz">
-      <input type="date" id="scoreDate">
+    <div id="sharedBanner" style="display:none">
+      Viewing a <b>shared</b> Property Readiness scorecard — read only.
     </div>
 
-    <!-- PART 1: CONDITION -->
-    <div class="section free-section">
-      <div class="section-header">
-        <span class="section-title">Part 1 · Condition of Property</span>
+    <!-- Dashboard: list of saved properties -->
+    <div id="dashboard" style="display:none">
+      <div class="header">
+        <div class="header-brand">Property Readiness Grader</div>
+        <h1>Your Properties</h1>
+        <p>Open one to continue, or start a new one.</p>
       </div>
-      <div class="section-subtitle">How well does your property meet the following criteria?</div>
-      <div class="criteria" id="part1">
-        <label class="criterion"><input type="checkbox" data-pts="2" data-section="1"><span class="criterion-text">Your property has better than average curb appeal</span><span class="criterion-pts pos">+2</span></label>
-        <label class="criterion"><input type="checkbox" data-pts="2" data-section="1"><span class="criterion-text">Your interior is light, bright and clean</span><span class="criterion-pts pos">+2</span></label>
-        <label class="criterion"><input type="checkbox" data-pts="2" data-section="1"><span class="criterion-text">Your rooms are uncluttered and look as large as possible</span><span class="criterion-pts pos">+2</span></label>
-        <label class="criterion"><input type="checkbox" data-pts="2" data-section="1"><span class="criterion-text">Your decorating is attractive and neutral</span><span class="criterion-pts pos">+2</span></label>
-        <label class="criterion"><input type="checkbox" data-pts="2" data-section="1"><span class="criterion-text">You don't have any pets</span><span class="criterion-pts pos">+2</span></label>
-        <label class="criterion"><input type="checkbox" data-pts="2" data-section="1"><span class="criterion-text">Your home is free of any unpleasant odors</span><span class="criterion-pts pos">+2</span></label>
-        <label class="criterion"><input type="checkbox" data-pts="-5" data-section="1"><span class="criterion-text">You have pets that may interfere with showings</span><span class="criterion-pts neg">−5</span></label>
-        <label class="criterion"><input type="checkbox" data-pts="-10" data-section="1"><span class="criterion-text">Your floor plan is obsolete or outdated</span><span class="criterion-pts neg">−10</span></label>
-        <label class="criterion"><input type="checkbox" data-pts="-10" data-section="1"><span class="criterion-text">Your home is in substandard condition for the area</span><span class="criterion-pts neg">−10</span></label>
-        <label class="criterion"><input type="checkbox" data-pts="-10" data-section="1"><span class="criterion-text">Your home is in dire need of updating</span><span class="criterion-pts neg">−10</span></label>
-        <label class="criterion"><input type="checkbox" data-pts="-10" data-section="1"><span class="criterion-text">Your home is adjacent to an obvious eye-sore</span><span class="criterion-pts neg">−10</span></label>
-      </div>
-      <div class="section-subtotal"><span>Condition Subtotal</span><span id="sub1">0</span></div>
+      <div class="property-list" id="propertyList"></div>
+      <button class="btn btn-primary" style="width:100%;margin-bottom:20px" onclick="openForm(null)">+ New Property</button>
     </div>
 
-    <!-- PART 2: LOCATION -->
-    <div class="section free-section">
-      <div class="section-header">
-        <span class="section-title">Part 2 · Location, Location, Location</span>
-      </div>
-      <div class="section-subtitle">How well does your property compare to similar properties?</div>
-      <div class="criteria" id="part2">
-        <label class="criterion"><input type="checkbox" data-pts="2" data-section="2"><span class="criterion-text">Your property is in the low end of a prestigious neighborhood</span><span class="criterion-pts pos">+2</span></label>
-        <label class="criterion"><input type="checkbox" data-pts="2" data-section="2"><span class="criterion-text">Your street has excellent curb appeal</span><span class="criterion-pts pos">+2</span></label>
-        <label class="criterion"><input type="checkbox" data-pts="2" data-section="2"><span class="criterion-text">Your property has an excellent and valued view</span><span class="criterion-pts pos">+2</span></label>
-        <label class="criterion"><input type="checkbox" data-pts="2" data-section="2"><span class="criterion-text">Your area has a reputation as an excellent school system</span><span class="criterion-pts pos">+2</span></label>
-        <label class="criterion"><input type="checkbox" data-pts="2" data-section="2"><span class="criterion-text">Your area has shopping within close proximity</span><span class="criterion-pts pos">+2</span></label>
-        <label class="criterion"><input type="checkbox" data-pts="2" data-section="2"><span class="criterion-text">Your property is located within a gated community</span><span class="criterion-pts pos">+2</span></label>
-        <label class="criterion"><input type="checkbox" data-pts="5" data-section="2"><span class="criterion-text">Your neighboring properties are well cared for</span><span class="criterion-pts pos">+5</span></label>
-        <label class="criterion"><input type="checkbox" data-pts="-10" data-section="2"><span class="criterion-text">Your property is located near high traffic or noise issues</span><span class="criterion-pts neg">−10</span></label>
-        <label class="criterion"><input type="checkbox" data-pts="-10" data-section="2"><span class="criterion-text">Your area has been stigmatized by crime or other issues</span><span class="criterion-pts neg">−10</span></label>
-      </div>
-      <div class="section-subtotal"><span>Location Subtotal</span><span id="sub2">0</span></div>
-    </div>
+    <!-- Form area: header / score / info / sections / notes / actions -->
+    <div id="formArea" style="display:none">
 
-    <!-- Locked sections wrapper -->
-    <div id="lockedWrap">
+      <!-- Header -->
+      <div class="header">
+        <img class="pgs-logo" src="pgs-logo.png" alt="Property Grader Scorecard" onerror="this.style.display='none'">
+        <div class="header-brand">Property Readiness Grader</div>
+        <h1>How Ready Is Your Property to Sell?</h1>
+        <p>A self-assessment to predict how well your home will sell</p>
+      </div>
+
+      <!-- Score Panel -->
+      <div class="score-panel">
+        <div class="score-label">Total Score</div>
+        <div class="score-number" id="scoreNumber">0</div>
+        <div class="score-max" id="scoreMax">out of 100 points</div>
+        <div class="score-bar-bg">
+          <div class="score-bar-fill" id="scoreBar"></div>
+        </div>
+        <div class="score-verdict" id="scoreVerdict">Complete the scorecard below</div>
+        <div class="score-advice" id="scoreAdvice"></div>
+      </div>
+
+      <!-- Feedback from agent (owner + shared views only, admin writes it on admin.html) -->
+      <div class="feedback-box" id="feedbackBox" style="display:none">
+        <div class="feedback-label">Feedback from your agent</div>
+        <div class="feedback-text" id="feedbackText"></div>
+      </div>
+
+      <!-- Property Info -->
+      <div class="property-info">
+        <input class="full-width" type="text" id="ownerName" placeholder="Prepared for: Owner Name">
+        <input class="full-width" type="text" id="propertyAddress" placeholder="Property Address">
+        <div class="full-width info-row3">
+          <select id="propertyState"><option value="">State…</option></select>
+          <input type="text" id="agentName" placeholder="Agent: dan cruz">
+          <input type="date" id="scoreDate">
+        </div>
+      </div>
+
+      <!-- PART 1: CONDITION -->
+      <div class="section">
+        <div class="section-header">
+          <span class="section-title">Part 1 · Condition of Property</span>
+        </div>
+        <div class="section-subtitle">How well does your property meet the following criteria?</div>
+        <div class="criteria" id="part1">
+          <label class="criterion"><input type="checkbox" data-pts="2" data-section="1"><span class="criterion-text">Your property has better than average curb appeal</span><span class="criterion-pts pos">+2</span></label>
+          <label class="criterion"><input type="checkbox" data-pts="2" data-section="1"><span class="criterion-text">Your interior is light, bright and clean</span><span class="criterion-pts pos">+2</span></label>
+          <label class="criterion"><input type="checkbox" data-pts="2" data-section="1"><span class="criterion-text">Your rooms are uncluttered and look as large as possible</span><span class="criterion-pts pos">+2</span></label>
+          <label class="criterion"><input type="checkbox" data-pts="2" data-section="1"><span class="criterion-text">Your decorating is attractive and neutral</span><span class="criterion-pts pos">+2</span></label>
+          <label class="criterion"><input type="checkbox" data-pts="2" data-section="1"><span class="criterion-text">You don't have any pets</span><span class="criterion-pts pos">+2</span></label>
+          <label class="criterion"><input type="checkbox" data-pts="2" data-section="1"><span class="criterion-text">Your home is free of any unpleasant odors</span><span class="criterion-pts pos">+2</span></label>
+          <label class="criterion"><input type="checkbox" data-pts="-5" data-section="1"><span class="criterion-text">You have pets that may interfere with showings</span><span class="criterion-pts neg">−5</span></label>
+          <label class="criterion"><input type="checkbox" data-pts="-10" data-section="1"><span class="criterion-text">Your floor plan is obsolete or outdated</span><span class="criterion-pts neg">−10</span></label>
+          <label class="criterion"><input type="checkbox" data-pts="-10" data-section="1"><span class="criterion-text">Your home is in substandard condition for the area</span><span class="criterion-pts neg">−10</span></label>
+          <label class="criterion"><input type="checkbox" data-pts="-10" data-section="1"><span class="criterion-text">Your home is in dire need of updating</span><span class="criterion-pts neg">−10</span></label>
+          <label class="criterion"><input type="checkbox" data-pts="-10" data-section="1"><span class="criterion-text">Your home is adjacent to an obvious eye-sore</span><span class="criterion-pts neg">−10</span></label>
+        </div>
+        <div class="section-subtotal"><span>Condition Subtotal</span><span id="sub1">0</span></div>
+      </div>
+
+      <!-- PART 2: LOCATION -->
+      <div class="section">
+        <div class="section-header">
+          <span class="section-title">Part 2 · Location, Location, Location</span>
+        </div>
+        <div class="section-subtitle">How well does your property compare to similar properties?</div>
+        <div class="criteria" id="part2">
+          <label class="criterion"><input type="checkbox" data-pts="2" data-section="2"><span class="criterion-text">Your property is in the low end of a prestigious neighborhood</span><span class="criterion-pts pos">+2</span></label>
+          <label class="criterion"><input type="checkbox" data-pts="2" data-section="2"><span class="criterion-text">Your street has excellent curb appeal</span><span class="criterion-pts pos">+2</span></label>
+          <label class="criterion"><input type="checkbox" data-pts="2" data-section="2"><span class="criterion-text">Your property has an excellent and valued view</span><span class="criterion-pts pos">+2</span></label>
+          <label class="criterion"><input type="checkbox" data-pts="2" data-section="2"><span class="criterion-text">Your area has a reputation as an excellent school system</span><span class="criterion-pts pos">+2</span></label>
+          <label class="criterion"><input type="checkbox" data-pts="2" data-section="2"><span class="criterion-text">Your area has shopping within close proximity</span><span class="criterion-pts pos">+2</span></label>
+          <label class="criterion"><input type="checkbox" data-pts="2" data-section="2"><span class="criterion-text">Your property is located within a gated community</span><span class="criterion-pts pos">+2</span></label>
+          <label class="criterion"><input type="checkbox" data-pts="5" data-section="2"><span class="criterion-text">Your neighboring properties are well cared for</span><span class="criterion-pts pos">+5</span></label>
+          <label class="criterion"><input type="checkbox" data-pts="-10" data-section="2"><span class="criterion-text">Your property is located near high traffic or noise issues</span><span class="criterion-pts neg">−10</span></label>
+          <label class="criterion"><input type="checkbox" data-pts="-10" data-section="2"><span class="criterion-text">Your area has been stigmatized by crime or other issues</span><span class="criterion-pts neg">−10</span></label>
+        </div>
+        <div class="section-subtotal"><span>Location Subtotal</span><span id="sub2">0</span></div>
+      </div>
+
       <!-- PART 3: AVAILABILITY -->
       <div class="section">
         <div class="section-header">
@@ -407,38 +517,37 @@
         <div class="section-subtotal"><span>Pricing Subtotal</span><span id="sub6">0</span></div>
       </div>
 
-      <!-- Paywall overlay -->
-      <div id="paywallOverlay" style="display:none">
-        <h2>Unlock the Full Grader</h2>
-        <p>You've seen Condition and Location. Get all 6 sections, your total score, verdict, printable report, and notes.</p>
-        <div class="price">$5</div>
-        <div class="price-sub">one-time payment · lifetime access</div>
-        <button onclick="startCheckout()">Unlock with Stripe →</button>
-        <div class="pw-loading" id="pwLoading" style="display:none"></div>
+      <!-- Notes -->
+      <div class="notes-area">
+        <label>Notes &amp; Recommendations</label>
+        <textarea id="notes" placeholder="Enter your observations, recommendations, or action items for this property..."></textarea>
       </div>
-    </div>
 
-    <!-- Notes -->
-    <div class="notes-area">
-      <label>Notes &amp; Recommendations</label>
-      <textarea id="notes" placeholder="Enter your observations, recommendations, or action items for this property..."></textarea>
-    </div>
+      <!-- Save / Share -->
+      <div class="save-bar" id="saveBar">
+        <button class="btn btn-primary" id="saveBtn" style="flex:none;padding:14px 28px" onclick="saveProperty()">💾 Save Property</button>
+        <button class="btn btn-secondary" id="shareBtn" style="flex:none;padding:14px 28px;display:none" onclick="toggleShareBox()">🔗 Share</button>
+        <span class="save-status" id="saveStatus"></span>
+      </div>
+      <div class="share-box" id="shareBox" style="display:none">
+        <input type="text" id="shareLink" readonly>
+        <button onclick="copyShareLink()">Copy</button>
+      </div>
 
-    <!-- Save indicator -->
-    <div class="save-indicator" id="saveIndicator">💾 Auto-saved to your browser</div>
+      <!-- Actions -->
+      <div class="actions">
+        <button class="btn btn-primary" onclick="window.print()">🖨 Print Report</button>
+        <button class="btn btn-secondary" onclick="resetForm()">↺ Reset</button>
+      </div>
 
-    <!-- Actions -->
-    <div class="actions">
-      <button class="btn btn-primary" onclick="window.print()">🖨 Print Report</button>
-      <button class="btn btn-secondary" onclick="resetForm()">↺ Reset</button>
-    </div>
+      <!-- CTA -->
+      <div class="cta-banner">
+        <div class="cta-label">Ready to List?</div>
+        <div class="cta-heading">Let's turn your score into a sold sign</div>
+        <div class="cta-body">I'll walk through this scorecard with you, build a pricing strategy tailored to your property, and write the listing that gets buyers through the door.</div>
+        <a href="https://calendly.com/negotiatorsondemand/virtualcoffeewithdan" target="_blank" rel="noopener" class="cta-button">📅 Book a Call with dan cruz</a>
+      </div>
 
-    <!-- CTA -->
-    <div class="cta-banner">
-      <div class="cta-label">Ready to List?</div>
-      <div class="cta-heading">Let's turn your score into a sold sign</div>
-      <div class="cta-body">I'll walk through this scorecard with you, build a pricing strategy tailored to your property, and write the listing that gets buyers through the door.</div>
-      <a href="https://calendly.com/negotiatorsondemand/virtualcoffeewithdan" target="_blank" rel="noopener" class="cta-button">📅 Book a Call with dan cruz</a>
     </div>
 
     <!-- Footer -->
@@ -449,12 +558,23 @@
   </div>
 </div>
 
+<!-- Subscribe modal -->
+<div id="subscribeModal" class="modal-backdrop" style="display:none">
+  <div class="modal">
+    <h2>Subscribe to Save &amp; Share</h2>
+    <p>Save this property, come back anytime to keep working on it, share a link with your agent, and get direct feedback from dan cruz — for as long as you're selling.</p>
+    <div class="price">$10<span style="font-size:16px">/mo</span></div>
+    <div class="price-sub">cancel anytime</div>
+    <button class="modal-subscribe" onclick="startSubscribeCheckout()" id="subscribeBtn">Subscribe with Stripe →</button>
+    <button class="modal-close" onclick="closeSubscribeModal()">Not now</button>
+    <div class="modal-loading" id="subscribeLoading" style="display:none"></div>
+  </div>
+</div>
+
 <script>
 'use strict';
 const SUPABASE_URL = 'https://iubxycckgrplbpdbncfk.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_L92hXORLG-Df4WiZxVq-6Q_X3AB47yl';
-const STORAGE_KEY = 'nod_scorecard_v2';
-const VISITOR_KEY = 'nod_scorecard_visitor_id';
 const SECTION_NAMES = {
   1: 'Condition of Property',
   2: 'Location',
@@ -463,6 +583,7 @@ const SECTION_NAMES = {
   5: 'Acceptable Terms',
   6: 'Pricing',
 };
+const STATES = ['AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY','DC'];
 
 // ponytail: single shared supabase client (UMD global loaded via defer in head)
 let _sb = null;
@@ -471,7 +592,7 @@ function sb() {
   return _sb;
 }
 
-// ponytail: thresholds straight from the source doc (60/70/80/90/100)
+// ponytail: thresholds straight from the source doc (60/70/80/90/100) — untouched
 const VERDICTS = [
   [100, 'Start Packing', 'You have done everything right — go ahead and start packing!', '#7ec8a0'],
   [90,  'Sells Quickly', 'Your home has a strong chance of selling and should sell quicker than other homes on the market.', '#a8c88a'],
@@ -481,12 +602,24 @@ const VERDICTS = [
 ];
 
 const $ = id => document.getElementById(id);
+let currentUser = null;
+let currentPropertyId = null;
+let currentShareToken = null;
+let subActive = false;
+let sharedMode = false;
 
+// ─── state select ───
+(function populateStates() {
+  const sel = $('propertyState');
+  STATES.forEach(s => { const o = document.createElement('option'); o.value = s; o.textContent = s; sel.appendChild(o); });
+})();
+
+// ─── scoring (unchanged logic) ───
 function update() {
   let total = 0;
   const subs = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
 
-  document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+  document.querySelectorAll('input[type="checkbox"][data-section]').forEach(cb => {
     if (cb.checked) {
       const pts = parseInt(cb.dataset.pts);
       const sec = parseInt(cb.dataset.section);
@@ -505,25 +638,25 @@ function update() {
 
   Object.keys(subs).forEach(s => { const el = $('sub' + s); if (el) el.textContent = subs[s]; });
 
-  saveState();
+  if (!sharedMode) saveDraftLocal();
+  return { total, verdict: total ? v[1] : '', advice: total ? v[2] : '' };
 }
 
 function sectionScoreSnapshot() {
   const subs = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
-  document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+  document.querySelectorAll('input[type="checkbox"][data-section]').forEach(cb => {
     if (!cb.checked) return;
     const pts = parseInt(cb.dataset.pts);
     const sec = parseInt(cb.dataset.section);
     subs[sec] += pts;
   });
   return Object.fromEntries(Object.entries(subs).map(([section, score]) => [
-    section,
-    { label: SECTION_NAMES[section], score },
+    section, { label: SECTION_NAMES[section], score },
   ]));
 }
 
 function answerSnapshot() {
-  return [...document.querySelectorAll('input[type="checkbox"]')].map((cb, index) => {
+  return [...document.querySelectorAll('input[type="checkbox"][data-section]')].map((cb, index) => {
     const row = cb.closest('.criterion');
     return {
       index,
@@ -533,19 +666,6 @@ function answerSnapshot() {
       checked: cb.checked,
     };
   });
-}
-
-function scorecardVisitorId() {
-  try {
-    let id = localStorage.getItem(VISITOR_KEY);
-    if (!id) {
-      id = (crypto.randomUUID && crypto.randomUUID()) || `visitor-${Date.now()}-${Math.random().toString(36).slice(2)}`;
-      localStorage.setItem(VISITOR_KEY, id);
-    }
-    return id;
-  } catch(e) {
-    return null;
-  }
 }
 
 // Exclusive groups: pricing tier & commission level — checking one unchecks the others
@@ -558,74 +678,51 @@ document.querySelectorAll('input[data-exclusive]').forEach(cb => {
   });
 });
 
-// ─── localStorage persistence ───
-function saveState() {
-  const data = {
-    checkboxes: [...document.querySelectorAll('input[type="checkbox"]')].map(cb => cb.checked),
+// ─── form <-> object ───
+function collectFormData() {
+  return {
     ownerName: $('ownerName').value,
     propertyAddress: $('propertyAddress').value,
+    propertyState: $('propertyState').value,
     agentName: $('agentName').value,
     scoreDate: $('scoreDate').value,
     notes: $('notes').value,
+    checkboxes: [...document.querySelectorAll('input[type="checkbox"][data-section]')].map(cb => cb.checked),
   };
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) { /* quota exceeded, silent */ }
-  $('saveIndicator').textContent = '💾 Auto-saved to your browser';
-  syncToCloud(data);
 }
 
-// ─── Supabase sync — ponytail: debounced insert-only snapshots, fire-and-forget ───
-let _syncT = null;
-async function syncToCloud(data) {
-  clearTimeout(_syncT);
-  _syncT = setTimeout(async () => {
-    try {
-      const { data: { user } } = await sb().auth.getUser();
-      const score = parseInt($('scoreNumber').textContent) || 0;
-      const { error } = await sb().from('marketability_submissions').insert({
-        owner_name: data.ownerName || null,
-        property_address: data.propertyAddress || null,
-        agent_name: data.agentName || null,
-        score_date: data.scoreDate || null,
-        total_score: score,
-        verdict: $('scoreVerdict').textContent,
-        advice: $('scoreAdvice').textContent || null,
-        section_scores: sectionScoreSnapshot(),
-        answers: { ...data, criteria: answerSnapshot() },
-        notes: data.notes || null,
-        site: 'dancruzhomes.com',
-        visitor_id: scorecardVisitorId(),
-        user_email: user?.email || null,
-      });
-      if (error) throw error;
-      $('saveIndicator').textContent = '💾 Saved to browser + cloud';
-    } catch(e) {
-      $('saveIndicator').textContent = '💾 Saved to browser; cloud sync pending';
-    }
-  }, 1200);
+function applyFormData(data) {
+  if (!data) return;
+  $('ownerName').value = data.ownerName || '';
+  $('propertyAddress').value = data.propertyAddress || '';
+  $('propertyState').value = data.propertyState || '';
+  $('agentName').value = data.agentName || 'dan cruz';
+  $('scoreDate').value = data.scoreDate || new Date().toISOString().split('T')[0];
+  $('notes').value = data.notes || '';
+  if (data.checkboxes) {
+    document.querySelectorAll('input[type="checkbox"][data-section]').forEach((cb, i) => { cb.checked = !!data.checkboxes[i]; });
+  }
 }
 
-function loadState() {
+// ─── localStorage draft (per property, survives the Stripe redirect round-trip) ───
+function draftKey() { return 'nod_scorecard_draft:' + (currentPropertyId || 'new'); }
+function saveDraftLocal() {
+  try { localStorage.setItem(draftKey(), JSON.stringify(collectFormData())); } catch (e) { /* quota, ignore */ }
+  $('saveStatus').textContent = currentPropertyId ? '' : 'Draft kept locally until you save';
+}
+function loadDraftLocal() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(draftKey());
     if (!raw) return false;
-    const data = JSON.parse(raw);
-    if (!data.checkboxes) return false;
-
-    document.querySelectorAll('input[type="checkbox"]').forEach((cb, i) => {
-      cb.checked = !!data.checkboxes[i];
-    });
-    if (data.ownerName) $('ownerName').value = data.ownerName;
-    if (data.propertyAddress) $('propertyAddress').value = data.propertyAddress;
-    if (data.agentName) $('agentName').value = data.agentName;
-    if (data.scoreDate) $('scoreDate').value = data.scoreDate;
-    if (data.notes) $('notes').value = data.notes;
+    applyFormData(JSON.parse(raw));
     return true;
-  } catch(e) { return false; }
+  } catch (e) { return false; }
 }
 
 function resetForm() {
-  document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+  document.querySelectorAll('input[type="checkbox"][data-section]').forEach(cb => cb.checked = false);
   $('ownerName').value = $('propertyAddress').value = '';
+  $('propertyState').value = '';
   $('agentName').value = 'dan cruz';
   $('scoreDate').value = new Date().toISOString().split('T')[0];
   $('notes').value = '';
@@ -634,109 +731,343 @@ function resetForm() {
 
 // ─── Auth ───
 async function signInWithGoogle() {
-  await sb().auth.signInWithOAuth({ provider: 'google', options: { redirectTo: window.location.href } });
+  await sb().auth.signInWithOAuth({ provider: 'google', options: { redirectTo: window.location.href.split('?')[0] } });
 }
-
 async function signOut() {
   await sb().auth.signOut();
-  location.reload();
+  location.href = location.pathname;
+}
+async function accessToken() {
+  const { data } = await sb().auth.getSession();
+  return data.session?.access_token || '';
 }
 
-// ─── Paywall ───
-function unlockGrader() {
-  $('appContainer').classList.remove('locked');
-  $('paywallOverlay').style.display = 'none';
+// ─── Consent / disclaimer ───
+async function ensureProfile(user) {
+  await sb().from('profiles').upsert({ user_id: user.id }, { onConflict: 'user_id', ignoreDuplicates: true });
 }
-function lockGrader() {
-  $('appContainer').classList.add('locked');
-  $('paywallOverlay').style.display = 'block';
-}
-
-async function checkPaymentStatus(email) {
+async function acceptDisclaimer() {
+  if (!$('consentCheck').checked) return;
+  $('consentBtn').disabled = true;
+  $('consentBtn').textContent = 'Saving…';
+  await sb().from('profiles').update({ consented_at: new Date().toISOString() }).eq('user_id', currentUser.id);
   try {
-    const { data, error } = await sb()
-      .from('grader_access')
-      .select('status')
-      .eq('email', email)
-      .eq('status', 'paid')
-      .limit(1);
-    if (error) throw error;
-    return data && data.length > 0;
-  } catch(e) { return false; }
-}
-
-async function startCheckout() {
-  const { data: { user } } = await sb().auth.getUser();
-  if (!user?.email) { alert('Please sign in first.'); return; }
-  const btn = $('paywallOverlay').querySelector('button');
-  btn.disabled = true; btn.textContent = 'Redirecting to Stripe…';
-  try {
-    const res = await fetch(SUPABASE_URL + '/functions/v1/create-checkout', {
+    await fetch(SUPABASE_URL + '/functions/v1/subscribe-convertkit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY },
+      body: JSON.stringify({ email: currentUser.email }),
+    });
+  } catch (e) { /* lead is already saved server-side either way; ConvertKit sync can lag */ }
+  $('consentGate').style.display = 'none';
+  await afterAuthReady();
+}
+
+// ─── Subscription ───
+async function loadSubscription() {
+  const { data } = await sb().from('subscriptions').select('status').eq('user_id', currentUser.id).maybeSingle();
+  subActive = data?.status === 'active';
+  $('manageSubLink').style.display = subActive ? 'inline' : 'none';
+}
+function openSubscribeModal() { $('subscribeModal').style.display = 'flex'; }
+function closeSubscribeModal() { $('subscribeModal').style.display = 'none'; }
+
+async function startSubscribeCheckout() {
+  sessionStorage.setItem('nod_pending_save', '1');
+  sessionStorage.setItem('nod_pending_pid', currentPropertyId || '');
+  const btn = $('subscribeBtn');
+  btn.disabled = true;
+  $('subscribeLoading').style.display = 'block';
+  $('subscribeLoading').textContent = 'Redirecting to Stripe…';
+  try {
+    const token = await accessToken();
+    const base = location.href.split('?')[0];
+    const res = await fetch(SUPABASE_URL + '/functions/v1/create-checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
       body: JSON.stringify({
-        email: user.email,
-        success_url: window.location.href.split('?')[0] + '?status=success',
-        cancel_url: window.location.href.split('?')[0],
+        success_url: base + '?status=success',
+        cancel_url: base,
       }),
     });
     const json = await res.json();
     if (json.url) { window.location.href = json.url; return; }
-    throw new Error('No checkout URL');
-  } catch(e) {
-    btn.disabled = false; btn.textContent = 'Unlock with Stripe →';
+    throw new Error(json.error || 'No checkout URL');
+  } catch (e) {
+    btn.disabled = false;
+    $('subscribeLoading').style.display = 'none';
     alert('Checkout failed to start. Please try again.');
   }
 }
 
-async function pollForPayment(email, attempts) {
-  for (let i = 0; i < attempts; i++) {
-    const paid = await checkPaymentStatus(email);
-    if (paid) { unlockGrader(); return true; }
-    await new Promise(r => setTimeout(r, 2000));
+async function openBillingPortal() {
+  try {
+    const token = await accessToken();
+    const res = await fetch(SUPABASE_URL + '/functions/v1/create-portal-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+      body: JSON.stringify({ return_url: location.href.split('?')[0] }),
+    });
+    const json = await res.json();
+    if (json.url) { window.location.href = json.url; return; }
+    throw new Error(json.error || 'No portal URL');
+  } catch (e) {
+    alert('Could not open billing portal. Please try again.');
   }
-  return false;
 }
 
-// ─── Init ───
-document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.addEventListener('change', update));
-['ownerName', 'propertyAddress', 'agentName', 'scoreDate', 'notes'].forEach(id => {
-  $(id).addEventListener('input', saveState);
-});
+// ─── Save / Share ───
+async function saveProperty() {
+  if (!subActive) { openSubscribeModal(); return; }
 
-// Try load saved state; if not, set defaults
-if (!loadState()) {
-  $('scoreDate').value = new Date().toISOString().split('T')[0];
-  $('agentName').value = 'dan cruz';
-}
-update();
+  const form = collectFormData();
+  const scored = update();
+  const payload = {
+    owner_user_id: currentUser.id,
+    owner_email: currentUser.email,
+    owner_name: form.ownerName || null,
+    address: form.propertyAddress || null,
+    state: form.propertyState || null,
+    agent_name: form.agentName || null,
+    score_date: form.scoreDate || null,
+    total_score: scored.total,
+    verdict: scored.verdict,
+    advice: scored.advice,
+    section_scores: sectionScoreSnapshot(),
+    answers: { criteria: answerSnapshot() },
+    notes: form.notes || null,
+    updated_at: new Date().toISOString(),
+  };
 
-// ─── Auth + paywall boot ───
-(async function boot() {
-  const params = new URLSearchParams(location.search);
-  const { data: { session } } = await sb().auth.getSession();
-  if (!session) {
-    $('loginGate').style.display = 'block';
+  $('saveStatus').textContent = 'Saving…';
+  let row, error;
+  if (currentPropertyId) {
+    ({ data: row, error } = await sb().from('properties').update(payload).eq('id', currentPropertyId).select().single());
+  } else {
+    ({ data: row, error } = await sb().from('properties').insert(payload).select().single());
+  }
+
+  if (error) {
+    $('saveStatus').textContent = 'Save failed — try again.';
     return;
   }
-  const email = session.user.email;
-  $('userEmail').textContent = email;
+
+  currentPropertyId = row.id;
+  currentShareToken = row.share_token;
+  $('saveStatus').textContent = '💾 Saved ' + new Date().toLocaleTimeString();
+  $('shareBtn').style.display = 'inline-block';
+  $('dashboardLink').style.display = 'inline';
+}
+
+function toggleShareBox() {
+  const box = $('shareBox');
+  if (box.style.display === 'flex') { box.style.display = 'none'; return; }
+  $('shareLink').value = location.origin + location.pathname + '?share=' + currentShareToken;
+  box.style.display = 'flex';
+}
+function copyShareLink() {
+  $('shareLink').select();
+  navigator.clipboard?.writeText($('shareLink').value);
+}
+
+// ─── Dashboard ───
+async function loadProperties() {
+  const { data } = await sb().from('properties').select('*').eq('owner_user_id', currentUser.id).order('updated_at', { ascending: false });
+  return data || [];
+}
+function renderDashboard(list) {
+  const el = $('propertyList');
+  el.innerHTML = '';
+  if (!list.length) {
+    el.innerHTML = '<div class="empty-state">No saved properties yet — start one below.</div>';
+    return;
+  }
+  list.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'property-card';
+    card.onclick = () => openForm(p.id);
+    const addr = p.address || '(no address yet)';
+    const updated = p.updated_at ? new Date(p.updated_at).toLocaleDateString() : '';
+    card.innerHTML = `
+      <div class="pc-main">
+        <div class="pc-address">${escapeHtml(addr)}</div>
+        <div class="pc-meta">${p.state ? escapeHtml(p.state) + ' · ' : ''}Updated ${updated}${p.verdict ? ' · ' + escapeHtml(p.verdict) : ''}</div>
+      </div>
+      <div class="pc-score">${p.total_score ?? 0}</div>
+    `;
+    el.appendChild(card);
+  });
+}
+function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+
+async function openDashboard() {
+  $('formArea').style.display = 'none';
+  $('dashboard').style.display = 'block';
+  renderDashboard(await loadProperties());
+}
+
+async function openForm(propertyId, preferLocalDraft) {
+  currentPropertyId = propertyId;
+  currentShareToken = null;
+  $('dashboard').style.display = 'none';
+  $('formArea').style.display = 'block';
+  $('shareBtn').style.display = 'none';
+  $('shareBox').style.display = 'none';
+  $('feedbackBox').style.display = 'none';
+  $('saveStatus').textContent = '';
+
+  // ponytail: on resume-after-Stripe-redirect (preferLocalDraft), an in-progress
+  // edit sitting in localStorage should win over whatever's already in the DB —
+  // otherwise re-fetching here would silently discard the edit that triggered
+  // the subscribe flow in the first place.
+  if (propertyId && preferLocalDraft && loadDraftLocal()) {
+    const { data: row } = await sb().from('properties').select('share_token, agent_feedback').eq('id', propertyId).single();
+    if (row) {
+      currentShareToken = row.share_token;
+      $('shareBtn').style.display = 'inline-block';
+      if (row.agent_feedback) {
+        $('feedbackText').textContent = row.agent_feedback;
+        $('feedbackBox').style.display = 'block';
+      }
+    }
+  } else if (propertyId) {
+    const { data: row } = await sb().from('properties').select('*').eq('id', propertyId).single();
+    if (row) {
+      currentShareToken = row.share_token;
+      applyFormData({
+        ownerName: row.owner_name, propertyAddress: row.address, propertyState: row.state,
+        agentName: row.agent_name, scoreDate: row.score_date, notes: row.notes,
+        checkboxes: (row.answers?.criteria || []).map(c => c.checked),
+      });
+      $('shareBtn').style.display = 'inline-block';
+      if (row.agent_feedback) {
+        $('feedbackText').textContent = row.agent_feedback;
+        $('feedbackBox').style.display = 'block';
+      }
+    }
+  } else if (!loadDraftLocal()) {
+    resetForm();
+  }
+  update();
+}
+
+// ─── Shared (read-only) view ───
+async function enterSharedMode(token) {
+  sharedMode = true;
+  $('loginGate').style.display = 'none';
+  $('consentGate').style.display = 'none';
+  $('authBar').style.display = 'none';
+  $('dashboard').style.display = 'none';
+  $('appContainer').style.display = 'block';
+  $('formArea').style.display = 'block';
+  $('sharedBanner').style.display = 'block';
+  $('saveBar').style.display = 'none';
+  $('shareBox').style.display = 'none';
+
+  const { data, error } = await sb().rpc('get_property_by_share_token', { token });
+  const row = Array.isArray(data) ? data[0] : data;
+  if (error || !row) {
+    $('sharedBanner').textContent = 'This share link is invalid or has expired.';
+    document.querySelectorAll('.section, .notes-area, .actions, .cta-banner, .property-info, .score-panel').forEach(el => el.style.display = 'none');
+    return;
+  }
+
+  applyFormData({
+    ownerName: row.owner_name, propertyAddress: row.address, propertyState: row.state,
+    agentName: row.agent_name, scoreDate: row.score_date, notes: row.notes,
+    checkboxes: (row.answers?.criteria || []).map(c => c.checked),
+  });
+  document.querySelectorAll('input, textarea, select').forEach(el => el.disabled = true);
+
+  $('scoreNumber').textContent = row.total_score ?? 0;
+  const v = VERDICTS.find(([min]) => (row.total_score ?? 0) >= min);
+  $('scoreNumber').style.color = v[3];
+  $('scoreBar').style.width = Math.max(0, Math.min(row.total_score ?? 0, 100)) + '%';
+  $('scoreBar').style.background = v[3];
+  $('scoreVerdict').textContent = row.verdict || '';
+  $('scoreAdvice').textContent = row.advice || '';
+  Object.entries(row.section_scores || {}).forEach(([s, v2]) => { const el = $('sub' + s); if (el) el.textContent = v2.score; });
+
+  if (row.agent_feedback) {
+    $('feedbackText').textContent = row.agent_feedback;
+    $('feedbackBox').style.display = 'block';
+  }
+}
+
+// ─── Boot ───
+function qs(name) { return new URLSearchParams(location.search).get(name); }
+
+async function afterAuthReady() {
+  $('userEmail').textContent = currentUser.email;
   $('loginGate').style.display = 'none';
   $('appContainer').style.display = 'block';
 
-  const paid = await checkPaymentStatus(email);
-  if (paid) {
-    unlockGrader();
-  } else {
-    lockGrader();
-    if (params.get('status') === 'success') {
-      $('pwLoading').style.display = 'block';
-      $('pwLoading').textContent = 'Verifying payment…';
-      const ok = await pollForPayment(email, 5);
-      $('pwLoading').style.display = 'none';
-      if (!ok) $('pwLoading').textContent = 'Payment not confirmed yet — refresh in a moment.';
+  await loadSubscription();
+
+  const { data: adminRow } = await sb().from('profiles').select('is_admin').eq('user_id', currentUser.id).maybeSingle();
+  $('adminLink').style.display = adminRow?.is_admin ? 'inline' : 'none';
+
+  const pendingSave = sessionStorage.getItem('nod_pending_save');
+  const pendingPid = sessionStorage.getItem('nod_pending_pid');
+  if (qs('status') === 'success') {
+    // subscription webhook may take a moment — poll briefly before proceeding
+    for (let i = 0; i < 6 && !subActive; i++) {
+      await new Promise(r => setTimeout(r, 1500));
+      await loadSubscription();
     }
   }
+
+  const properties = await loadProperties();
+
+  if (pendingSave === '1' && subActive) {
+    sessionStorage.removeItem('nod_pending_save');
+    sessionStorage.removeItem('nod_pending_pid');
+    await openForm(pendingPid || null, true);
+    await saveProperty();
+    return;
+  }
+
+  $('dashboardLink').style.display = properties.length ? 'inline' : 'none';
+
+  const pid = qs('pid');
+  if (pid) {
+    await openForm(pid);
+  } else if (properties.length) {
+    await openDashboard();
+  } else {
+    await openForm(null);
+  }
+}
+
+(async function boot() {
+  document.querySelectorAll('input[type="checkbox"][data-section]').forEach(cb => cb.addEventListener('change', update));
+  ['ownerName', 'propertyAddress', 'propertyState', 'agentName', 'scoreDate', 'notes'].forEach(id => {
+    $(id).addEventListener('input', () => { if (!sharedMode) saveDraftLocal(); });
+  });
+
+  const shareToken = qs('share');
+  if (shareToken) {
+    await enterSharedMode(shareToken);
+    return;
+  }
+
+  const { data: { session } } = await sb().auth.getSession();
+  if (!session) {
+    $('loginGate').style.display = 'block';
+    $('appContainer').style.display = 'none';
+    return;
+  }
+
+  currentUser = session.user;
+  await ensureProfile(currentUser);
+
+  const { data: profile } = await sb().from('profiles').select('consented_at').eq('user_id', currentUser.id).maybeSingle();
+  if (!profile?.consented_at) {
+    $('consentEmail').textContent = currentUser.email;
+    $('consentGate').style.display = 'block';
+    return;
+  }
+
+  await afterAuthReady();
 })();
 </script>
 </body>
