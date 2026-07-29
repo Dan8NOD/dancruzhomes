@@ -184,6 +184,23 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
 .note-card h3{font-size:20px;font-weight:500;line-height:1.25;margin-bottom:10px}
 .note-card p{color:var(--ink-2);font-size:14px;line-height:1.55;margin-bottom:16px}
 .note-card .read{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+
+/* ── quick find — site search ── */
+.quickfind{position:relative;padding:14px var(--gutter);border-bottom:1px solid var(--line);background:var(--paper)}
+.qf-box{position:relative;max-width:640px;margin:0 auto}
+.qf-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:16px;height:16px;fill:none;stroke:var(--muted);stroke-width:2;pointer-events:none}
+.quickfind input[type=search]{width:100%;padding:12px 16px 12px 40px;background:var(--paper-2);border:1px solid var(--line-2);border-radius:20px;font-size:14px;font-family:inherit;color:var(--ink)}
+.quickfind input[type=search]:focus{outline:none;border-color:var(--gold)}
+.quickfind input[type=search]::-webkit-search-cancel-button{cursor:pointer}
+.qf-results{position:absolute;top:100%;left:var(--gutter);right:var(--gutter);max-width:640px;margin:4px auto 0;background:var(--paper);border:1px solid var(--line-2);border-radius:8px;box-shadow:0 12px 32px rgba(0,0,0,.14);list-style:none;overflow:hidden;z-index:20;max-height:70vh;overflow-y:auto}
+.qf-results[hidden]{display:none}
+.qf-result{padding:12px 16px;cursor:pointer;border-bottom:1px solid var(--line)}
+.qf-result:last-child{border-bottom:none}
+.qf-result:hover,.qf-result[aria-selected=true]{background:var(--paper-2)}
+.qf-result .qf-cat{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:3px}
+.qf-result .qf-title{font-size:14px;font-weight:600;color:var(--ink)}
+.qf-result .qf-snip{font-size:12px;color:var(--muted);margin-top:2px;line-height:1.4}
+.qf-empty{padding:16px;font-size:13px;color:var(--muted);text-align:center}
 </style>
 <!-- ponytail: AEO — JSON-LD RealEstateAgent -->
 <script type="application/ld+json">
@@ -242,6 +259,192 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
   });
   document.addEventListener('keydown', function(e){
     if(e.key === 'Escape' && links.classList.contains('open')){ setOpen(false); toggle.focus(); }
+  });
+})();
+</script>
+
+<!-- ── QUICK FIND — site search. A separate bar below the nav rather than
+     crammed into it: the nav row is already at 8 links (see the breakpoint
+     comment above), and a search input in that same flex row would just
+     reintroduce a width-crowding problem on the same tablet/small-desktop
+     sizes that comment describes fixing. Deliberately not sticky either —
+     stacking two sticky bars is a common source of overlap bugs, and this
+     doesn't need to survive scrolling to do its job.
+     SITE_INDEX is a small hand-maintained index of real page sections —
+     not a full-text search engine. Update it when a section's facts change
+     (specs, pipeline numbers, active builds) or a new one is added. ── -->
+<div class="quickfind">
+  <div class="qf-box" role="search">
+    <svg class="qf-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+    <label for="siteSearchInput" class="sr-only">Search the site</label>
+    <input type="search" id="siteSearchInput" autocomplete="off" placeholder="Find anything — a location, price, size, referral program…"
+      role="combobox" aria-expanded="false" aria-controls="siteSearchResults" aria-autocomplete="list">
+  </div>
+  <ul class="qf-results" id="siteSearchResults" role="listbox" aria-label="Search suggestions" hidden></ul>
+</div>
+<script>
+(function(){
+  // ponytail: kw is space-separated search terms, not shown to the user —
+  // snippet/title are. Keep facts here in sync with the sections they
+  // point to; this is hand-maintained, nothing generates it.
+  var SITE_INDEX = [
+    { title: 'Property Readiness Grader', cat: 'Tool', href: 'grader.html',
+      snippet: 'Free 6-part scorecard — is your current home ready to sell? $10/mo unlocks save, share, and feedback.',
+      kw: 'grader scorecard score sell house ready readiness free portal save share feedback condition marketing terms tool' },
+    { title: 'Bring your lot — new construction', cat: 'Build', href: '#inquire',
+      snippet: 'Send a lot address, get a price, floor plan, and finish spec before you sign anything.',
+      kw: 'lot build new construction custom home inquire address quote' },
+    { title: 'Buy or sell an existing home', cat: 'Brokerage', href: '#brokerage',
+      snippet: 'Licensed IL brokerage services — a real CMA for sellers, full representation for buyers.',
+      kw: 'buy sell buyer seller existing home listing cma brokerage licensed agent represent' },
+    { title: 'Pricing', cat: 'Info', href: '#inquire',
+      snippet: 'Fixed at contract, quoted per lot — no upgrades sold after signing, no surprise change orders.',
+      kw: 'price cost pricing how much fixed quote money' },
+    { title: 'Home size & specs', cat: 'Specs', href: '#specs',
+      snippet: '3,000–8,000 sqft, 3–6 bedrooms, ICF + ERV construction, 9–14 month build cycle.',
+      kw: 'size square feet sqft footprint bedrooms beds specs spec energy icf erv construction materials minimalist style features' },
+    { title: 'The build process', cat: 'Process', href: '#process',
+      snippet: 'Four steps: Site & Program, Design & Permit, Build, Commissioning.',
+      kw: 'process how it works steps timeline schedule permit' },
+    { title: 'West Loop — Minimalist Loft', cat: 'Active build', href: '#communities',
+      snippet: '3,400 sqft, 4 bed / 3.5 bath. Pre-build, demo permits issued.',
+      kw: 'west loop loft chicago inventory active current listing 3400 location' },
+    { title: 'Lincoln Park — Coach House ADU', cat: 'Active build', href: '#communities',
+      snippet: '1,200 sqft, 1 bed / 1.5 bath. Detached garage conversion, permitting.',
+      kw: 'lincoln park adu coach house garage inventory active current listing 1200 location' },
+    { title: 'Pilsen — Two-Flat Conversion', cat: 'Active build', href: '#communities',
+      snippet: '4,200 sqft, 6 bed / 4 bath. Multi-unit minimalist, planning stage.',
+      kw: 'pilsen two-flat twoflat multi-unit inventory active current listing 4200 location' },
+    { title: '50-home Midwest pipeline', cat: 'Pipeline', href: '#pipeline',
+      snippet: '3 phases, 2026–2030 — Illinois, Indiana, Wisconsin, Iowa, Michigan, Texas, Florida, Carolinas, Mountain West, EU.',
+      kw: 'pipeline expansion phases regions locations illinois indiana wisconsin iowa michigan texas florida carolinas mountain west eu bucharest where location' },
+    { title: 'Agent partner / referral program', cat: 'Referral', href: '#agents',
+      snippet: 'Out-of-state licensed brokers — co-brokered deal, written referral agreement, fee at close.',
+      kw: 'referral agent partner broker commission fee out of state nationwide' },
+    { title: 'Market Notes', cat: 'Read', href: 'notes.html',
+      snippet: 'Market updates, negotiation tactics, and neighborhood spotlights.',
+      kw: 'notes blog market negotiation tips neighborhood spotlight articles read' },
+    { title: 'How to read a market without the panic', cat: 'Read', href: 'notes.html#reading-the-market',
+      snippet: 'Months of supply, days on market, price-per-sqft — the three numbers that matter.',
+      kw: 'months of supply days on market price per square foot read panic buyer seller' },
+    { title: 'Never name your number first', cat: 'Read', href: 'notes.html#name-your-number',
+      snippet: 'Whoever anchors first sets the frame for the entire negotiation.',
+      kw: 'negotiation anchor tip number first offer ackerman' },
+    { title: 'West Loop, for people who actually live there', cat: 'Read', href: 'notes.html#west-loop-spotlight',
+      snippet: 'What to check before buying a converted loft here.',
+      kw: 'west loop spotlight neighborhood loft conversion' },
+    { title: 'Get the market update by email', cat: 'Newsletter', href: '#newsletter',
+      snippet: 'Monthly, under 200 words. Unsubscribe anytime.',
+      kw: 'newsletter subscribe email market update monthly' }
+  ];
+
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]; }); }
+
+  function searchSite(q){
+    q = q.trim().toLowerCase();
+    if(!q) return [];
+    return SITE_INDEX.map(function(item){
+      var title = item.title.toLowerCase();
+      var score = 0;
+      if(title === q) score = 100;
+      else if(title.indexOf(q) === 0) score = 80;
+      else if(title.indexOf(q) !== -1) score = 60;
+      else if((' ' + item.kw + ' ').indexOf(' ' + q) !== -1) score = 50;
+      else if(item.kw.indexOf(q) !== -1) score = 40;
+      else if(item.snippet.toLowerCase().indexOf(q) !== -1) score = 20;
+      return { item: item, score: score };
+    }).filter(function(s){ return s.score > 0; })
+      .sort(function(a, b){ return b.score - a.score; })
+      .slice(0, 6)
+      .map(function(s){ return s.item; });
+  }
+
+  var input = document.getElementById('siteSearchInput');
+  var list = document.getElementById('siteSearchResults');
+  if(!input || !list) return;
+  var activeIndex = -1;
+  var currentResults = [];
+
+  function render(results){
+    currentResults = results;
+    activeIndex = -1;
+    input.removeAttribute('aria-activedescendant');
+    if(!results.length){
+      list.innerHTML = '<li class="qf-empty">No matches — try &ldquo;lot&rdquo;, &ldquo;grader&rdquo;, or &ldquo;referral&rdquo;</li>';
+    } else {
+      list.innerHTML = results.map(function(item, i){
+        return '<li class="qf-result" role="option" id="qf-opt-' + i + '" aria-selected="false">' +
+          '<div class="qf-cat">' + esc(item.cat) + '</div>' +
+          '<div class="qf-title">' + esc(item.title) + '</div>' +
+          '<div class="qf-snip">' + esc(item.snippet) + '</div></li>';
+      }).join('');
+    }
+    list.hidden = false;
+    input.setAttribute('aria-expanded', 'true');
+  }
+
+  function close(){
+    list.hidden = true;
+    input.setAttribute('aria-expanded', 'false');
+    input.removeAttribute('aria-activedescendant');
+    activeIndex = -1;
+  }
+
+  function go(item){
+    if(!item) return;
+    if(item.href.charAt(0) === '#') location.hash = item.href;
+    else location.href = item.href;
+    close();
+    input.blur();
+  }
+
+  function setActive(i){
+    var opts = list.querySelectorAll('.qf-result');
+    opts.forEach(function(o){ o.setAttribute('aria-selected', 'false'); });
+    if(i >= 0 && opts[i]){
+      opts[i].setAttribute('aria-selected', 'true');
+      input.setAttribute('aria-activedescendant', opts[i].id);
+      opts[i].scrollIntoView({ block: 'nearest' });
+    } else {
+      input.removeAttribute('aria-activedescendant');
+    }
+    activeIndex = i;
+  }
+
+  input.addEventListener('input', function(){
+    var results = searchSite(input.value);
+    if(input.value.trim()) render(results);
+    else close();
+  });
+
+  input.addEventListener('focus', function(){
+    if(input.value.trim()) render(searchSite(input.value));
+  });
+
+  input.addEventListener('keydown', function(e){
+    if(list.hidden && e.key !== 'Escape') return;
+    if(e.key === 'ArrowDown'){
+      e.preventDefault();
+      setActive(Math.min(activeIndex + 1, currentResults.length - 1));
+    } else if(e.key === 'ArrowUp'){
+      e.preventDefault();
+      setActive(Math.max(activeIndex - 1, 0));
+    } else if(e.key === 'Enter'){
+      e.preventDefault();
+      go(activeIndex >= 0 ? currentResults[activeIndex] : currentResults[0]);
+    } else if(e.key === 'Escape'){
+      close();
+    }
+  });
+
+  list.addEventListener('click', function(e){
+    var li = e.target.closest('.qf-result');
+    if(!li) return;
+    go(currentResults[Array.prototype.indexOf.call(list.querySelectorAll('.qf-result'), li)]);
+  });
+
+  document.addEventListener('click', function(e){
+    if(!list.hidden && !e.target.closest('.quickfind')) close();
   });
 })();
 </script>
