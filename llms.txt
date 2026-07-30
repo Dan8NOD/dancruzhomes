@@ -39,8 +39,10 @@
 - Marketing: hello@negotiatorsondemand.com
 - Agent partner program: https://dancruzhomes.com/#agents (out-of-state broker referrals, referral fee on close)
 
-## Sister
-- Property management: https://fatcatpm.com
+## Related businesses
+- FatCat Property Management (https://fatcatpm.com) is a division of Dan
+  Cruz Homes — FatCat Asset Management is its investment/asset-management
+  arm. Not a separate parent company.
 - Negotiation training app: https://negotiatorsondemand.com
 
 ## Notes for crawlers
