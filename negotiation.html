@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Offer War Room — Offer Strategy Session · Dan Cruz Homes</title>
+<meta name="description" content="A paid 60-minute Offer Strategy Session for buyers and sellers. Negotiation scorecard, offer and counter strategy, recap PDF. Fee credited back 100% at closing if you transact with Dan.">
+<link rel="canonical" href="https://dancruzhomes.com/negotiation.html">
+<meta name="theme-color" content="#9a7d2e">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<!-- Link preview card — same reasoning as index.html: this page gets texted
+     and pasted into DMs more than it gets found by search, so the card
+     matters more than the meta description does.
+     og:image reuses og-card.png until a War Room card is designed — a
+     missing image renders a bare link, which is worse than a generic one. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Dan Cruz Homes">
+<meta property="og:url" content="https://dancruzhomes.com/negotiation.html">
+<meta property="og:title" content="The Offer War Room — Win the offer before you make it.">
+<meta property="og:description" content="A paid 60-minute Offer Strategy Session before you list or write an offer. Fee credited back 100% at closing.">
+<meta property="og:image" content="https://dancruzhomes.com/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The Offer War Room — offer strategy session with Dan Cruz.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Offer War Room — Win the offer before you make it.">
+<meta name="twitter:description" content="60 minutes, a negotiation scorecard, and a written plan. Fee credited back 100% at closing.">
+<meta name="twitter:image" content="https://dancruzhomes.com/og-card.png">
+<!-- Prices appear in three places: these two Offer nodes, the pricing cards,
+     and the Stripe links. Change all of them together. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "The Offer War Room — Offer Strategy Session",
+  "serviceType": "Real estate negotiation strategy session",
+  "url": "https://dancruzhomes.com/negotiation.html",
+  "description": "A paid 60-minute offer strategy session for buyers and sellers, held before listing or before writing an offer. Includes a negotiation scorecard, an offer and counter script, and a written recap PDF. The fee is credited back in full at closing for clients who transact with Dan Cruz.",
+  "areaServed": {"@type": "AdministrativeArea", "name": "Illinois"},
+  "provider": {
+    "@type": "RealEstateAgent",
+    "name": "Dan Cruz Homes",
+    "url": "https://dancruzhomes.com/"
+  },
+  "offers": [
+    {
+      "@type": "Offer",
+      "name": "Seller War Room Session",
+      "price": "497",
+      "priceCurrency": "USD",
+      "description": "60-minute pre-listing offer strategy session. Credited back 100% at closing if you list with Dan."
+    },
+    {
+      "@type": "Offer",
+      "name": "Buyer War Room Session",
+      "price": "297",
+      "priceCurrency": "USD",
+      "description": "60-minute pre-offer strategy session. Credited back 100% at closing if you buy with Dan."
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How does the credit-back at closing work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If you transact with Dan Cruz — list with him as your seller's agent, or close a purchase with him as your buyer's agent — the full session fee is credited back to you on the closing statement. If you decide to work with someone else, you keep the scorecard, the strategy, and the recap PDF, and the fee stands as paid."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is the strategy session paid instead of free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It is an hour of negotiation coaching with written deliverables, not a listing presentation. Charging for it means the hour is spent on your deal instead of on a pitch — and the fee comes back to you at closing anyway if you transact with Dan."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to already have a house picked out?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Buyers get the most out of the session before they write their first offer, and sellers before the listing goes live. If you do have a specific address in play, bring it — the scorecard is sharper with a real property in front of it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the War Room session available outside Illinois?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The coaching is available anywhere, because strategy is not a licensed activity. Representation is Illinois only — outside Illinois the session ends with a referral to a licensed partner broker in your state, and the credit-back does not apply."
+      }
+    }
+  ]
+}
+</script>
+<style>
+:root{--ink:#1a1a1a;--ink-2:#333;--line:#d4cdb8;--line-2:#c0b89e;--paper:#f5f0e6;--paper-2:#ede6d6;--gold:#9a7d2e;--gold-2:#806820;--muted:#6b6b6b;--max:1200px;--gutter:clamp(20px,6vw,32px);--shadow-card:0 1px 2px rgba(26,26,26,.04);--shadow-card-hover:0 16px 36px -20px rgba(154,125,46,.35)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+
+/* ── nav — same component as index.html, including the 900px hamburger
+   breakpoint (8 links no longer fit on one line below it). ── */
+.nav{display:flex;justify-content:space-between;align-items:center;padding:20px var(--gutter);border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--paper);z-index:10}
+.nav .logo{font-size:14px;font-weight:600;letter-spacing:.18em;text-transform:uppercase}
+.nav .logo .dot{color:var(--gold);margin-left:2px}
+.nav .links{display:flex;gap:24px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.nav .links a:hover{color:var(--ink)}
+.nav .links a[aria-current=page]{color:var(--ink)}
+.nav-toggle{display:none;background:none;border:1px solid var(--line-2);color:var(--ink);padding:9px 11px;cursor:pointer;border-radius:3px;line-height:0}
+.nav-toggle:hover{border-color:var(--gold);color:var(--gold)}
+.nav-toggle svg{width:18px;height:18px;display:block;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+@media(max-width:900px){
+  .nav{flex-wrap:wrap}
+  .nav-toggle{display:block}
+  .nav .links{display:none;flex-basis:100%;flex-direction:column;gap:0;margin-top:16px;border-top:1px solid var(--line);max-height:70vh;overflow-y:auto;white-space:normal}
+  .nav .links.open{display:flex}
+  .nav .links a{padding:15px 2px;border-bottom:1px solid var(--line);font-size:13px}
+  .nav .links a:last-child{border-bottom:none}
+}
+
+/* ── hero ── */
+.hero{padding:clamp(56px,13vw,96px) var(--gutter) clamp(44px,9vw,80px);border-bottom:1px solid var(--line)}
+.hero .eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;display:flex;align-items:center;gap:12px}
+.hero .eyebrow::after{content:"";flex:1;height:1px;background:var(--line);margin-left:8px}
+.hero h1{font-family:Georgia,'Times New Roman',serif;font-size:clamp(44px,9vw,112px);font-weight:300;line-height:.97;letter-spacing:-.01em;max-width:16ch;margin-bottom:32px}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero .lede{font-size:20px;color:var(--ink-2);max-width:52ch;margin-bottom:40px;line-height:1.5}
+.hero .actions{display:flex;gap:16px;flex-wrap:wrap}
+.hero .fineprint{margin-top:26px;font-size:13px;color:var(--muted);max-width:52ch}
+
+.btn{display:inline-block;padding:16px 28px;font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;border:1px solid transparent;transition:background .2s,border-color .2s,color .2s,box-shadow .2s;cursor:pointer}
+.btn.primary{background:var(--gold);color:#fff}
+.btn.primary:hover{background:var(--gold-2);box-shadow:var(--shadow-card-hover)}
+.btn.ghost{border-color:var(--line-2);color:var(--ink)}
+.btn.ghost:hover{border-color:var(--gold);color:var(--gold)}
+.btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+/* ── sections ── */
+section{padding:clamp(64px,11vw,96px) 0;border-bottom:1px solid var(--line)}
+section .eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+section h2{font-family:Georgia,'Times New Roman',serif;font-size:clamp(30px,5vw,56px);font-weight:300;line-height:1.1;letter-spacing:-.005em;margin-bottom:20px;max-width:20ch}
+section .lede{font-size:18px;color:var(--ink-2);max-width:54ch;margin-bottom:48px}
+
+/* ── promise banner — hairline gold rule, not a gold fill (gold stays
+   reserved for the buttons; see the same note in index.html). ── */
+.promise{padding:24px var(--gutter);background:var(--paper-2);text-align:center;border-top:1px solid var(--gold);border-bottom:1px solid var(--line)}
+.promise strong{letter-spacing:.18em;text-transform:uppercase;font-size:13px;color:var(--gold-2)}
+.promise span{margin-left:16px;font-size:14px;color:var(--ink-2)}
+@media(max-width:640px){.promise span{display:block;margin:8px 0 0}}
+
+/* ── included grid — the .specs cell pattern from index.html ── */
+.included{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:0;border:1px solid var(--line)}
+.included .cell{padding:32px 24px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.included .cell:last-child{border-right:none}
+@media(max-width:640px){.included .cell{border-right:none;padding:24px 20px}}
+.included .k{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.included .v{font-size:22px;font-weight:500;line-height:1.25;margin-bottom:8px}
+.included p{color:var(--ink-2);font-size:14px;line-height:1.55}
+
+/* ── agenda — the .step pattern ── */
+.agenda{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px}
+.agenda .step{padding:24px;border-left:1px solid var(--line)}
+.agenda .n{font-family:Georgia,serif;font-size:48px;color:var(--gold);font-weight:300;line-height:1;margin-bottom:12px}
+.agenda h3{font-size:16px;margin-bottom:8px;font-weight:600}
+.agenda p{color:var(--ink-2);font-size:14px}
+
+/* ── pricing ── */
+.prices{display:grid;grid-template-columns:1fr;gap:24px;margin-bottom:32px}
+@media(min-width:760px){.prices{grid-template-columns:1fr 1fr}}
+.price{border:1px solid var(--line);background:var(--paper);box-shadow:var(--shadow-card);padding:36px 32px;display:flex;flex-direction:column;transition:border-color .2s,box-shadow .2s}
+.price:hover{border-color:var(--gold);box-shadow:var(--shadow-card-hover)}
+@media(max-width:640px){.price{padding:28px 22px}}
+.price .who{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.price h3{font-family:Georgia,'Times New Roman',serif;font-size:28px;font-weight:300;line-height:1.15;margin-bottom:18px}
+.price .fee{font-family:Georgia,'Times New Roman',serif;font-size:56px;font-weight:300;line-height:1;letter-spacing:-.02em;margin-bottom:6px}
+.price .fee .cur{font-size:26px;vertical-align:super;color:var(--gold)}
+.price .credit{font-size:13px;color:var(--gold-2);letter-spacing:.06em;margin-bottom:24px}
+.price ul{list-style:none;color:var(--ink-2);font-size:14px;margin-bottom:28px;flex:1}
+.price ul li{padding:8px 0;border-bottom:1px dashed var(--line)}
+.price ul li:last-child{border-bottom:none}
+.price ul li b{color:var(--ink);font-weight:500}
+.price .btn{text-align:center}
+.price .note{font-size:12px;color:var(--muted);margin-top:12px;letter-spacing:.04em}
+
+/* ── scheduling embed — a plain lazy iframe, no Cal.com embed script.
+   Their JS embed injects its own listeners and animated resizing, which is
+   exactly what this site doesn't ship; a fixed-aspect iframe plus the
+   direct link below it books the same slot with zero JS on our side. ── */
+.cal{border:1px solid var(--line);background:var(--paper-2)}
+.cal iframe{display:block;width:100%;height:720px;border:0}
+@media(max-width:640px){.cal iframe{height:640px}}
+.cal .caption{padding:12px 16px;border-top:1px solid var(--line);color:var(--muted);font-size:11px;letter-spacing:.18em;text-transform:uppercase}
+
+/* ── testimonials ── */
+.quotes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
+.quote{padding:28px 24px;border:1px solid var(--line);box-shadow:var(--shadow-card);background:var(--paper)}
+.quote blockquote{font-family:Georgia,'Times New Roman',serif;font-size:19px;font-weight:300;line-height:1.4;color:var(--ink);margin-bottom:16px}
+.quote .who{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.quote .placeholder{display:inline-block;font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(154,125,46,.35);padding:4px 10px;margin-bottom:16px}
+
+/* ── booking form — the .lead component, widened to a grid ── */
+.book{padding:clamp(64px,11vw,96px) var(--gutter);background:var(--paper-2);border-bottom:1px solid var(--line)}
+.book .inner{max-width:760px;margin:0 auto;text-align:center}
+.book h2{font-family:Georgia,'Times New Roman',serif;font-size:clamp(28px,4vw,40px);font-weight:300;margin-bottom:16px}
+.book p{color:var(--ink-2);max-width:52ch;margin:0 auto 32px;font-size:17px}
+.book form{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;text-align:left}
+.book input,.book select,.book textarea{width:100%;padding:14px 18px;background:var(--paper);border:1px solid var(--line-2);color:var(--ink);font-size:15px;font-family:inherit;border-radius:0}
+.book textarea{grid-column:1/-1;min-height:110px;resize:vertical;line-height:1.5}
+.book input:focus,.book select:focus,.book textarea:focus{outline:none;border-color:var(--gold)}
+.book button{grid-column:1/-1;padding:16px 28px;background:var(--gold);color:#fff;border:none;font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
+.book button:hover{background:var(--gold-2)}
+.book button:disabled{opacity:.6;cursor:default}
+.book .disclaimer{color:var(--muted);font-size:12px;letter-spacing:.05em;margin:18px auto 0;max-width:56ch}
+
+/* ── faq ── */
+.faq{display:grid;gap:0;border:1px solid var(--line)}
+.faq .qa{padding:28px 24px;border-bottom:1px solid var(--line)}
+.faq .qa:last-child{border-bottom:none}
+.faq h3{font-size:17px;font-weight:600;margin-bottom:8px}
+.faq p{color:var(--ink-2);font-size:15px;max-width:70ch}
+
+/* ── footer ── */
+footer{padding:48px var(--gutter);color:var(--muted);font-size:12px;letter-spacing:.12em;text-transform:uppercase;border-top:1px solid var(--line)}
+footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;max-width:var(--max);margin:0 auto}
+footer a{color:var(--muted);border-bottom:1px solid var(--line-2)}
+footer a:hover{color:var(--gold);border-color:var(--gold)}
+
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+</style>
+<link rel="alternate" type="text/plain" href="https://dancruzhomes.com/llms.txt" title="LLM-friendly site summary">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="logo"><a href="index.html">DAN CRUZ HOMES<span class="dot">.</span></a></div>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  </button>
+  <div class="links" id="navLinks">
+    <a href="negotiation.html" aria-current="page" style="color:var(--gold)">War Room</a>
+    <a href="grader.html">Grader</a>
+    <a href="index.html#brokerage">Buy / Sell</a>
+    <a href="index.html#specs">Specs</a>
+    <a href="index.html#process">Process</a>
+    <a href="index.html#communities">Communities</a>
+    <a href="notes.html">Notes</a>
+    <a href="#book">Book</a>
+  </div>
+</nav>
+<script>
+(function(){
+  var toggle = document.getElementById('navToggle');
+  var links = document.getElementById('navLinks');
+  if(!toggle || !links) return;
+  function setOpen(open){
+    links.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  toggle.addEventListener('click', function(e){
+    e.stopPropagation();
+    setOpen(!links.classList.contains('open'));
+  });
+  // tapping a link navigates, so collapse behind it
+  links.addEventListener('click', function(e){
+    if(e.target.tagName === 'A') setOpen(false);
+  });
+  document.addEventListener('click', function(e){
+    if(links.classList.contains('open') && !links.contains(e.target)) setOpen(false);
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && links.classList.contains('open')){ setOpen(false); toggle.focus(); }
+  });
+})();
+</script>
+
+<!-- ── HERO ── -->
+<header class="hero">
+  <div class="eyebrow">The Offer War Room · Paid Strategy Session</div>
+  <h1>Win the offer <em>before</em> you make it.</h1>
+  <p class="lede">Sixty minutes on your specific deal — before the listing goes live, before you write the offer. You leave with a negotiation scorecard, the exact counter language for the three most likely pushbacks, and a written recap. The fee is credited back in full at closing if you transact with me.</p>
+  <div class="actions">
+    <a href="#book" class="btn primary">Book Your War Room Session &rarr;</a>
+    <a href="#pricing" class="btn ghost">See pricing</a>
+  </div>
+  <p class="fineprint">This is the hourly negotiation coaching I already do, productized — same preparation I run before my own listing appointments and my own buyers' offers.</p>
+</header>
+
+<!-- Single promise line — the whole objection to a paid session answered
+     above the fold's fold, before the reader has to scroll for pricing. -->
+<section class="promise">
+  <strong>100% credited back at closing.</strong>
+  <span>Transact with me and the session fee comes off your closing statement. Don't, and you still keep everything.</span>
+</section>
+
+<!-- ── WHAT'S INCLUDED ── -->
+<section id="included">
+  <div class="wrap">
+    <div class="eyebrow">What you get</div>
+    <h2>Four deliverables, not a listing presentation.</h2>
+    <p class="lede">A listing appointment is a pitch. This is an hour of work on your deal, with things you can hold afterward — whether or not you ever hire me.</p>
+    <div class="included">
+      <div class="cell">
+        <div class="k">01 · Live session</div>
+        <div class="v">60 minutes, one call</div>
+        <p>Video or phone, you pick. We go through your property, your timeline, your walk-away number, and who is actually on the other side of the table.</p>
+      </div>
+      <div class="cell">
+        <div class="k">02 · Scorecard</div>
+        <div class="v">Negotiation scorecard</div>
+        <p>Your position scored across leverage, urgency, competition, terms, financing strength, and information asymmetry — so you know which levers you actually have.</p>
+      </div>
+      <div class="cell">
+        <div class="k">03 · Strategy</div>
+        <div class="v">Offer &amp; counter strategy</div>
+        <p>Your opening number, your concession ladder, and prepared language for the three pushbacks most likely to land — inspection credits, appraisal gaps, and close-date pressure.</p>
+      </div>
+      <div class="cell">
+        <div class="k">04 · Recap</div>
+        <div class="v">Recap PDF, within 24h</div>
+        <p>The scorecard, the plan, and the scripts written down and sent to you. Forward it to a spouse, a lender, or the agent you end up using.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── AGENDA ── -->
+<section id="agenda" style="background:var(--paper-2)">
+  <div class="wrap">
+    <div class="eyebrow">How the hour runs</div>
+    <h2>Same four steps, every session.</h2>
+    <p class="lede">Structure is the point. An unstructured hour becomes a venting session; this one ends with a number you're willing to defend and the words you'll use to defend it.</p>
+    <div class="agenda">
+      <div class="step"><div class="n">01</div><h3>Position</h3><p>Fifteen minutes on the facts — the property, the comps, the timeline, and what you can and can't afford to lose.</p></div>
+      <div class="step"><div class="n">02</div><h3>Score</h3><p>We fill the scorecard together, out loud. Most people discover they have more leverage than they thought, in a place they weren't looking.</p></div>
+      <div class="step"><div class="n">03</div><h3>Rehearse</h3><p>I play the other side. You practice the anchor, the silence, and the counter until they stop feeling awkward to say.</p></div>
+      <div class="step"><div class="n">04</div><h3>Write it down</h3><p>The plan gets committed to paper while it's fresh — anchor, ladder, walk-away, and the exact sentence you lead with.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     PRICING — the figures below are the ONLY place the customer-facing
+     price appears in the page body. Keep in sync with:
+       1. the two Offer nodes in the Service JSON-LD in <head>
+       2. the Stripe Payment Link amounts (links are placeholders today)
+     ══════════════════════════════════════════════════════════════════════ -->
+<section id="pricing">
+  <div class="wrap">
+    <div class="eyebrow">Pricing · Credited back at closing</div>
+    <h2>Two versions. One credit-back.</h2>
+    <p class="lede">Sellers pay more because the pre-listing session is longer work behind the scenes — a real comp pull and an expired-listing read before we ever get on the call.</p>
+
+    <div class="prices">
+      <div class="price">
+        <div class="who">For sellers · Pre-listing</div>
+        <h3>Seller War Room</h3>
+        <div class="fee"><span class="cur">$</span>497</div>
+        <div class="credit">Credited back 100% at closing when you list with me.</div>
+        <ul>
+          <li><b>Comp read before the call</b> — actives, solds, and the expireds that show what overpricing costs</li>
+          <li><b>List-price strategy</b> — the number, and the reason behind the number</li>
+          <li><b>Multiple-offer playbook</b> — how to run a deadline without killing your best buyer</li>
+          <li><b>Post-inspection defense</b> — what to concede, what to hold, and when to re-list instead</li>
+        </ul>
+        <a class="btn primary" href="https://buy.stripe.com/PLACEHOLDER_SELLER" rel="noopener">Pay &amp; book — sellers &rarr;</a>
+        <p class="note">Stripe Checkout. After payment you'll land on the scheduling step.</p>
+      </div>
+
+      <div class="price">
+        <div class="who">For buyers · Pre-offer</div>
+        <h3>Buyer War Room</h3>
+        <div class="fee"><span class="cur">$</span>297</div>
+        <div class="credit">Credited back 100% at closing when you buy with me.</div>
+        <ul>
+          <li><b>Offer construction</b> — price, terms, and which contingencies are actually worth trading</li>
+          <li><b>Escalation vs. clean offer</b> — when each one wins, with the math</li>
+          <li><b>Appraisal-gap language</b> — how to sound strong without writing a blank check</li>
+          <li><b>Listing-agent read</b> — what their behavior is telling you about the seller's real urgency</li>
+        </ul>
+        <a class="btn primary" href="https://buy.stripe.com/PLACEHOLDER_BUYER" rel="noopener">Pay &amp; book — buyers &rarr;</a>
+        <p class="note">Stripe Checkout. After payment you'll land on the scheduling step.</p>
+      </div>
+    </div>
+
+    <p style="color:var(--muted);font-size:13px;letter-spacing:.04em;max-width:64ch">Credit-back applies to a closed transaction where I acted as your listing or buyer's agent, and is applied once per household. Coaching-only clients outside Illinois are welcome — the credit-back can't apply there, since I'm not the agent of record.</p>
+  </div>
+</section>
+
+<!-- ── SCHEDULING ── -->
+<section id="schedule" style="background:var(--paper-2)">
+  <div class="wrap">
+    <div class="eyebrow">Scheduling</div>
+    <h2>Pick your hour.</h2>
+    <p class="lede">Already paid, or want to see open times before you commit? The calendar below is live. Sessions run weekday evenings and Saturday mornings.</p>
+    <div class="cal">
+      <!-- Placeholder Cal.com link — swap the handle/event slug once the real
+           event type exists. Plain iframe on purpose (see the .cal CSS note).
+           loading="lazy" keeps the third-party frame off the critical path on
+           a phone; title is required for a non-decorative iframe. -->
+      <iframe
+        src="https://cal.com/dancruz/offer-war-room"
+        title="Book an Offer War Room session with Dan Cruz"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <div class="caption">Cal.com · 60-minute session · Times shown in your local zone</div>
+    </div>
+    <p style="margin-top:16px;font-size:13px;color:var(--muted)">Calendar not loading? Book directly at <a href="https://cal.com/dancruz/offer-war-room" rel="noopener" style="color:var(--gold-2);border-bottom:1px solid var(--line-2)">cal.com/dancruz/offer-war-room</a>.</p>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS — placeholders. Replace with real, attributable quotes
+     only; a fabricated testimonial on a licensed broker's page is an
+     advertising violation, not just bad taste. Keep the .placeholder badge
+     on any card that is not yet a real client quote. ── -->
+<section id="results">
+  <div class="wrap">
+    <div class="eyebrow">Results</div>
+    <h2>What clients say after the hour.</h2>
+    <p class="lede">Placeholder cards below — they go live as real, named client quotes come in, with permission on file for each one.</p>
+    <div class="quotes">
+      <div class="quote">
+        <span class="placeholder">Placeholder</span>
+        <blockquote>&ldquo;Quote pending — seller, multiple-offer situation. Replace this text with the client's own words.&rdquo;</blockquote>
+        <div class="who">Seller &middot; Neighborhood &middot; Year</div>
+      </div>
+      <div class="quote">
+        <span class="placeholder">Placeholder</span>
+        <blockquote>&ldquo;Quote pending — buyer, appraisal gap. Replace this text with the client's own words.&rdquo;</blockquote>
+        <div class="who">Buyer &middot; Neighborhood &middot; Year</div>
+      </div>
+      <div class="quote">
+        <span class="placeholder">Placeholder</span>
+        <blockquote>&ldquo;Quote pending — coaching-only client, out of state. Replace this text with the client's own words.&rdquo;</blockquote>
+        <div class="who">Coaching client &middot; State &middot; Year</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── BOOKING FORM ── -->
+<div class="book" id="book">
+  <div class="inner">
+    <h2>Book Your War Room Session</h2>
+    <p>Tell me what you're up against. I'll confirm the session, send the payment link for your side of the table, and hold a slot for 48 hours.</p>
+    <form id="warRoomForm" onsubmit="return submitWarRoomBooking(event)">
+      <label for="wrEmail" class="sr-only">Email address</label>
+      <input type="email" id="wrEmail" name="email" placeholder="you@example.com" autocomplete="email" required>
+
+      <label for="wrType" class="sr-only">Which side of the table are you on?</label>
+      <select id="wrType" name="session_type" required>
+        <option value="" disabled selected>I'm a…</option>
+        <option value="seller">Seller — listing soon</option>
+        <option value="buyer">Buyer — about to make an offer</option>
+      </select>
+
+      <label for="wrPhone" class="sr-only">Phone (optional)</label>
+      <input type="tel" id="wrPhone" name="phone" placeholder="Phone (optional)" autocomplete="tel">
+
+      <label for="wrAddress" class="sr-only">Property address (optional)</label>
+      <input type="text" id="wrAddress" name="address" placeholder="Property address (optional)">
+
+      <label for="wrChallenge" class="sr-only">What's the negotiation challenge?</label>
+      <textarea id="wrChallenge" name="challenge" placeholder="What's the challenge? Competing offers, a lowball, an appraisal gap, a stubborn listing agent, a deadline…"></textarea>
+
+      <button type="submit">Book Your War Room Session &rarr;</button>
+    </form>
+    <div class="lead-status" id="warRoomFormStatus" style="display:none;margin-top:14px;font-size:14px"></div>
+    <p class="disclaimer">Booking a session is not a listing agreement or a buyer representation agreement — those are separate documents, signed only if we both want to work together. Dan Cruz is a licensed real estate broker in Illinois.</p>
+  </div>
+</div>
+
+<!-- ── FAQ — mirrors the FAQPage JSON-LD in <head>. Change both together. ── -->
+<section id="faq">
+  <div class="wrap">
+    <div class="eyebrow">Questions</div>
+    <h2>The four things everyone asks.</h2>
+    <div class="faq">
+      <div class="qa">
+        <h3>How does the credit-back at closing work?</h3>
+        <p>If you transact with me — list with me as your seller's agent, or close a purchase with me as your buyer's agent — the full session fee is credited back to you on the closing statement. If you go with someone else, you keep the scorecard, the strategy, and the recap PDF, and the fee stands as paid.</p>
+      </div>
+      <div class="qa">
+        <h3>Why is this paid when every other agent's consultation is free?</h3>
+        <p>Because a free consultation is a sales call, and both of us know it. Charging for the hour means it gets spent on your deal instead of on a pitch — and an agent who discounts their own fee before the work starts is telling you what they'll do when it's your money on the table.</p>
+      </div>
+      <div class="qa">
+        <h3>Do I need to have a house picked out already?</h3>
+        <p>No. Buyers get the most out of this before their first offer, and sellers before the listing goes live. If you do have a specific address in play, bring it — the scorecard is sharper with a real property in front of it.</p>
+      </div>
+      <div class="qa">
+        <h3>Is this available outside Illinois?</h3>
+        <p>The coaching is, anywhere — strategy isn't a licensed activity. Representation is Illinois only. Outside Illinois the session ends with a referral to a licensed partner broker in your state, and the credit-back doesn't apply, since I'm not the agent of record.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="row">
+    <span>© 2026 · DAN CRUZ HOMES · MIDWEST</span>
+    <span>
+      <a href="notes.html">Market Notes</a> ·
+      <a href="grader.html">Grader</a> ·
+      <a href="https://negotiatorsondemand.com">negotiatorsondemand.com</a> ·
+      <a href="https://tiktok.com/@negotiatorsondemand">TikTok</a>
+    </span>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     Booking capture — posts straight to the shared Supabase project's
+     warroom_sessions table with the public anon key, the same pattern as
+     index.html's lead forms. RLS on that table allows anonymous INSERT and
+     restricts SELECT to admins (supabase/business_tables.sql).
+     Column is session_type, NOT type — matching the live schema.
+     `paid` is left at its false default on purpose: this form is a booking
+     request, and payment lands separately through the Stripe link, so
+     nothing client-side is trusted to declare a session paid.
+     ══════════════════════════════════════════════════════════════════════ -->
+<script>
+(function(){
+  var SUPABASE_URL = 'https://iubxycckgrplbpdbncfk.supabase.co';
+  var SUPABASE_ANON_KEY = 'sb_publishable_L92hXORLG-Df4WiZxVq-6Q_X3AB47yl';
+
+  window.submitWarRoomBooking = function(event){
+    event.preventDefault();
+    var form = document.getElementById('warRoomForm');
+    var statusEl = document.getElementById('warRoomFormStatus');
+    var data = new FormData(form);
+
+    // Empty optional fields go in as null, not '' — keeps the admin view from
+    // showing blank strings that read like a value someone actually entered.
+    var payload = {
+      email: data.get('email'),
+      session_type: data.get('session_type'),
+      phone: data.get('phone') || null,
+      address: data.get('address') || null,
+      challenge: data.get('challenge') || null
+    };
+
+    var btn = form.querySelector('button[type="submit"]');
+    var originalText = btn.textContent;
+    btn.disabled = true; btn.textContent = 'Booking…';
+
+    fetch(SUPABASE_URL + '/rest/v1/warroom_sessions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify(payload)
+    }).then(function(r){
+      btn.disabled = false; btn.textContent = originalText;
+      if(!r.ok) throw new Error('Request failed: ' + r.status);
+      form.reset();
+      form.style.display = 'none';
+      statusEl.style.display = 'block';
+      statusEl.style.color = 'var(--gold-2)';
+      statusEl.innerHTML = "Booked — I'll confirm by email within one business day with the payment link and a hold on your slot. " +
+        'Want to pick a time now? <a href="#schedule" style="color:var(--gold-2);border-bottom:1px solid var(--line-2)">Open the calendar</a>.';
+    }).catch(function(err){
+      btn.disabled = false; btn.textContent = originalText;
+      statusEl.style.display = 'block';
+      statusEl.style.color = '#b05050';
+      statusEl.textContent = 'Something went wrong sending that — email hello@negotiatorsondemand.com directly instead.';
+      console.warn('War Room booking failed:', err.message);
+    });
+
+    return false;
+  };
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seller Net Proceeds Calculator — Dan Cruz Homes</title>
+<meta name="description" content="Know your number before you list. Free seller net proceeds calculator — mortgage payoff, commission, Illinois transfer tax, title insurance, and closing costs, all in one place.">
+<link rel="canonical" href="https://dancruzhomes.com/calculator.html">
+<meta name="theme-color" content="#9a7d2e">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Dan Cruz Homes">
+<meta property="og:url" content="https://dancruzhomes.com/calculator.html">
+<meta property="og:title" content="Seller Net Proceeds Calculator — Dan Cruz Homes">
+<meta property="og:description" content="Free calculator — see what you'd actually walk away with after mortgage payoff, commission, transfer tax, title insurance, and closing costs.">
+<meta property="og:image" content="https://dancruzhomes.com/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Seller Net Proceeds Calculator — Dan Cruz Homes.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Seller Net Proceeds Calculator — Dan Cruz Homes">
+<meta name="twitter:description" content="Free calculator — see what you'd actually walk away with after selling.">
+<meta name="twitter:image" content="https://dancruzhomes.com/og-card.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Seller Net Proceeds Calculator",
+  "url": "https://dancruzhomes.com/calculator.html",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any (web browser)",
+  "description": "Free calculator estimating a home seller's net proceeds after mortgage payoff, agent commission, Illinois + Cook County transfer tax, title insurance, and closing costs.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD",
+    "description": "Free to use. Email required for the full itemized breakdown."
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Dan Cruz Homes",
+    "url": "https://dancruzhomes.com/"
+  }
+}
+</script>
+<style>
+:root{--ink:#1a1a1a;--ink-2:#333;--line:#d4cdb8;--line-2:#c0b89e;--paper:#f5f0e6;--paper-2:#ede6d6;--gold:#9a7d2e;--gold-2:#806820;--muted:#6b6b6b;--max:1200px;--gutter:clamp(20px,6vw,32px);--shadow-card:0 1px 2px rgba(26,26,26,.04);--shadow-card-hover:0 16px 36px -20px rgba(154,125,46,.35)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* ── nav ── */
+.nav{display:flex;justify-content:space-between;align-items:center;padding:20px var(--gutter);border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--paper);z-index:10}
+.nav .logo{font-size:14px;font-weight:600;letter-spacing:.18em;text-transform:uppercase}
+.nav .logo .dot{color:var(--gold);margin-left:2px}
+.nav .links{display:flex;gap:24px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.nav .links a:hover{color:var(--ink)}
+.nav-toggle{display:none;background:none;border:1px solid var(--line-2);color:var(--ink);padding:9px 11px;cursor:pointer;border-radius:3px;line-height:0}
+.nav-toggle:hover{border-color:var(--gold);color:var(--gold)}
+.nav-toggle svg{width:18px;height:18px;display:block;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+@media(max-width:640px){
+  .nav{flex-wrap:wrap}
+  .nav-toggle{display:block}
+  .nav .links{display:none;flex-basis:100%;flex-direction:column;gap:0;margin-top:16px;border-top:1px solid var(--line);white-space:normal}
+  .nav .links.open{display:flex}
+  .nav .links a{padding:15px 2px;border-bottom:1px solid var(--line);font-size:13px}
+  .nav .links a:last-child{border-bottom:none}
+}
+
+/* ── hero ── */
+.hero{padding:clamp(56px,13vw,96px) var(--gutter) clamp(36px,7vw,56px);border-bottom:1px solid var(--line)}
+.hero .eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;display:flex;align-items:center;gap:12px}
+.hero .eyebrow::after{content:"";flex:1;height:1px;background:var(--line);margin-left:8px}
+.hero h1{font-family:Georgia,'Times New Roman',serif;font-size:clamp(36px,7vw,84px);font-weight:300;line-height:1.02;letter-spacing:-.01em;max-width:16ch;margin-bottom:24px}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero .lede{font-size:19px;color:var(--ink-2);max-width:52ch;line-height:1.5}
+
+/* ── calculator ── */
+section{padding:clamp(48px,9vw,72px) 0;border-bottom:1px solid var(--line)}
+.calc-grid{display:grid;grid-template-columns:1fr;gap:24px}
+@media(min-width:900px){.calc-grid{grid-template-columns:.85fr 1.15fr;align-items:start}}
+.card{background:var(--paper-2);border:1px solid var(--line);box-shadow:var(--shadow-card)}
+.calc-inputs{padding:32px 28px}
+.calc-inputs h2{font-family:Georgia,'Times New Roman',serif;font-weight:300;font-size:24px;margin-bottom:24px}
+.field{margin-bottom:18px}
+.field label{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-2);margin-bottom:8px}
+.field input{width:100%;padding:14px 16px;background:var(--paper);border:1px solid var(--line-2);color:var(--ink);font-size:15px;font-family:inherit;border-radius:0}
+.field input:focus{outline:none;border-color:var(--gold)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:480px){.field-row{grid-template-columns:1fr}}
+
+.calc-results{padding:36px 28px;text-align:center;position:sticky;top:96px}
+@media(max-width:900px){.calc-results{position:static}}
+.net-label{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.net-number{font-family:Georgia,'Times New Roman',serif;font-weight:300;font-size:clamp(44px,7vw,64px);color:var(--gold);line-height:1;margin-bottom:8px}
+.net-sub{font-size:13px;color:var(--muted);margin-bottom:32px}
+
+.breakdown-wrap{position:relative;text-align:left;border:1px solid var(--line);background:var(--paper)}
+.breakdown{width:100%;border-collapse:collapse;font-size:14px}
+.breakdown td{padding:12px 18px;border-bottom:1px dashed var(--line)}
+.breakdown tr:last-child td{border-bottom:none}
+.breakdown td:first-child{color:var(--ink-2)}
+.breakdown td:last-child{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.breakdown tr.total td{border-top:1px solid var(--gold);font-weight:600;color:var(--ink)}
+.breakdown tr.total td:last-child{color:var(--gold-2)}
+
+.breakdown-wrap.locked .breakdown{filter:blur(5px);user-select:none;pointer-events:none}
+.gate-overlay{position:absolute;inset:0;background:rgba(245,240,230,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:28px 20px;gap:14px}
+.gate-overlay p{font-size:14px;color:var(--ink-2);max-width:36ch}
+.gate-overlay form{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;width:100%;max-width:380px}
+.gate-overlay input[type=email]{flex:1;min-width:180px;padding:12px 14px;background:var(--paper);border:1px solid var(--line-2);color:var(--ink);font-size:14px;border-radius:0}
+.gate-overlay input[type=email]:focus{outline:none;border-color:var(--gold)}
+.gate-overlay button{padding:12px 20px;background:var(--gold);color:#fff;border:none;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;white-space:nowrap}
+.gate-overlay button:hover{background:var(--gold-2)}
+.gate-status{font-size:12px;min-height:16px}
+
+.cta-after-gate{margin-top:24px}
+.btn{display:inline-block;padding:16px 28px;font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;border:1px solid transparent;transition:background .2s,border-color .2s,color .2s,box-shadow .2s;cursor:pointer}
+.btn.primary{background:var(--gold);color:#fff}
+.btn.primary:hover{background:var(--gold-2);box-shadow:var(--shadow-card-hover)}
+.btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+.disclaimer{margin-top:28px;font-size:12px;color:var(--muted);text-align:center;font-style:italic}
+
+/* ── footer ── */
+footer{padding:48px var(--gutter);color:var(--muted);font-size:12px;letter-spacing:.12em;text-transform:uppercase;border-top:1px solid var(--line)}
+footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;max-width:var(--max);margin:0 auto}
+footer a{color:var(--muted);border-bottom:1px solid var(--line-2)}
+footer a:hover{color:var(--gold);border-color:var(--gold)}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="logo">DAN CRUZ HOMES<span class="dot">.</span></div>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  </button>
+  <div class="links" id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="grader.html">Grader</a>
+    <a href="index.html#brokerage">Buy / Sell</a>
+    <a href="index.html#inquire">Inquire</a>
+  </div>
+</nav>
+<script>
+(function(){
+  var toggle = document.getElementById('navToggle');
+  var links = document.getElementById('navLinks');
+  if(!toggle || !links) return;
+  function setOpen(open){
+    links.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  toggle.addEventListener('click', function(e){
+    e.stopPropagation();
+    setOpen(!links.classList.contains('open'));
+  });
+  links.addEventListener('click', function(e){
+    if(e.target.tagName === 'A') setOpen(false);
+  });
+  document.addEventListener('click', function(e){
+    if(links.classList.contains('open') && !links.contains(e.target)) setOpen(false);
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && links.classList.contains('open')){ setOpen(false); toggle.focus(); }
+  });
+})();
+</script>
+
+<header class="hero">
+  <div class="eyebrow">Free tool · Takes 2 minutes</div>
+  <h1>Know your number <em>before you list.</em></h1>
+  <p class="lede">Seller Net Proceeds Calculator — plug in your sale price and see what you'd actually walk away with after mortgage payoff, commission, Illinois transfer tax, title insurance, and closing costs.</p>
+</header>
+
+<section id="calculator">
+  <div class="wrap">
+    <div class="calc-grid">
+
+      <div class="card calc-inputs">
+        <h2>Your numbers</h2>
+
+        <div class="field">
+          <label for="salePrice">Expected sale price</label>
+          <input type="number" id="salePrice" value="450000" min="0" step="1000">
+        </div>
+
+        <div class="field">
+          <label for="mortgagePayoff">Mortgage payoff</label>
+          <input type="number" id="mortgagePayoff" value="0" min="0" step="1000">
+        </div>
+
+        <div class="field">
+          <label for="commissionPct">Agent commission (%)</label>
+          <input type="number" id="commissionPct" value="5.5" min="0" max="20" step="0.1">
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="transferTaxPct">IL + Cook Co. transfer tax (%)</label>
+            <input type="number" id="transferTaxPct" value="0.1" min="0" step="0.01">
+          </div>
+          <div class="field">
+            <label for="titlePct">Title insurance, est. (%)</label>
+            <input type="number" id="titlePct" value="0.5" min="0" step="0.1">
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="closingPct">Closing costs, est. (%)</label>
+            <input type="number" id="closingPct" value="1" min="0" step="0.1">
+          </div>
+          <div class="field">
+            <label for="repairsCredit">Repairs credit ($, optional)</label>
+            <input type="number" id="repairsCredit" value="0" min="0" step="500">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="zip">ZIP code (optional)</label>
+          <input type="text" id="zip" placeholder="60607" maxlength="10">
+        </div>
+      </div>
+
+      <div class="card calc-results">
+        <div class="net-label">Estimated net to seller</div>
+        <div class="net-number" id="netNumber">$0</div>
+        <div class="net-sub">After mortgage payoff, commission, taxes &amp; closing costs</div>
+
+        <div class="breakdown-wrap locked" id="breakdownWrap">
+          <table class="breakdown" id="breakdownTable">
+            <tbody>
+              <tr><td>Gross sale price</td><td id="rowGross">$0</td></tr>
+              <tr><td>Mortgage payoff</td><td id="rowPayoff">−$0</td></tr>
+              <tr><td>Agent commission</td><td id="rowCommission">−$0</td></tr>
+              <tr><td>IL + Cook Co. transfer tax</td><td id="rowTransfer">−$0</td></tr>
+              <tr><td>Title insurance</td><td id="rowTitle">−$0</td></tr>
+              <tr><td>Closing costs</td><td id="rowClosing">−$0</td></tr>
+              <tr><td>Repairs credit</td><td id="rowRepairs">−$0</td></tr>
+              <tr class="total"><td>Net to seller</td><td id="rowNet">$0</td></tr>
+            </tbody>
+          </table>
+
+          <div class="gate-overlay" id="gateOverlay">
+            <p>Enter your email to unlock the full itemized breakdown.</p>
+            <form id="gateForm">
+              <label for="gateEmail" class="sr-only">Email address</label>
+              <input type="email" id="gateEmail" placeholder="you@example.com" required>
+              <button type="submit">Unlock →</button>
+            </form>
+            <div class="gate-status" id="gateStatus"></div>
+          </div>
+        </div>
+
+        <div class="cta-after-gate" id="ctaAfterGate" style="display:none">
+          <a href="index.html#inquire" class="btn primary">Get Dan's Full Selling Strategy →</a>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="disclaimer">Estimates only — Dan will confirm actual numbers at your listing consultation.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="row">
+    <span>© 2026 · DAN CRUZ HOMES · MIDWEST</span>
+    <span>
+      <a href="notes.html">Market Notes</a> ·
+      <a href="https://negotiatorsondemand.com">negotiatorsondemand.com</a> ·
+      <a href="https://tiktok.com/@negotiatorsondemand">TikTok</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var SUPABASE_URL = 'https://iubxycckgrplbpdbncfk.supabase.co';
+  var SUPABASE_ANON_KEY = 'sb_publishable_L92hXORLG-Df4WiZxVq-6Q_X3AB47yl';
+
+  var $ = function(id){ return document.getElementById(id); };
+  var fields = ['salePrice','mortgagePayoff','commissionPct','transferTaxPct','titlePct','closingPct','repairsCredit'];
+
+  function num(id){ return parseFloat($(id).value) || 0; }
+  function fmt(n){
+    var sign = n < 0 ? '−' : '';
+    return sign + '$' + Math.round(Math.abs(n)).toLocaleString('en-US');
+  }
+
+  var lastResult = null;
+
+  function compute(){
+    var sale = num('salePrice');
+    var payoff = num('mortgagePayoff');
+    var commission = sale * num('commissionPct') / 100;
+    var transferTax = sale * num('transferTaxPct') / 100;
+    var title = sale * num('titlePct') / 100;
+    var closing = sale * num('closingPct') / 100;
+    var repairs = num('repairsCredit');
+
+    var net = sale - payoff - commission - transferTax - title - closing - repairs;
+
+    $('netNumber').textContent = fmt(net);
+    $('rowGross').textContent = fmt(sale);
+    $('rowPayoff').textContent = fmt(-payoff);
+    $('rowCommission').textContent = fmt(-commission);
+    $('rowTransfer').textContent = fmt(-transferTax);
+    $('rowTitle').textContent = fmt(-title);
+    $('rowClosing').textContent = fmt(-closing);
+    $('rowRepairs').textContent = fmt(-repairs);
+    $('rowNet').textContent = fmt(net);
+
+    lastResult = { sale: sale, net: net };
+  }
+
+  fields.forEach(function(id){
+    $(id).addEventListener('input', compute);
+  });
+  compute();
+
+  $('gateForm').addEventListener('submit', function(event){
+    event.preventDefault();
+    var statusEl = $('gateStatus');
+    var btn = this.querySelector('button[type="submit"]');
+    var email = $('gateEmail').value;
+    var originalText = btn.textContent;
+    btn.disabled = true; btn.textContent = 'Unlocking…';
+
+    var payload = {
+      email: email,
+      sale_price: lastResult ? lastResult.sale : null,
+      net_proceeds: lastResult ? lastResult.net : null,
+      zip: $('zip').value || null
+    };
+
+    fetch(SUPABASE_URL + '/rest/v1/calculator_leads', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify(payload)
+    }).then(function(r){
+      if(!r.ok) throw new Error('Request failed: ' + r.status);
+      $('breakdownWrap').classList.remove('locked');
+      $('gateOverlay').style.display = 'none';
+      $('ctaAfterGate').style.display = 'block';
+    }).catch(function(err){
+      btn.disabled = false; btn.textContent = originalText;
+      statusEl.style.color = '#b05050';
+      statusEl.textContent = 'Something went wrong — try again in a moment.';
+      console.warn('Calculator lead submit failed:', err.message);
+    });
+
+    return false;
+  });
+})();
+</script>
+
+</body>
+</html>
