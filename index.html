@@ -71,7 +71,7 @@
 }
 </script>
 <style>
-:root{--ink:#1a1a1a;--ink-2:#333;--line:#d4cdb8;--line-2:#c0b89e;--paper:#f5f0e6;--paper-2:#ede6d6;--gold:#9a7d2e;--gold-2:#806820;--muted:#6b6b6b;--max:1200px;--gutter:32px}
+:root{--ink:#1a1a1a;--ink-2:#333;--line:#d4cdb8;--line-2:#c0b89e;--paper:#f5f0e6;--paper-2:#ede6d6;--gold:#9a7d2e;--gold-2:#806820;--muted:#6b6b6b;--max:1200px;--gutter:clamp(20px,6vw,32px);--shadow-card:0 1px 2px rgba(26,26,26,.04);--shadow-card-hover:0 16px 36px -20px rgba(154,125,46,.35)}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
 img{max-width:100%;height:auto;display:block}
@@ -102,30 +102,63 @@ a{color:inherit;text-decoration:none}
 }
 
 /* ── hero ── */
-.hero{padding:96px var(--gutter) 80px;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+.hero{padding:clamp(56px,13vw,96px) var(--gutter) clamp(44px,9vw,80px);border-bottom:1px solid var(--line);position:relative;overflow:hidden}
 .hero .eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;display:flex;align-items:center;gap:12px}
 .hero .eyebrow::after{content:"";flex:1;height:1px;background:var(--line);margin-left:8px}
-.hero h1{font-size:clamp(48px,9vw,128px);font-weight:300;line-height:.95;letter-spacing:-.02em;max-width:14ch;margin-bottom:32px}
+.hero h1{font-family:Georgia,'Times New Roman',serif;font-size:clamp(44px,9vw,128px);font-weight:300;line-height:.97;letter-spacing:-.01em;max-width:14ch;margin-bottom:32px}
 .hero h1 em{font-style:normal;color:var(--gold)}
 .hero .lede{font-size:20px;color:var(--ink-2);max-width:46ch;margin-bottom:40px;line-height:1.5}
 .hero .actions{display:flex;gap:16px;flex-wrap:wrap}
-.btn{display:inline-block;padding:16px 28px;font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;border:1px solid transparent;transition:background .2s,border-color .2s,color .2s;cursor:pointer}
+.btn{display:inline-block;padding:16px 28px;font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;border:1px solid transparent;transition:background .2s,border-color .2s,color .2s,box-shadow .2s;cursor:pointer}
 .btn.primary{background:var(--gold);color:#fff}
-.btn.primary:hover{background:var(--gold-2)}
+.btn.primary:hover{background:var(--gold-2);box-shadow:var(--shadow-card-hover)}
 .btn.ghost{border-color:var(--line-2);color:var(--ink)}
 .btn.ghost:hover{border-color:var(--gold);color:var(--gold)}
+.btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+/* ── hero media — 45s silent loop, native <video>, zero JS ──
+   Deliberately a framed panel and not a full-bleed background: the page is
+   light mode and the h1 sits directly on paper, so text over video would
+   need a dark scrim and lose the flat printed look the rest of the site has.
+   A bounded 16/10 panel also bounds the decode area, which is the thing
+   that actually keeps a phone cool — a full-viewport video on a 6.1" screen
+   decodes several times the pixels for the same file.
+   Encode target for hero-loop.webm (not committed yet): VP9, 1280×800,
+   24fps, NO audio track, CRF ~34, keyframes every 2s → ~2 MB for 45s. */
+.hero-media{margin-top:64px;max-width:760px;border:1px solid var(--line);background:var(--paper-2)}
+.hero-media .frame{position:relative;aspect-ratio:16/10;overflow:hidden}
+.hero-media video,.hero-media .still{width:100%;height:100%;object-fit:cover;display:block}
+.hero-media .still{display:none}
+.hero-media .tag{position:absolute;left:16px;bottom:16px;color:var(--gold);font-size:10px;letter-spacing:.26em;text-transform:uppercase;background:rgba(245,240,230,.86);border:1px solid rgba(154,125,46,.35);padding:4px 10px}
+.hero-media figcaption{padding:12px 16px;border-top:1px solid var(--line);color:var(--muted);font-size:11px;letter-spacing:.18em;text-transform:uppercase}
+@media(max-width:640px){.hero-media{margin-top:44px}.hero-media .tag{left:12px;bottom:12px}}
+/* Reduced motion: swap the loop for the poster still. Honest caveat — this
+   hides the video but does not guarantee the browser skips decoding it;
+   only JS could tear the element out, and this site ships no animation JS. */
+@media(prefers-reduced-motion:reduce){
+  .hero-media video{display:none}
+  .hero-media .still{display:block}
+}
 
 /* ── sections ── */
-section{padding:96px 0;border-bottom:1px solid var(--line)}
+section{padding:clamp(64px,11vw,96px) 0;border-bottom:1px solid var(--line)}
 section .eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
-section h2{font-size:clamp(32px,5vw,56px);font-weight:300;line-height:1.05;letter-spacing:-.01em;margin-bottom:20px;max-width:18ch}
+section h2{font-family:Georgia,'Times New Roman',serif;font-size:clamp(30px,5vw,56px);font-weight:300;line-height:1.1;letter-spacing:-.005em;margin-bottom:20px;max-width:18ch}
 section .lede{font-size:18px;color:var(--ink-2);max-width:54ch;margin-bottom:48px}
+
+/* ── signature promise banner — a hairline gold rule, not a gold fill.
+   Full-bleed gold background competed with the actual CTAs for attention;
+   restrained to an accent line keeps gold reserved for the buttons. ── */
+.promise{padding:24px var(--gutter);background:var(--paper-2);text-align:center;border-top:1px solid var(--gold);border-bottom:1px solid var(--line)}
+.promise strong{letter-spacing:.18em;text-transform:uppercase;font-size:13px;color:var(--gold-2)}
+.promise span{margin-left:16px;font-size:14px;color:var(--ink-2)}
+@media(max-width:640px){.promise span{display:block;margin:8px 0 0}}
 
 /* ── spec grid ── */
 .specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0;border:1px solid var(--line)}
 .specs .cell{padding:32px 24px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
 .specs .cell:last-child{border-right:none}
-@media(max-width:640px){.specs .cell{border-right:none;border-bottom:1px solid var(--line)}}
+@media(max-width:640px){.specs .cell{border-right:none;border-bottom:1px solid var(--line);padding:24px 20px}}
 .specs .k{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
 .specs .v{font-size:24px;font-weight:500}
 .specs .sub{color:var(--muted);font-size:13px;margin-top:4px}
@@ -139,8 +172,8 @@ section .lede{font-size:18px;color:var(--ink-2);max-width:54ch;margin-bottom:48p
 
 /* ── projects ── */
 .projects{display:grid;gap:32px}
-.project{display:grid;grid-template-columns:1fr;gap:0;border:1px solid var(--line);transition:border-color .2s}
-.project:hover{border-color:var(--gold)}
+.project{display:grid;grid-template-columns:1fr;gap:0;border:1px solid var(--line);box-shadow:var(--shadow-card);transition:border-color .2s,box-shadow .2s}
+.project:hover{border-color:var(--gold);box-shadow:var(--shadow-card-hover)}
 @media(min-width:760px){.project{grid-template-columns:1.4fr 1fr}}
 .project .shot{background:linear-gradient(135deg,var(--paper-2) 0%,#e0d9c6 60%,#d4cdb8 100%);aspect-ratio:16/10;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;gap:8px;padding:24px 28px;color:var(--muted);font-size:11px;letter-spacing:.22em;text-transform:uppercase;position:relative;overflow:hidden;border-right:1px solid var(--line)}
 .project .shot::before{content:'';position:absolute;inset:0;background:
@@ -151,15 +184,16 @@ section .lede{font-size:18px;color:var(--ink-2);max-width:54ch;margin-bottom:48p
 @media(max-width:759px){.project .shot{border-right:none;border-bottom:1px solid var(--line)}}
 .project .body{padding:36px 32px;display:flex;flex-direction:column;justify-content:space-between}
 .project .hood{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
-.project h3{font-size:28px;font-weight:300;line-height:1.15;margin-bottom:16px}
+.project h3{font-family:Georgia,'Times New Roman',serif;font-size:28px;font-weight:300;line-height:1.15;margin-bottom:16px}
+@media(max-width:640px){.project .body{padding:26px 22px}}
 .project ul{list-style:none;color:var(--ink-2);font-size:14px;margin-bottom:20px}
 .project ul li{padding:6px 0;border-bottom:1px dashed var(--line)}
 .project ul li:last-child{border-bottom:none}
 .project ul li b{color:var(--ink);font-weight:500;display:inline-block;min-width:130px}
 
 /* ── lead form ── */
-.lead{padding:96px var(--gutter);background:var(--paper-2);text-align:center;border-bottom:1px solid var(--line)}
-.lead h2{font-size:clamp(28px,4vw,40px);font-weight:300;margin-bottom:16px}
+.lead{padding:clamp(64px,11vw,96px) var(--gutter);background:var(--paper-2);text-align:center;border-bottom:1px solid var(--line)}
+.lead h2{font-family:Georgia,'Times New Roman',serif;font-size:clamp(28px,4vw,40px);font-weight:300;margin-bottom:16px}
 .lead p{color:var(--ink-2);max-width:48ch;margin:0 auto 32px;font-size:17px}
 .lead form{display:flex;gap:12px;justify-content:center;max-width:560px;margin:0 auto;flex-wrap:wrap}
 .lead input[type=email]{flex:1;min-width:240px;padding:14px 18px;background:var(--paper);border:1px solid var(--line-2);color:var(--ink);font-size:15px;border-radius:0}
@@ -178,8 +212,8 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
 
 /* ── notes teaser grid ── */
 .notes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
-.note-card{padding:28px 24px;border:1px solid var(--line);transition:border-color .2s}
-.note-card:hover{border-color:var(--gold)}
+.note-card{padding:28px 24px;border:1px solid var(--line);box-shadow:var(--shadow-card);transition:border-color .2s,box-shadow .2s}
+.note-card:hover{border-color:var(--gold);box-shadow:var(--shadow-card-hover)}
 .note-card .kicker{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
 .note-card h3{font-size:20px;font-weight:500;line-height:1.25;margin-bottom:10px}
 .note-card p{color:var(--ink-2);font-size:14px;line-height:1.55;margin-bottom:16px}
@@ -458,6 +492,37 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
     <a href="#inquire" class="btn primary">Bring your lot →</a>
     <a href="#communities" class="btn ghost">See active builds</a>
   </div>
+
+  <!-- 45-second silent loop. Native <video>, no library, no JS — autoplay +
+       muted + playsinline is everything mobile Safari and Chrome need, and
+       any of the three missing means it silently won't start.
+       preload="metadata" on purpose: the copy above and the poster win the
+       network race on a slow phone, and the loop starts a beat later. That's
+       the right trade for a first paint in Pilsen on 4 bars of LTE.
+       hero-loop.webm and hero-poster.jpg are NOT committed yet — until they
+       are this renders as the empty paper-2 panel with its caption, which is
+       why the frame carries its own background. -->
+  <figure class="hero-media">
+    <div class="frame">
+      <video
+        poster="hero-poster.jpg"
+        autoplay loop muted playsinline
+        preload="metadata"
+        disablepictureinpicture disableremoteplayback
+        aria-label="Silent 45-second loop: exterior and interior passes through a finished minimalist build.">
+        <source src="hero-loop.webm" type="video/webm">
+        <!-- If iOS 17.3 and older matters for this audience, add an H.264
+             fallback right here: <source src="hero-loop.mp4" type="video/mp4">
+             WebM only landed in iOS Safari 17.4; older devices match no
+             source and hold the poster still, which degrades cleanly. -->
+      </video>
+      <!-- Shown only under prefers-reduced-motion (see CSS) — same file as
+           the poster, so it costs nothing extra when it is displayed. -->
+      <img class="still" src="hero-poster.jpg" alt="Interior of a finished minimalist build — large planes, quiet materials.">
+      <span class="tag">45s · Silent loop</span>
+    </div>
+    <figcaption>One build, lot walk to keys — 45 seconds, no sound</figcaption>
+  </figure>
 </header>
 
 <!-- ══════════════════════════════════════════════════════════════════════
@@ -573,13 +638,13 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
 
 <!-- PONYTAIL: single signature promise banner — Lennar's "Everything's
      Included" equivalent. The differentiator vs. every other Chicago builder. -->
-<section style="padding:32px var(--gutter);background:var(--gold);color:#fff;text-align:center;border-bottom:1px solid var(--line);border-top:1px solid var(--line)">
-  <strong style="letter-spacing:.18em;text-transform:uppercase;font-size:13px">What's included: the price you see is the price you pay.</strong>
-  <span style="margin-left:16px;font-size:14px;opacity:.8">Every finish, every fixture — no upgrade theater after contract.</span>
+<section class="promise">
+  <strong>What's included: the price you see is the price you pay.</strong>
+  <span>Every finish, every fixture — no upgrade theater after contract.</span>
 </section>
 
 <!-- ── GRADER PROMO — most builds start by selling the current home first ── -->
-<section id="grader-promo" style="padding:56px var(--gutter);border-bottom:1px solid var(--line)">
+<section id="grader-promo" style="padding:clamp(44px,9vw,64px) var(--gutter);border-bottom:1px solid var(--line)">
   <div class="wrap" style="max-width:900px;margin:0 auto;text-align:center">
     <div class="eyebrow" style="font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:16px">Property Readiness Grader · Free to grade, any state</div>
     <h2 style="font-size:clamp(28px,4vw,42px);font-weight:300;line-height:1.15;margin-bottom:18px">Selling your current home to build the new one? Know your score before you list.</h2>
@@ -821,7 +886,7 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
      NOT promise consumers a referral fee. IL Real Estate License Act
      225 ILCS 441/ allows referral fees to out-of-state licensed brokers
      under a written agreement on file at both brokerages. -->
-<section id="agents" style="padding:96px var(--gutter);background:var(--paper-2);border-bottom:1px solid var(--line);border-top:1px solid var(--line)">
+<section id="agents" style="padding:clamp(64px,11vw,96px) var(--gutter);background:var(--paper-2);border-bottom:1px solid var(--line);border-top:1px solid var(--line)">
   <div class="wrap">
     <div class="eyebrow" style="font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:18px">For Real Estate Professionals · Nationwide</div>
     <h2 style="font-size:clamp(32px,5vw,56px);font-weight:300;line-height:1.05;letter-spacing:-.01em;margin-bottom:20px;max-width:18ch">Partner with an Illinois broker who draws inbound from a daily content engine.</h2>
