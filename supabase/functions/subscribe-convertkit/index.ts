@@ -28,6 +28,21 @@ const FORM_ID = Deno.env.get('CONVERTKIT_FORM_ID') ?? ''
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!
 const SUPABASE_SERVICE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
 
+// Allowlist rather than trusting the body: `site` is written straight into
+// lead_submissions and is what every cross-domain report groups by, so a
+// caller must not be able to invent a value and split the data silently.
+const ALLOWED_SITES = new Set([
+  'dancruzhomes.com',
+  'negotiatorsondemand.com',
+  'fatcatam.com',
+  'fatcatpm.com',
+  'fatcatcruz.com',
+  'nodnew.com',
+  'nodnews.com',
+  'negotiatorcruz.com',
+  'pilsenphoto.com',
+])
+
 function cors() {
   return {
     'Access-Control-Allow-Origin': '*',
@@ -42,16 +57,22 @@ function json(body: unknown, status = 200) {
 serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { headers: cors() })
   try {
-    const { email, first_name, source } = await req.json()
+    const { email, first_name, source, site } = await req.json()
     if (!email || typeof email !== 'string' || !email.includes('@')) {
       return json({ error: 'email required' }, 400)
     }
+
+    // Every table on this project carries a `site` column so one person can be
+    // tracked across the nine domains. This function is shared, so the caller
+    // says which site it is; dancruzhomes stays the default because it was the
+    // only caller when this was written and still posts without the field.
+    const siteName = ALLOWED_SITES.has(site) ? site : 'dancruzhomes.com'
 
     // Step 1 — persist. Service role, so this does not depend on the
     // anonymous-insert RLS policy the homepage lead forms rely on.
     const supa = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY)
     const { error: insertErr } = await supa.from('lead_submissions').insert({
-      site: 'dancruzhomes.com',
+      site: siteName,
       form_type: 'newsletter',
       status: 'new',
       email,
