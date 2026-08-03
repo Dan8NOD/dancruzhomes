@@ -9,7 +9,7 @@
 // pattern (constructEventAsync + SubtleCryptoProvider).
 //
 // Deploy: supabase functions deploy stripe-webhook
-// Env vars: STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
+// Env vars: STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET_GRADER, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
 // In Stripe dashboard: add webhook endpoint → https://<project>.supabase.co/functions/v1/stripe-webhook
 // Events to send: checkout.session.completed, customer.subscription.created,
 //                 customer.subscription.updated, customer.subscription.deleted
@@ -19,7 +19,12 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
 import Stripe from "https://esm.sh/stripe@14?target=deno"
 
 const STRIPE_SECRET = Deno.env.get('STRIPE_SECRET_KEY')!
-const WEBHOOK_SECRET = Deno.env.get('STRIPE_WEBHOOK_SECRET')!
+// NOT plain STRIPE_WEBHOOK_SECRET: this Supabase project (iubxycckgrplbpdbncfk)
+// is shared with NOD-ify, whose `broker` function already owns that name and
+// holds the signing secret for a *different* Stripe webhook endpoint. Each
+// endpoint gets its own whsec_, so reusing the name would make every event
+// here fail signature verification with a 400. Dedicated name, no collision.
+const WEBHOOK_SECRET = Deno.env.get('STRIPE_WEBHOOK_SECRET_GRADER')!
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!
 const SUPABASE_SERVICE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
 
