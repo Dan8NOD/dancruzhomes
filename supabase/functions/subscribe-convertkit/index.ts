@@ -7,6 +7,12 @@
 // Env vars: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY (required)
 //           CONVERTKIT_API_KEY, CONVERTKIT_FORM_ID (optional — see below)
 //
+// API VERSION: this calls ConvertKit/Kit's **v4** API, not v3. The account's
+// key is a `kit_`-prefixed v4 key, which v3 rejects outright — verified:
+//   GET api.kit.com/v4/account      + X-Kit-Api-Key  -> 200
+//   GET api.convertkit.com/v3/account?api_key=...    -> 401 "API Key not valid"
+// v4 authenticates by header, not by an `api_key` field in the body.
+//
 // DURABILITY: the previous version did nothing but call ConvertKit, and
 // asserted its two env vars with `!`. Neither has ever been set on this
 // project, so a signup would hit /v3/forms/undefined/subscribe, get a 404,
@@ -63,18 +69,40 @@ serve(async (req) => {
       console.warn('ConvertKit not configured; lead recorded, list sync skipped')
       return json({ ok: true, synced: false })
     }
+    // Kit v4 is a TWO-step flow, and the order is not optional: posting
+    // straight to /forms/{id}/subscribers with an address Kit has never seen
+    // returns 404 "Not Found" (verified). The subscriber must exist first.
+    const kitHeaders = {
+      'Content-Type': 'application/json',
+      'X-Kit-Api-Key': API_KEY,
+    }
     try {
-      const res = await fetch(`https://api.convertkit.com/v3/forms/${FORM_ID}/subscribe`, {
+      const createRes = await fetch('https://api.kit.com/v4/subscribers', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ api_key: API_KEY, email, first_name }),
+        headers: kitHeaders,
+        body: JSON.stringify({
+          email_address: email,
+          ...(first_name ? { first_name } : {}),
+        }),
       })
-      if (!res.ok) {
-        console.error('ConvertKit subscribe failed:', res.status, await res.text())
+      // Already-subscribed addresses are a success case, not an error — Kit
+      // upserts, so a repeat signup should still get added to the form below.
+      if (!createRes.ok) {
+        console.error('Kit create-subscriber failed:', createRes.status, await createRes.text())
+        return json({ ok: true, synced: false })
+      }
+
+      const formRes = await fetch(`https://api.kit.com/v4/forms/${FORM_ID}/subscribers`, {
+        method: 'POST',
+        headers: kitHeaders,
+        body: JSON.stringify({ email_address: email }),
+      })
+      if (!formRes.ok) {
+        console.error('Kit add-to-form failed:', formRes.status, await formRes.text())
         return json({ ok: true, synced: false })
       }
     } catch (err) {
-      console.error('ConvertKit subscribe threw:', String((err as Error)?.message || err))
+      console.error('Kit subscribe threw:', String((err as Error)?.message || err))
       return json({ ok: true, synced: false })
     }
 
