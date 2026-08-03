@@ -80,8 +80,11 @@ a{color:inherit;text-decoration:none}
 
 /* ── nav ── */
 .nav{display:flex;justify-content:space-between;align-items:center;padding:20px var(--gutter);border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--paper);z-index:10}
+.nav .brand{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.nav .broker-logo{height:40px;width:auto;display:block}
 .nav .logo{font-size:14px;font-weight:600;letter-spacing:.18em;text-transform:uppercase}
 .nav .logo .dot{color:var(--gold);margin-left:2px}
+@media(max-width:480px){.nav .broker-logo{height:32px}}
 .nav .links{display:flex;gap:24px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
 .nav .links a:hover{color:var(--ink)}
 /* Hamburger — hidden on desktop, the only nav affordance under 900px.
@@ -172,6 +175,10 @@ footer{padding:48px var(--gutter);color:var(--muted);font-size:12px;letter-spaci
 footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;max-width:var(--max);margin:0 auto}
 footer a{color:var(--muted);border-bottom:1px solid var(--line-2)}
 footer a:hover{color:var(--gold);border-color:var(--gold)}
+footer .broker-row{justify-content:flex-start;margin:0 auto 24px;padding-bottom:24px;border-bottom:1px solid var(--line)}
+footer .broker-credit{display:flex;align-items:center;gap:14px;text-transform:none;letter-spacing:normal}
+footer .broker-credit img{height:36px;width:auto;border-bottom:none}
+footer .broker-credit span{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
 
 /* ── visually hidden but screen-reader-accessible labels ── */
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
@@ -222,7 +229,12 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
 <body>
 
 <nav class="nav">
-  <div class="logo">DAN CRUZ HOMES<span class="dot">.</span></div>
+  <div class="brand">
+    <a href="https://westward360.com" target="_blank" rel="noopener" aria-label="Westward360 — Brokerage of record">
+      <img class="broker-logo" src="westward360-logo.png" alt="Westward360" width="453" height="149">
+    </a>
+    <div class="logo">DAN CRUZ HOMES<span class="dot">.</span></div>
+  </div>
   <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
   </button>
@@ -868,6 +880,12 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
 
 <!-- ── FOOTER ── -->
 <footer>
+  <div class="row broker-row">
+    <a class="broker-credit" href="https://westward360.com" target="_blank" rel="noopener">
+      <img src="westward360-logo.png" alt="Westward360" width="453" height="149">
+      <span>Licensed under Westward360</span>
+    </a>
+  </div>
   <div class="row">
     <span>© 2026 · DAN CRUZ HOMES · MIDWEST</span>
     <span>
