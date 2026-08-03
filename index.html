@@ -851,9 +851,15 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
 </section>
 
 <!-- ── NEWSLETTER — monthly market update, reuses the .lead component and
-     calls the subscribe-convertkit Edge Function directly (already deployed,
-     already used from grader.html's consent flow; this is its first
-     anonymous, no-account entry point). ── -->
+     calls the subscribe-convertkit Edge Function directly (also used from
+     grader.html's consent flow; this is its first anonymous, no-account
+     entry point).
+     Deploy state is NOT assumed here — an earlier version of this comment
+     asserted the function was "already deployed" when it had never been
+     pushed, and the claim is why ~3 months of signups were dropped without
+     anyone noticing. Verify with:
+       curl -X POST https://iubxycckgrplbpdbncfk.supabase.co/functions/v1/subscribe-convertkit
+     404 means not deployed. ── -->
 <div class="lead" id="newsletter">
   <h2>Get the market update.</h2>
   <p>One market data point, one negotiation tip or deal story, one question. Once a month, under 200 words, unsubscribe anytime.</p>
@@ -945,8 +951,9 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
     return false;
   };
 
-  // Newsletter — separate from lead capture: goes to ConvertKit via the
-  // already-deployed subscribe-convertkit Edge Function, not lead_submissions.
+  // Newsletter — goes through the subscribe-convertkit Edge Function, which
+  // records the address in lead_submissions (form_type 'newsletter') and then
+  // syncs to ConvertKit as a best-effort second step.
   window.submitNewsletterForm = function(event){
     event.preventDefault();
     var form = document.getElementById('newsletterForm');
