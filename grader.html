@@ -815,7 +815,12 @@ async function acceptDisclaimer() {
 
 // ─── Subscription ───
 async function loadSubscription() {
-  const { data } = await sb().from('subscriptions').select('status').eq('user_id', currentUser.id).maybeSingle();
+  // Scoped to this product on purpose. `subscriptions` is keyed on
+  // (user_id, product) — a person may hold NOD Pro as well — and maybeSingle()
+  // ERRORS when more than one row comes back, which would read here as "not
+  // subscribed" and lock a paying customer out of their own saved properties.
+  const { data } = await sb().from('subscriptions').select('status')
+    .eq('user_id', currentUser.id).eq('product', 'dch_portal').maybeSingle();
   subActive = data?.status === 'active';
   $('manageSubLink').style.display = subActive ? 'inline' : 'none';
 }

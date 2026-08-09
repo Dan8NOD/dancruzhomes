@@ -34,6 +34,13 @@ const stripe = new Stripe(STRIPE_SECRET, {
 })
 const cryptoProvider = Stripe.createSubtleCryptoProvider()
 
+/** This function owns the DCH Property Grader portal, and only that.
+ *  `public.subscriptions` is keyed on (user_id, product) as of the Phase 0
+ *  migration, because NOD Pro and Rocke bill into the same table through the
+ *  same Stripe account. An unscoped write here would overwrite whichever
+ *  other product's row that person happened to hold. */
+const DCH_PRODUCT = 'dch_portal'
+
 serve(async (req) => {
   const signature = req.headers.get('Stripe-Signature')
   const body = await req.text()
@@ -59,12 +66,14 @@ serve(async (req) => {
         if (!userId) break
         const { error } = await supa.from('subscriptions').upsert({
           user_id: userId,
+          product: DCH_PRODUCT,
+          source: 'stripe',
           email,
           status: 'active',
           stripe_customer_id: session.customer,
           stripe_subscription_id: session.subscription,
           updated_at: new Date().toISOString(),
-        }, { onConflict: 'user_id' })
+        }, { onConflict: 'user_id,product' })
         if (error) throw error
         break
       }
@@ -77,12 +86,14 @@ serve(async (req) => {
         const status = (sub.status === 'active' || sub.status === 'trialing') ? 'active' : sub.status
         const { error } = await supa.from('subscriptions').upsert({
           user_id: userId,
+          product: DCH_PRODUCT,
+          source: 'stripe',
           status,
           stripe_customer_id: sub.customer,
           stripe_subscription_id: sub.id,
           current_period_end: sub.current_period_end ? new Date(sub.current_period_end * 1000).toISOString() : null,
           updated_at: new Date().toISOString(),
-        }, { onConflict: 'user_id' })
+        }, { onConflict: 'user_id,product' })
         if (error) throw error
         break
       }
@@ -94,7 +105,7 @@ serve(async (req) => {
         const { error } = await supa.from('subscriptions').update({
           status: 'canceled',
           updated_at: new Date().toISOString(),
-        }).eq('user_id', userId)
+        }).eq('user_id', userId).eq('product', DCH_PRODUCT)
         if (error) throw error
         break
       }
