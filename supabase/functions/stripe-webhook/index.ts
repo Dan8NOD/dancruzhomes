@@ -34,6 +34,43 @@ const stripe = new Stripe(STRIPE_SECRET, {
 })
 const cryptoProvider = Stripe.createSubtleCryptoProvider()
 
+/** This function owns the DCH Property Grader portal, and only that.
+ *  `public.subscriptions` is keyed on (user_id, product) as of the Phase 0
+ *  migration, because NOD Pro and Rocke bill into the same table through the
+ *  same Stripe account. An unscoped write here would overwrite whichever
+ *  other product's row that person happened to hold. */
+const DCH_PRODUCT = 'dch_portal'
+
+/** The Property Grader Portal product, as Stripe knows it. Matches
+ *  create-checkout/index.ts. */
+const STRIPE_PRODUCT_ID = 'prod_UyId5X2lyBFXdu'
+
+/**
+ * True when a subscription event actually belongs to the Grader.
+ *
+ * This Stripe account is shared: NOD-ify's `broker` function owns a SECOND
+ * webhook endpoint (/functions/v1/broker/webhook) for its own $5.99/mo
+ * subscription, and both endpoints are subscribed to
+ * checkout.session.completed and customer.subscription.*. Every subscription
+ * event on the account is therefore delivered HERE too, including NOD Pro's.
+ *
+ * Without this check every NOD Pro subscriber would get a dch_portal row
+ * written for them — i.e. free Property Grader access for anyone who bought
+ * NOD. Adding the `product` column does NOT fix that on its own; the column
+ * only says which product the row claims to be, and an unguarded handler
+ * cheerfully claims 'dch_portal' for somebody else's purchase. `broker` guards
+ * its own side with isNodSubscription(); this is the mirror image.
+ *
+ * Checking the product (not the price) works whether the subscription used the
+ * saved STRIPE_PRICE_ID_GRADER Price or create-checkout's inline price_data
+ * fallback, since either way Stripe attaches the price to this product.
+ */
+function isGraderSubscription(subscription: any): boolean {
+  const product = subscription?.items?.data?.[0]?.price?.product
+  const productId = typeof product === 'string' ? product : product?.id
+  return productId === STRIPE_PRODUCT_ID
+}
+
 serve(async (req) => {
   const signature = req.headers.get('Stripe-Signature')
   const body = await req.text()
@@ -56,15 +93,21 @@ serve(async (req) => {
         if (session.mode !== 'subscription') break
         const userId = session.client_reference_id || session.metadata?.user_id
         const email = session.customer_email || session.metadata?.email
-        if (!userId) break
+        if (!userId || !session.subscription) break
+        // The event carries no price/product, so fetch the subscription to
+        // find out whether this checkout was even for the Grader.
+        const subscription = await stripe.subscriptions.retrieve(session.subscription as string)
+        if (!isGraderSubscription(subscription)) break
         const { error } = await supa.from('subscriptions').upsert({
           user_id: userId,
+          product: DCH_PRODUCT,
+          source: 'stripe',
           email,
           status: 'active',
           stripe_customer_id: session.customer,
           stripe_subscription_id: session.subscription,
           updated_at: new Date().toISOString(),
-        }, { onConflict: 'user_id' })
+        }, { onConflict: 'user_id,product' })
         if (error) throw error
         break
       }
@@ -72,29 +115,33 @@ serve(async (req) => {
       case 'customer.subscription.created':
       case 'customer.subscription.updated': {
         const sub = event.data.object as any
+        if (!isGraderSubscription(sub)) break
         const userId = sub.metadata?.user_id
         if (!userId) break
         const status = (sub.status === 'active' || sub.status === 'trialing') ? 'active' : sub.status
         const { error } = await supa.from('subscriptions').upsert({
           user_id: userId,
+          product: DCH_PRODUCT,
+          source: 'stripe',
           status,
           stripe_customer_id: sub.customer,
           stripe_subscription_id: sub.id,
           current_period_end: sub.current_period_end ? new Date(sub.current_period_end * 1000).toISOString() : null,
           updated_at: new Date().toISOString(),
-        }, { onConflict: 'user_id' })
+        }, { onConflict: 'user_id,product' })
         if (error) throw error
         break
       }
 
       case 'customer.subscription.deleted': {
         const sub = event.data.object as any
+        if (!isGraderSubscription(sub)) break
         const userId = sub.metadata?.user_id
         if (!userId) break
         const { error } = await supa.from('subscriptions').update({
           status: 'canceled',
           updated_at: new Date().toISOString(),
-        }).eq('user_id', userId)
+        }).eq('user_id', userId).eq('product', DCH_PRODUCT)
         if (error) throw error
         break
       }
