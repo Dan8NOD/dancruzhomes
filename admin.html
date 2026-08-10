@@ -327,7 +327,7 @@ function toggleLeadRow(id) {
 async function saveFeedback(id) {
   const text = $('fb-' + id).value;
   $('fb-status-' + id).textContent = 'Saving…';
-  const { error } = await sb().rpc('admin_set_feedback', { p_id: id, p_feedback: text });
+  const { error } = await sb().rpc('admin_set_scorecard_feedback', { p_id: id, p_feedback: text });
   $('fb-status-' + id).textContent = error ? 'Failed — try again' : 'Saved ✓';
   if (!error) {
     const row = allRows.find(r => r.id === id);
@@ -352,7 +352,7 @@ async function boot() {
     $('userEmail').textContent = currentUser.email;
     $('appContainer').style.display = 'block';
 
-    const { data, error } = await sb().from('properties').select('*').order('updated_at', { ascending: false });
+    const { data, error } = await sb().from('scorecards').select('*').order('updated_at', { ascending: false });
     allRows = data || [];
     renderStats();
     renderStateFilter();

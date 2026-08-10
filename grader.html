@@ -906,9 +906,9 @@ async function saveProperty() {
   $('saveStatus').textContent = 'Saving…';
   let row, error;
   if (currentPropertyId) {
-    ({ data: row, error } = await sb().from('properties').update(payload).eq('id', currentPropertyId).select().single());
+    ({ data: row, error } = await sb().from('scorecards').update(payload).eq('id', currentPropertyId).select().single());
   } else {
-    ({ data: row, error } = await sb().from('properties').insert(payload).select().single());
+    ({ data: row, error } = await sb().from('scorecards').insert(payload).select().single());
   }
 
   if (error) {
@@ -936,7 +936,7 @@ function copyShareLink() {
 
 // ─── Dashboard ───
 async function loadProperties() {
-  const { data } = await sb().from('properties').select('*').eq('owner_user_id', currentUser.id).order('updated_at', { ascending: false });
+  const { data } = await sb().from('scorecards').select('*').eq('owner_user_id', currentUser.id).order('updated_at', { ascending: false });
   return data || [];
 }
 function renderDashboard(list) {
@@ -985,7 +985,7 @@ async function openForm(propertyId, preferLocalDraft) {
   // otherwise re-fetching here would silently discard the edit that triggered
   // the subscribe flow in the first place.
   if (propertyId && preferLocalDraft && loadDraftLocal()) {
-    const { data: row } = await sb().from('properties').select('share_token, agent_feedback').eq('id', propertyId).single();
+    const { data: row } = await sb().from('scorecards').select('share_token, agent_feedback').eq('id', propertyId).single();
     if (row) {
       currentShareToken = row.share_token;
       $('shareBtn').style.display = 'inline-block';
@@ -995,7 +995,7 @@ async function openForm(propertyId, preferLocalDraft) {
       }
     }
   } else if (propertyId) {
-    const { data: row } = await sb().from('properties').select('*').eq('id', propertyId).single();
+    const { data: row } = await sb().from('scorecards').select('*').eq('id', propertyId).single();
     if (row) {
       currentShareToken = row.share_token;
       applyFormData({
@@ -1027,7 +1027,7 @@ async function enterSharedMode(token) {
   $('saveBar').style.display = 'none';
   $('shareBox').style.display = 'none';
 
-  const { data, error } = await sb().rpc('get_property_by_share_token', { token });
+  const { data, error } = await sb().rpc('get_scorecard_by_share_token', { token });
   const row = Array.isArray(data) ? data[0] : data;
   if (error || !row) {
     $('sharedBanner').textContent = 'This share link is invalid or has expired.';
