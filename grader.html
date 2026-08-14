@@ -33,7 +33,7 @@
     "@type": "Offer",
     "price": "0",
     "priceCurrency": "USD",
-    "description": "Grading is free and unlimited. Saving, sharing, and feedback from Dan Cruz is a $10/mo add-on."
+    "description": "Grading is free and unlimited. Saving, sharing, and feedback from Dan Cruz is a $9.99/mo add-on."
   },
   "publisher": {
     "@type": "Organization",
@@ -614,7 +614,7 @@
   <div class="modal">
     <h2>Subscribe to Save &amp; Share</h2>
     <p>Save this property, come back anytime to keep working on it, share a link with your agent, and get direct feedback from dan cruz — for as long as you're selling.</p>
-    <div class="price">$10<span style="font-size:16px">/mo</span></div>
+    <div class="price">$9.99<span style="font-size:16px">/mo</span></div>
     <div class="price-sub">cancel anytime</div>
     <button class="modal-subscribe" onclick="startSubscribeCheckout()" id="subscribeBtn">Subscribe with Stripe →</button>
     <button class="modal-close" onclick="closeSubscribeModal()">Not now</button>
@@ -815,7 +815,12 @@ async function acceptDisclaimer() {
 
 // ─── Subscription ───
 async function loadSubscription() {
-  const { data } = await sb().from('subscriptions').select('status').eq('user_id', currentUser.id).maybeSingle();
+  // Scoped to this product on purpose. `subscriptions` is keyed on
+  // (user_id, product) — a person may hold NOD Pro as well — and maybeSingle()
+  // ERRORS when more than one row comes back, which would read here as "not
+  // subscribed" and lock a paying customer out of their own saved properties.
+  const { data } = await sb().from('subscriptions').select('status')
+    .eq('user_id', currentUser.id).eq('product', 'dch_portal').maybeSingle();
   subActive = data?.status === 'active';
   $('manageSubLink').style.display = subActive ? 'inline' : 'none';
 }
@@ -901,9 +906,9 @@ async function saveProperty() {
   $('saveStatus').textContent = 'Saving…';
   let row, error;
   if (currentPropertyId) {
-    ({ data: row, error } = await sb().from('properties').update(payload).eq('id', currentPropertyId).select().single());
+    ({ data: row, error } = await sb().from('scorecards').update(payload).eq('id', currentPropertyId).select().single());
   } else {
-    ({ data: row, error } = await sb().from('properties').insert(payload).select().single());
+    ({ data: row, error } = await sb().from('scorecards').insert(payload).select().single());
   }
 
   if (error) {
@@ -931,7 +936,7 @@ function copyShareLink() {
 
 // ─── Dashboard ───
 async function loadProperties() {
-  const { data } = await sb().from('properties').select('*').eq('owner_user_id', currentUser.id).order('updated_at', { ascending: false });
+  const { data } = await sb().from('scorecards').select('*').eq('owner_user_id', currentUser.id).order('updated_at', { ascending: false });
   return data || [];
 }
 function renderDashboard(list) {
@@ -980,7 +985,7 @@ async function openForm(propertyId, preferLocalDraft) {
   // otherwise re-fetching here would silently discard the edit that triggered
   // the subscribe flow in the first place.
   if (propertyId && preferLocalDraft && loadDraftLocal()) {
-    const { data: row } = await sb().from('properties').select('share_token, agent_feedback').eq('id', propertyId).single();
+    const { data: row } = await sb().from('scorecards').select('share_token, agent_feedback').eq('id', propertyId).single();
     if (row) {
       currentShareToken = row.share_token;
       $('shareBtn').style.display = 'inline-block';
@@ -990,7 +995,7 @@ async function openForm(propertyId, preferLocalDraft) {
       }
     }
   } else if (propertyId) {
-    const { data: row } = await sb().from('properties').select('*').eq('id', propertyId).single();
+    const { data: row } = await sb().from('scorecards').select('*').eq('id', propertyId).single();
     if (row) {
       currentShareToken = row.share_token;
       applyFormData({
@@ -1022,7 +1027,7 @@ async function enterSharedMode(token) {
   $('saveBar').style.display = 'none';
   $('shareBox').style.display = 'none';
 
-  const { data, error } = await sb().rpc('get_property_by_share_token', { token });
+  const { data, error } = await sb().rpc('get_scorecard_by_share_token', { token });
   const row = Array.isArray(data) ? data[0] : data;
   if (error || !row) {
     $('sharedBanner').textContent = 'This share link is invalid or has expired.';

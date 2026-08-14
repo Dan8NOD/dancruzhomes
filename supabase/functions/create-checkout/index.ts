@@ -5,6 +5,7 @@
 //
 // Deploy: supabase functions deploy create-checkout
 // Env vars needed: STRIPE_SECRET_KEY, SUPABASE_URL, SUPABASE_ANON_KEY
+// Optional: STRIPE_PRICE_ID_GRADER (see below)
 //
 // SECURITY: the email charged is whoever the caller's own Supabase session
 // JWT resolves to (via auth.getUser), never a client-supplied string — so
@@ -17,8 +18,16 @@ const STRIPE_SECRET = Deno.env.get('STRIPE_SECRET_KEY')!
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!
 const SUPABASE_ANON_KEY = Deno.env.get('SUPABASE_ANON_KEY')!
 
+// Preferred: a saved Stripe Price object, set as STRIPE_PRICE_ID_GRADER.
+// A saved Price is what makes promotional pricing workable — a Black Friday
+// signup can be grandfathered onto its own Price at renewal, and the discount
+// segments in Stripe reporting. Inline price_data can do neither.
+//
+// Falls back to the original inline price_data when the env var is unset, so
+// this function keeps working before the Price object exists.
+const PRICE_ID = Deno.env.get('STRIPE_PRICE_ID_GRADER') ?? ''
 const PRODUCT_ID = 'prod_UyId5X2lyBFXdu' // Property Grader Portal
-const AMOUNT = 1000 // $10.00/mo, cents
+const AMOUNT = 1000 // $10.00/mo, cents — only used on the fallback path
 const CURRENCY = 'usd'
 
 function cors() {
@@ -61,10 +70,17 @@ serve(async (req) => {
         'mode': 'subscription',
         'customer_email': user.email,
         'line_items[0][quantity]': '1',
-        'line_items[0][price_data][currency]': CURRENCY,
-        'line_items[0][price_data][unit_amount]': String(AMOUNT),
-        'line_items[0][price_data][recurring][interval]': 'month',
-        'line_items[0][price_data][product]': PRODUCT_ID,
+        ...(PRICE_ID
+          ? { 'line_items[0][price]': PRICE_ID }
+          : {
+              'line_items[0][price_data][currency]': CURRENCY,
+              'line_items[0][price_data][unit_amount]': String(AMOUNT),
+              'line_items[0][price_data][recurring][interval]': 'month',
+              'line_items[0][price_data][product]': PRODUCT_ID,
+            }),
+        // Without this, Stripe Checkout renders no promo-code field and every
+        // coupon is unredeemable no matter what exists in the dashboard.
+        'allow_promotion_codes': 'true',
         'success_url': success_url,
         'cancel_url': cancel_url,
         'client_reference_id': user.id,

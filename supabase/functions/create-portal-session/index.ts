@@ -22,6 +22,13 @@ function json(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json', ...cors() } })
 }
 
+/** This function owns the DCH Property Grader portal, and only that.
+ *  `public.subscriptions` is keyed on (user_id, product) as of the Phase 0
+ *  migration, because NOD Pro and Rocke bill into the same table through the
+ *  same Stripe account. An unscoped write here would overwrite whichever
+ *  other product's row that person happened to hold. */
+const DCH_PRODUCT = 'dch_portal'
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { headers: cors() })
 
@@ -32,7 +39,7 @@ serve(async (req) => {
     if (!user) return json({ error: 'Not signed in' }, 401)
 
     const supa = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY)
-    const { data: sub, error: subErr } = await supa.from('subscriptions').select('stripe_customer_id').eq('user_id', user.id).maybeSingle()
+    const { data: sub, error: subErr } = await supa.from('subscriptions').select('stripe_customer_id').eq('user_id', user.id).eq('product', DCH_PRODUCT).maybeSingle()
     if (subErr) throw subErr // distinct from "genuinely no subscription" — surfaces as a retryable 500, not a misleading 404
     if (!sub?.stripe_customer_id) return json({ error: 'No subscription found' }, 404)
 
