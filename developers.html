@@ -79,6 +79,7 @@
 <style>
 :root{--ink:#1a1a1a;--ink-2:#333;--line:#d4cdb8;--line-2:#c0b89e;--paper:#f5f0e6;--paper-2:#ede6d6;--gold:#9a7d2e;--gold-2:#806820;--muted:#6b6b6b;--max:1200px;--gutter:clamp(20px,6vw,32px);--shadow-card:0 1px 2px rgba(26,26,26,.04);--shadow-card-hover:0 16px 36px -20px rgba(154,125,46,.35)}
 *{box-sizing:border-box;margin:0;padding:0}
+html{scroll-padding-top:96px}
 html,body{background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
 img{max-width:100%;height:auto;display:block}
 a{color:inherit;text-decoration:none}
@@ -110,7 +111,7 @@ a{color:inherit;text-decoration:none}
 .hero h1{font-family:Georgia,'Times New Roman',serif;font-size:clamp(36px,6.5vw,76px);font-weight:300;line-height:1.02;letter-spacing:-.01em;max-width:16ch;margin-bottom:24px}
 .hero .lede{font-size:18px;color:var(--ink-2);max-width:58ch;line-height:1.55}
 
-section{padding:clamp(56px,9vw,88px) 0;border-bottom:1px solid var(--line)}
+section{padding:clamp(56px,9vw,88px) 0;border-bottom:1px solid var(--line);scroll-margin-top:96px}
 section .eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
 section h2{font-family:Georgia,'Times New Roman',serif;font-size:clamp(30px,5vw,52px);font-weight:300;line-height:1.1;letter-spacing:-.005em;margin-bottom:20px;max-width:18ch}
 section .lede{font-size:18px;color:var(--ink-2);max-width:54ch;margin-bottom:40px}
@@ -604,7 +605,7 @@ footer .brokerage-line{font-size:14px;letter-spacing:.02em;text-transform:none;c
       var marketRead = data.get('market_read') === 'yes';
       var message = [
         location,
-        count + ' lots/units',
+        count,
         timeline,
         price,
         marketRead ? 'Quick market read requested' : 'Full project'
