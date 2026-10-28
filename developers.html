@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Developers &amp; Builders — Dan Cruz</title>
+<meta name="description" content="Illinois broker Dan Cruz sells finished homes for builders around Joliet and the Chicago suburbs. Pricing before you pour, a buyer pipeline, weekly reports.">
+<link rel="canonical" href="https://dancruzhomes.com/developers.html">
+<meta name="theme-color" content="#9a7d2e">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Dan Cruz Homes">
+<meta property="og:url" content="https://dancruzhomes.com/developers.html">
+<meta property="og:title" content="For Developers &amp; Builders — Dan Cruz">
+<meta property="og:description" content="Illinois broker Dan Cruz sells finished homes for builders around Joliet and the Chicago suburbs. Pricing before you pour, a buyer pipeline, weekly reports.">
+<meta property="og:image" content="https://dancruzhomes.com/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Dan Cruz Homes">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="For Developers &amp; Builders — Dan Cruz">
+<meta name="twitter:description" content="Illinois broker Dan Cruz sells finished homes for builders around Joliet and the Chicago suburbs. Pricing before you pour, a buyer pipeline, weekly reports.">
+<meta name="twitter:image" content="https://dancruzhomes.com/og-card.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "RealEstateAgent",
+  "name": "Dan Cruz",
+  "url": "https://dancruzhomes.com/developers.html",
+  "description": "Illinois licensed real estate broker based around Joliet and the Chicago suburbs. Sells finished homes for developers, builders, and investors, and helps with land and infill sourcing, pricing, buyer demand, and speed to close.",
+  "areaServed": [
+    { "@type": "City", "name": "Joliet" },
+    { "@type": "AdministrativeArea", "name": "Chicago suburbs" }
+  ],
+  "knowsAbout": ["New construction", "Infill single-family", "Small multi-unit"]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What do you actually do — list the house, or run the build?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You build. I'm the broker. I help with land and infill sourcing, pricing, buyer demand, and selling the finished homes. I don't pour the foundation, and I don't pretend I do."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where do you work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Around Joliet, Illinois, and the Chicago suburbs. If the lot is outside that, send it anyway. I'll tell you if I can help."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will you only sell to trades buyers?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. I will not prefer, steer, or exclude a buyer. Households in the trades — electricians, plumbers, linemen, union trades — are a big share of who buys new construction in this market, and I already have reach with them. That describes an audience I can talk to. It is not a rule about who may buy."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a quick market read, and how do we start?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Send the project-fit form: location, lot or unit count, timeline, and price range. Check the box if you want a quick market read on the lot before a longer conversation. You can also book a 15-minute intro, or just use the contact form."
+      }
+    }
+  ]
+}
+</script>
+<style>
+:root{--ink:#1a1a1a;--ink-2:#333;--line:#d4cdb8;--line-2:#c0b89e;--paper:#f5f0e6;--paper-2:#ede6d6;--gold:#9a7d2e;--gold-2:#806820;--muted:#6b6b6b;--max:1200px;--gutter:clamp(20px,6vw,32px);--shadow-card:0 1px 2px rgba(26,26,26,.04);--shadow-card-hover:0 16px 36px -20px rgba(154,125,46,.35)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+
+.nav{display:flex;justify-content:space-between;align-items:center;padding:20px var(--gutter);border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--paper);z-index:10}
+.nav .brand{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.nav .broker-logo{height:40px;width:auto;display:block}
+.nav .logo{font-size:14px;font-weight:600;letter-spacing:.18em;text-transform:uppercase}
+.nav .logo .dot{color:var(--gold);margin-left:2px}
+@media(max-width:480px){.nav .broker-logo{height:32px}}
+.nav .links{display:flex;gap:24px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.nav .links a:hover,.nav .links a[aria-current=page]{color:var(--ink)}
+.nav-toggle{display:none;background:none;border:1px solid var(--line-2);color:var(--ink);padding:9px 11px;cursor:pointer;border-radius:3px;line-height:0}
+.nav-toggle:hover{border-color:var(--gold);color:var(--gold)}
+.nav-toggle svg{width:18px;height:18px;display:block;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+@media(max-width:900px){
+  .nav{flex-wrap:wrap}
+  .nav-toggle{display:block}
+  .nav .links{display:none;flex-basis:100%;flex-direction:column;gap:0;margin-top:16px;border-top:1px solid var(--line);max-height:70vh;overflow-y:auto;white-space:normal}
+  .nav .links.open{display:flex}
+  .nav .links a{padding:15px 2px;border-bottom:1px solid var(--line);font-size:13px}
+  .nav .links a:last-child{border-bottom:none}
+}
+
+.hero{padding:clamp(48px,10vw,88px) var(--gutter) clamp(36px,7vw,64px);border-bottom:1px solid var(--line)}
+.hero .eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;display:flex;align-items:center;gap:12px}
+.hero .eyebrow::after{content:"";flex:1;height:1px;background:var(--line);margin-left:8px}
+.hero h1{font-family:Georgia,'Times New Roman',serif;font-size:clamp(36px,6.5vw,76px);font-weight:300;line-height:1.02;letter-spacing:-.01em;max-width:16ch;margin-bottom:24px}
+.hero .lede{font-size:18px;color:var(--ink-2);max-width:58ch;line-height:1.55}
+
+section{padding:clamp(56px,9vw,88px) 0;border-bottom:1px solid var(--line)}
+section .eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+section h2{font-family:Georgia,'Times New Roman',serif;font-size:clamp(30px,5vw,52px);font-weight:300;line-height:1.1;letter-spacing:-.005em;margin-bottom:20px;max-width:18ch}
+section .lede{font-size:18px;color:var(--ink-2);max-width:54ch;margin-bottom:40px}
+
+.cta{padding:clamp(40px,7vw,64px) var(--gutter);background:var(--paper-2);text-align:center;border-bottom:1px solid var(--line);border-top:1px solid var(--gold)}
+.cta h2{font-family:Georgia,'Times New Roman',serif;font-size:clamp(28px,4vw,44px);font-weight:300;margin-bottom:12px}
+.cta p{color:var(--ink-2);max-width:46ch;margin:0 auto 28px;font-size:17px}
+.cta-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-block;padding:16px 28px;font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;border:1px solid transparent;transition:background .2s,border-color .2s,color .2s,box-shadow .2s;cursor:pointer;background:transparent;font-family:inherit;text-align:center}
+.btn.primary{background:var(--gold);color:#fff}
+.btn.primary:hover{background:var(--gold-2);box-shadow:var(--shadow-card-hover)}
+.btn.ghost{border-color:var(--line-2);color:var(--ink);background:var(--paper)}
+.btn.ghost:hover{border-color:var(--gold);color:var(--gold)}
+.btn:focus-visible,a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+@media(max-width:640px){
+  .cta-actions{flex-direction:column;align-items:stretch}
+  .cta-actions .btn{width:100%}
+}
+
+.blocks{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:0;border:1px solid var(--line)}
+.block{padding:32px 24px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.block:last-child{border-right:none}
+.block .k{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.block h3{font-family:Georgia,'Times New Roman',serif;font-size:26px;font-weight:300;line-height:1.2;margin-bottom:12px}
+.block p{color:var(--ink-2);font-size:15px}
+@media(max-width:640px){.block{border-right:none;padding:24px 20px}}
+
+.process{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px}
+.step{padding:8px 8px 8px 20px;border-left:1px solid var(--line)}
+.step .n{font-family:Georgia,'Times New Roman',serif;font-size:48px;color:var(--gold);font-weight:300;line-height:1;margin-bottom:12px}
+.step h3{font-size:16px;margin-bottom:8px;font-weight:600}
+.step p{color:var(--ink-2);font-size:14px}
+
+.fit{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0;border:1px solid var(--line);max-width:860px}
+.fit li{padding:18px 20px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);color:var(--ink-2);font-size:15px}
+.fit li b{color:var(--ink);font-weight:600}
+@media(max-width:640px){.fit li{border-right:none}}
+
+.faq{max-width:760px;border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;padding:18px 4px;font-size:17px;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:16px;align-items:baseline}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--gold);font-family:Georgia,serif;font-size:24px;font-weight:300;line-height:1}
+.faq details[open] summary::after{content:"–"}
+.faq details p{color:var(--ink-2);font-size:15px;padding:0 4px 18px;max-width:68ch}
+
+.form-section h2{max-width:22ch}
+.form-grid{display:grid;grid-template-columns:1fr;gap:12px;max-width:720px}
+@media(min-width:720px){
+  .form-grid.two{grid-template-columns:1fr 1fr}
+  .form-grid .span{grid-column:1/-1}
+}
+.field{display:flex;flex-direction:column;gap:6px}
+.field span{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+input,textarea{width:100%;padding:14px 16px;background:var(--paper);border:1px solid var(--line-2);color:var(--ink);font-size:16px;font-family:inherit;border-radius:0}
+textarea{min-height:120px;resize:vertical}
+input:focus,textarea:focus{outline:none;border-color:var(--gold)}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:15px;color:var(--ink-2);max-width:62ch}
+.check input{width:18px;height:18px;margin-top:3px;accent-color:var(--gold);flex:none}
+.form-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.lead-status{margin-top:14px;font-size:14px;max-width:62ch}
+.lead-status a{color:var(--gold-2);border-bottom:1px solid var(--gold)}
+.fine{color:var(--muted);font-size:13px;margin-top:14px;max-width:62ch}
+
+footer{padding:48px var(--gutter);color:var(--muted);font-size:12px;letter-spacing:.12em;text-transform:uppercase;border-top:1px solid var(--line)}
+footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;max-width:var(--max);margin:0 auto}
+footer a{color:var(--muted);border-bottom:1px solid var(--line-2)}
+footer a:hover{color:var(--gold);border-color:var(--gold)}
+footer .broker-row{justify-content:flex-start;margin:0 auto 24px;padding-bottom:24px;border-bottom:1px solid var(--line)}
+footer .broker-credit{display:flex;align-items:center;gap:14px;text-transform:none;letter-spacing:normal}
+footer .broker-credit img{height:36px;width:auto;border-bottom:none}
+footer .brokerage-line{font-size:14px;letter-spacing:.02em;text-transform:none;color:var(--ink);line-height:1.45;max-width:46ch}
+
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+[hidden]{display:none!important}
+</style>
+<link rel="alternate" type="text/plain" href="https://dancruzhomes.com/llms.txt" title="LLM-friendly site summary">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="brand">
+    <a href="https://westward360.com" target="_blank" rel="noopener" aria-label="Westward360 — Brokerage of record">
+      <img class="broker-logo" src="westward360-logo.png" alt="Westward360" width="453" height="149">
+    </a>
+    <a class="logo" href="index.html">DAN CRUZ HOMES<span class="dot">.</span></a>
+  </div>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  </button>
+  <div class="links" id="navLinks">
+    <a href="developers.html" aria-current="page">For Builders</a>
+    <a href="grader.html">Grader</a>
+    <a href="calculator.html">Calculator</a>
+    <a href="negotiation.html">Asset Protection</a>
+    <a href="va.html">VA Loans</a>
+    <a href="index.html#brokerage">Buy / Sell</a>
+    <a href="index.html#agents">For Agents</a>
+    <a href="index.html">Home</a>
+  </div>
+</nav>
+<script>
+(function(){
+  var toggle = document.getElementById('navToggle');
+  var links = document.getElementById('navLinks');
+  if(!toggle || !links) return;
+  function setOpen(open){
+    links.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  toggle.addEventListener('click', function(e){
+    e.stopPropagation();
+    setOpen(!links.classList.contains('open'));
+  });
+  links.addEventListener('click', function(e){
+    if(e.target.tagName === 'A') setOpen(false);
+  });
+  document.addEventListener('click', function(e){
+    if(links.classList.contains('open') && !links.contains(e.target)) setOpen(false);
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && links.classList.contains('open')){ setOpen(false); toggle.focus(); }
+  });
+})();
+</script>
+
+<header class="hero">
+  <div class="eyebrow">For developers &amp; builders · Joliet &amp; the Chicago suburbs</div>
+  <h1>Don't pour concrete on a guess.</h1>
+  <p class="lede">I'm Dan Cruz. Illinois-licensed real estate broker, about 20 years in real estate, based around Joliet and the Chicago suburbs. I'm known as the Blue Collar Whisperer. I work with developers, builders, and investors who put up quality product — infill single-family, new construction, small multi-unit. You build it. I sell the finished home, and I help with the land, the price, the buyers, and the close.</p>
+</header>
+
+<div class="cta" id="top-cta">
+  <h2>Send me your next project</h2>
+  <p>A note, a 15-minute intro, or a quick market read on the lot. Pick whichever gets you an answer fastest.</p>
+  <div class="cta-actions">
+    <a class="btn primary" href="#contact">Send me your next project</a>
+    <!-- TODO(dan): BOOKING_URL — href is overwritten from the constant below. Placeholder is #book-a-call. -->
+    <a class="btn ghost" data-booking href="#book-a-call" id="book-a-call">Book a 15-minute intro</a>
+    <a class="btn ghost" href="#project-fit" data-market-read>Request a quick market read on your lot</a>
+    <a class="btn ghost" data-mailto hidden>Email me</a>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">What I do for builders</div>
+    <h2>Three things. None of them are a brochure.</h2>
+    <div class="blocks">
+      <article class="block">
+        <div class="k">Before you pour</div>
+        <h3>A price the market will actually pay</h3>
+        <p>Market-realistic pricing and an absorption read before the concrete shows up. If the number only works on a spreadsheet, you hear it while the lot is still dirt.</p>
+      </article>
+      <article class="block">
+        <div class="k">The buyers</div>
+        <h3>A pipeline you don't have to invent</h3>
+        <p>I already talk to households in the trades — electricians, plumbers, linemen, union trades. They are a big share of who buys new construction in this market, and I can put your homes in front of them. That is who I reach. It is not a velvet rope. I don't pick buyers by occupation, and any qualified buyer can buy.</p>
+      </article>
+      <article class="block">
+        <div class="k">While it sells</div>
+        <h3>A weekly report and a fast answer</h3>
+        <p>You get a clear report every week. When something is stuck, you get an answer from me, not a circle-back and a slogan.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">How we work</div>
+    <h2>Send it. I'll read it straight. Then we sell it.</h2>
+    <div class="process">
+      <div class="step">
+        <div class="n">01</div>
+        <h3>Send the project</h3>
+        <p>Location, how many lots or units, when you want to deliver, and the price range you're underwriting. The short form below is enough to start.</p>
+      </div>
+      <div class="step">
+        <div class="n">02</div>
+        <h3>I read the market</h3>
+        <p>Pricing, whether buyers are there, and a straight take on land or infill if you're still sourcing the dirt. Bad news shows up before the construction money does.</p>
+      </div>
+      <div class="step">
+        <div class="n">03</div>
+        <h3>I sell the finished homes</h3>
+        <p>Listing, buyer demand, and staying on the file so it moves toward the closing table. A weekly report until it's done.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Who it's for</div>
+    <h2>Builders who want the truth before the drywall.</h2>
+    <p class="lede">If you put up a solid house and you want it sold without the theater, this is the work.</p>
+    <ul class="fit">
+      <li><b>Developers, builders, and investors</b> putting up quality product</li>
+      <li><b>Infill single-family</b></li>
+      <li><b>New construction</b></li>
+      <li><b>Small multi-unit</b></li>
+      <li><b>Land and infill sourcing</b> when you still need the dirt</li>
+      <li><b>Pricing, buyer demand, and speed to close</b> once the house is real</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">FAQ</div>
+    <h2>Straight answers.</h2>
+    <div class="faq">
+      <details>
+        <summary>What do you actually do — list the house, or run the build?</summary>
+        <p>You build. I'm the broker. I help with land and infill sourcing, pricing, buyer demand, and selling the finished homes. I don't pour the foundation, and I don't pretend I do.</p>
+      </details>
+      <details>
+        <summary>Where do you work?</summary>
+        <p>Around Joliet, Illinois, and the Chicago suburbs. If the lot is outside that, send it anyway. I'll tell you if I can help.</p>
+      </details>
+      <details>
+        <summary>Will you only sell to trades buyers?</summary>
+        <p>No. I will not prefer, steer, or exclude a buyer. Households in the trades — electricians, plumbers, linemen, union trades — are a big share of who buys new construction in this market, and I already have reach with them. That describes an audience I can talk to. It is not a rule about who may buy.</p>
+      </details>
+      <details>
+        <summary>What is a quick market read, and how do we start?</summary>
+        <p>Send the project-fit form: location, lot or unit count, timeline, and price range. Check the box if you want a quick market read on the lot before a longer conversation. You can also book a 15-minute intro, or just use the contact form.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<div class="cta" id="bottom-cta">
+  <h2>Send me your next project</h2>
+  <p>The forms are right under this. If a 15-minute call is easier, use that button.</p>
+  <div class="cta-actions">
+    <a class="btn primary" href="#contact">Send me your next project</a>
+    <a class="btn ghost" data-booking href="#book-a-call">Book a 15-minute intro</a>
+    <a class="btn ghost" href="#project-fit" data-market-read>Request a quick market read on your lot</a>
+    <a class="btn ghost" data-mailto hidden>Email me</a>
+  </div>
+</div>
+
+<section class="form-section" id="contact">
+  <div class="wrap">
+    <div class="eyebrow">Contact</div>
+    <h2>Send me your next project</h2>
+    <p class="lede">Name, email, and what you're building. I'll write back. This is the whole form.</p>
+    <form id="builderContactForm">
+      <div class="form-grid two">
+        <label class="field">
+          <span>Name</span>
+          <input type="text" name="name" autocomplete="name" required maxlength="120">
+        </label>
+        <label class="field">
+          <span>Email</span>
+          <input type="email" name="email" autocomplete="email" required maxlength="200">
+        </label>
+        <label class="field span">
+          <span>What are you building?</span>
+          <textarea name="message" required maxlength="2000"></textarea>
+        </label>
+      </div>
+      <div class="form-actions" style="margin-top:16px">
+        <button class="btn primary" type="submit">Send me your next project</button>
+      </div>
+      <div class="lead-status" id="builderContactFormStatus" role="status" style="display:none"></div>
+    </form>
+  </div>
+</section>
+
+<section class="form-section" id="project-fit">
+  <div class="wrap">
+    <div class="eyebrow">Project fit</div>
+    <h2>Lot, count, timeline, price.</h2>
+    <p class="lede">Four facts. Check the box if this is a quick market read on the lot, not a full listing conversation yet.</p>
+    <form id="builderProjectForm">
+      <div class="form-grid two">
+        <label class="field">
+          <span>Name</span>
+          <input type="text" name="name" autocomplete="name" required maxlength="120">
+        </label>
+        <label class="field">
+          <span>Email</span>
+          <input type="email" name="email" autocomplete="email" required maxlength="200">
+        </label>
+        <label class="field span">
+          <span>Location</span>
+          <input type="text" name="location" required maxlength="200" placeholder="City, suburb, or lot address">
+        </label>
+        <label class="field">
+          <span>Lot or unit count</span>
+          <input type="text" name="lot_unit_count" required maxlength="80" placeholder="1 infill lot, or 4 units">
+        </label>
+        <label class="field">
+          <span>Timeline</span>
+          <input type="text" name="timeline" required maxlength="120" placeholder="When you want to deliver">
+        </label>
+        <label class="field span">
+          <span>Price range</span>
+          <input type="text" name="price_range" required maxlength="80" placeholder="The range you're underwriting">
+        </label>
+        <label class="check span">
+          <input type="checkbox" name="market_read" id="marketRead" value="yes">
+          <span>Request a quick market read on your lot</span>
+        </label>
+      </div>
+      <div class="form-actions" style="margin-top:16px">
+        <button class="btn primary" type="submit">Send the project</button>
+      </div>
+      <div class="lead-status" id="builderProjectFormStatus" role="status" style="display:none"></div>
+      <p class="fine">Same form either way. The box tells me you want the short read on the lot first.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="row broker-row">
+    <a class="broker-credit" href="https://westward360.com" target="_blank" rel="noopener">
+      <img src="westward360-logo.png" alt="Westward360" width="453" height="149">
+    </a>
+  </div>
+  <div class="row" style="margin-bottom:28px">
+    <!-- BROKERAGE_LINE — single copy of the sponsoring-brokerage line.
+         Illinois advertising rules require this name on the page.
+         Dan may change brokerages: edit ONLY the text inside #brokerageLine.
+         The Westward360 logo above is a separate image (westward360-logo.png)
+         and has to be swapped too. Do not duplicate this sentence elsewhere. -->
+    <p class="brokerage-line" id="brokerageLine">Dan Cruz, Illinois licensed real estate broker, Westward360</p>
+  </div>
+  <div class="row">
+    <span>© 2026 · DAN CRUZ HOMES</span>
+    <span>
+      <a href="index.html">Home</a> ·
+      <a href="notes.html">Market Notes</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // TODO(dan): placeholders. Do not print the word TODO on the page.
+  // PHONE — no number is published. When Dan supplies one, add a
+  // CONTACT_PHONE constant here and a visible tel: link. Do not invent one.
+  // EMAIL — set CONTACT_EMAIL to the address builders should use. Empty
+  // on purpose. When it is non-empty, the "Email me" buttons appear and a
+  // failed submit offers a mailto with the form contents filled in.
+  // The rest of the site sometimes names hello@negotiatorsondemand.com.
+  // Do not assume that is the address for this page until Dan confirms it.
+  // BOOKING_URL — 15-minute intro. Leave #book-a-call until the real
+  // calendar link exists, then replace this string.
+  // TESTIMONIALS — do not add quotes, client names, project results, or
+  // star ratings until Dan supplies them in writing. None are on this page.
+  var CONTACT_EMAIL = '';
+  var BOOKING_URL = '#book-a-call';
+
+  // BROKERAGE_LINE lives only in #brokerageLine (the footer sentence).
+  // Do not copy that string into this script.
+
+  document.querySelectorAll('[data-booking]').forEach(function(el){
+    el.href = BOOKING_URL;
+  });
+
+  function mailtoHref(subject, body){
+    return 'mailto:' + CONTACT_EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  }
+
+  if(CONTACT_EMAIL){
+    document.querySelectorAll('[data-mailto]').forEach(function(el){
+      el.hidden = false;
+      el.href = mailtoHref('Next project — Dan Cruz', 'Project:\n\n');
+    });
+  }
+
+  document.querySelectorAll('[data-market-read]').forEach(function(el){
+    el.addEventListener('click', function(){
+      var box = document.getElementById('marketRead');
+      if(box) box.checked = true;
+    });
+  });
+
+  // Same lead_submissions insert the homepage uses (anon key, RLS allows
+  // INSERT only). form_type distinguishes the two forms on this page.
+  var SUPABASE_URL = 'https://iubxycckgrplbpdbncfk.supabase.co';
+  var SUPABASE_ANON_KEY = 'sb_publishable_L92hXORLG-Df4WiZxVq-6Q_X3AB47yl';
+
+  function field(data, name){
+    var value = data.get(name);
+    if(value == null) return '';
+    return String(value).trim();
+  }
+
+  function showStatus(el, ok, node){
+    el.style.display = 'block';
+    el.style.color = ok ? 'var(--gold-2)' : '#8a3b32';
+    el.textContent = '';
+    if(typeof node === 'string') el.textContent = node;
+    else el.appendChild(node);
+  }
+
+  function failStatus(el, subject, body){
+    if(!CONTACT_EMAIL){
+      showStatus(el, false, "That didn't send. Try again in a minute.");
+      return;
+    }
+    var wrap = document.createElement('span');
+    wrap.appendChild(document.createTextNode("That didn't send. "));
+    var link = document.createElement('a');
+    link.href = mailtoHref(subject, body);
+    link.textContent = 'Email it instead';
+    wrap.appendChild(link);
+    wrap.appendChild(document.createTextNode('.'));
+    showStatus(el, false, wrap);
+  }
+
+  function postLead(form, statusEl, formType, build){
+    var data = new FormData(form);
+    var built = build(data);
+    var payload = {
+      site: 'dancruzhomes.com',
+      form_type: formType,
+      status: 'new',
+      name: built.name,
+      email: built.email,
+      phone: null,
+      message: built.message,
+      props: built.props
+    };
+    var btn = form.querySelector('button[type="submit"]');
+    var original = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    fetch(SUPABASE_URL + '/rest/v1/lead_submissions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify(payload)
+    }).then(function(r){
+      btn.disabled = false;
+      btn.textContent = original;
+      if(!r.ok) throw new Error('Request failed: ' + r.status);
+      form.reset();
+      form.querySelector('.form-grid').style.display = 'none';
+      form.querySelector('.form-actions').style.display = 'none';
+      var fine = form.querySelector('.fine');
+      if(fine) fine.style.display = 'none';
+      showStatus(statusEl, true, built.thanks);
+    }).catch(function(err){
+      btn.disabled = false;
+      btn.textContent = original;
+      failStatus(statusEl, built.subject, built.mailBody);
+      console.warn('Lead submit failed:', err.message);
+    });
+  }
+
+  var contactForm = document.getElementById('builderContactForm');
+  contactForm.addEventListener('submit', function(event){
+    event.preventDefault();
+    postLead(contactForm, document.getElementById('builderContactFormStatus'), 'builder_contact', function(data){
+      var name = field(data, 'name');
+      var email = field(data, 'email');
+      var message = field(data, 'message');
+      return {
+        name: name,
+        email: email,
+        message: message,
+        props: { page: 'developers' },
+        thanks: "Got it. I'll read it and write back.",
+        subject: 'Next project — ' + name,
+        mailBody: 'Name: ' + name + '\nEmail: ' + email + '\n\n' + message
+      };
+    });
+  });
+
+  var projectForm = document.getElementById('builderProjectForm');
+  projectForm.addEventListener('submit', function(event){
+    event.preventDefault();
+    postLead(projectForm, document.getElementById('builderProjectFormStatus'), 'builder_project', function(data){
+      var name = field(data, 'name');
+      var email = field(data, 'email');
+      var location = field(data, 'location');
+      var count = field(data, 'lot_unit_count');
+      var timeline = field(data, 'timeline');
+      var price = field(data, 'price_range');
+      var marketRead = data.get('market_read') === 'yes';
+      var message = [
+        location,
+        count + ' lots/units',
+        timeline,
+        price,
+        marketRead ? 'Quick market read requested' : 'Full project'
+      ].join(' · ');
+      return {
+        name: name,
+        email: email,
+        message: message,
+        props: {
+          page: 'developers',
+          location: location,
+          lot_unit_count: count,
+          timeline: timeline,
+          price_range: price,
+          market_read: marketRead
+        },
+        thanks: marketRead
+          ? "Got it. I'll do the market read on the lot and write back."
+          : "Got it. I'll read the project and write back.",
+        subject: (marketRead ? 'Market read — ' : 'Project fit — ') + location,
+        mailBody: 'Name: ' + name + '\nEmail: ' + email + '\nLocation: ' + location + '\nLot or unit count: ' + count + '\nTimeline: ' + timeline + '\nPrice range: ' + price + '\nMarket read: ' + (marketRead ? 'yes' : 'no')
+      };
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
