@@ -79,23 +79,22 @@ a{color:inherit;text-decoration:none}
 .wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
 
 /* ── nav ── */
-.nav{display:flex;justify-content:space-between;align-items:center;padding:20px var(--gutter);border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--paper);z-index:10}
-.nav .brand{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.nav{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;column-gap:24px;row-gap:12px;padding:20px var(--gutter);border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--paper);z-index:10}
+.nav .brand{display:flex;align-items:center;gap:14px;flex:0 0 auto;flex-wrap:nowrap}
 .nav .broker-logo{height:40px;width:auto;display:block}
 .nav .logo{font-size:14px;font-weight:600;letter-spacing:.18em;text-transform:uppercase}
 .nav .logo .dot{color:var(--gold);margin-left:2px}
 @media(max-width:480px){.nav .broker-logo{height:32px}}
-.nav .links{display:flex;gap:24px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.nav .links{display:flex;flex:0 0 auto;gap:24px;margin-left:auto;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
 .nav .links a:hover{color:var(--ink)}
-/* Hamburger — hidden on desktop, the only nav affordance under 900px.
-   (Raised from 640px when an 8th link was added — at narrower desktop/
-   tablet widths 8 items no longer fit on one line and were wrapping
-   mid-label instead of the row wrapping as a whole; the tested hamburger
-   pattern below the breakpoint sidesteps that regardless of item count.) */
+/* Hamburger under 1320px. Twelve nowrap links do not fit beside the
+   brokerage mark, and on a 1280px laptop they do not fit on their own row
+   either. Wider than that, the link row wraps under the mark instead of
+   scrolling sideways. */
 .nav-toggle{display:none;background:none;border:1px solid var(--line-2);color:var(--ink);padding:9px 11px;cursor:pointer;border-radius:3px;line-height:0}
 .nav-toggle:hover{border-color:var(--gold);color:var(--gold)}
 .nav-toggle svg{width:18px;height:18px;display:block;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
-@media(max-width:900px){
+@media(max-width:1320px){
   .nav{flex-wrap:wrap}
   .nav-toggle{display:block}
   .nav .links{display:none;flex-basis:100%;flex-direction:column;gap:0;margin-top:16px;border-top:1px solid var(--line);max-height:70vh;overflow-y:auto;white-space:normal}
@@ -273,6 +272,7 @@ footer .broker-credit span{font-size:13px;letter-spacing:.06em;text-transform:up
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
   </button>
   <div class="links" id="navLinks">
+    <a href="developers.html" style="color:var(--gold)">For Builders</a>
     <a href="grader.html" style="color:var(--gold)">Grader</a>
     <a href="calculator.html">Calculator</a>
     <a href="negotiation.html" style="color:var(--gold)">Asset Protection</a>
@@ -343,6 +343,9 @@ footer .broker-credit span{font-size:13px;letter-spacing:.06em;text-transform:up
     { title: 'Bring your lot — new construction', cat: 'Build', href: '#inquire',
       snippet: 'Send a lot address, get a price, floor plan, and finish spec before you sign anything.',
       kw: 'lot build new construction custom home inquire address quote' },
+    { title: 'For developers and builders', cat: 'Brokerage', href: 'developers.html',
+      snippet: 'Pricing before you pour, a buyer pipeline, and a weekly report for builders in Chicagoland and the west suburbs.',
+      kw: 'developer builder investor infill new construction multi-unit lot absorption pricing chicagoland west suburbs sell finished homes' },
     { title: 'Buy or sell an existing home', cat: 'Brokerage', href: '#brokerage',
       snippet: 'Licensed IL brokerage services — a real CMA for sellers, full representation for buyers.',
       kw: 'buy sell buyer seller existing home listing cma brokerage licensed agent represent' },
@@ -715,6 +718,17 @@ footer .broker-credit span{font-size:13px;letter-spacing:.06em;text-transform:up
   </div>
 </section>
 
+<!-- ── FOR BUILDERS — brokerage work for developers, distinct from the
+     Dan Cruz Homes build pipeline and from the existing-home section above. ── -->
+<section id="builders">
+  <div class="wrap">
+    <div class="eyebrow">For developers &amp; builders</div>
+    <h2>You build it. I'll sell the finished home.</h2>
+    <p class="lede">Infill single-family, new construction, and small multi-unit in Chicagoland and the west suburbs. A straight price before you pour, buyers I already talk to, and a weekly report.</p>
+    <a href="developers.html" class="btn primary">For developers &amp; builders &rarr;</a>
+  </div>
+</section>
+
 <!-- ── SPECS ── -->
 <section id="specs">
   <div class="wrap">
@@ -963,6 +977,7 @@ footer .broker-credit span{font-size:13px;letter-spacing:.06em;text-transform:up
   <div class="row">
     <span>© 2026 · DAN CRUZ HOMES · MIDWEST</span>
     <span>
+      <a href="developers.html">For Builders</a> ·
       <a href="notes.html">Market Notes</a> ·
       <a href="https://negotiatorsondemand.com">negotiatorsondemand.com</a> ·
       <a href="https://tiktok.com/@negotiatorsondemand">TikTok</a>

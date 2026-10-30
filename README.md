@@ -6,6 +6,11 @@ Pages (`CNAME`), `main` is live the moment it's pushed.
 
 ## Pages
 
+- **`developers.html`** — for developers, builders, and investors
+  (`/developers` where clean URLs are on; `developers.html` everywhere).
+  Pricing and absorption before a build, a trades-household buyer audience
+  described without limiting who may buy, weekly reporting. Two lead forms
+  post to `lead_submissions` as `builder_contact` and `builder_project`.
 - **`index.html`** — marketing homepage (large minimalist home builder,
   Midwest, 50-home pipeline). Three lead forms (lot inquiry, buy/sell
   brokerage inquiry, agent partner application), a newsletter signup,
@@ -32,7 +37,7 @@ specific to avoid collisions.
 
 | Table | Written by | Purpose |
 | --- | --- | --- |
-| `lead_submissions` | `index.html`, anon insert | All homepage forms — a single table, `form_type` column (`lot_inquiry` \| `broker_partner` \| `brokerage_inquiry`) distinguishes them, not separate tables per form. Admin read via a dedicated policy — see [`supabase/lead_submissions_admin_policy.sql`](supabase/lead_submissions_admin_policy.sql), added because no admin-read policy existed before (only an owner-read policy, which anonymous submissions never satisfy). |
+| `lead_submissions` | `index.html`, `developers.html`, anon insert | All public lead forms — a single table, `form_type` column (`lot_inquiry` \| `broker_partner` \| `brokerage_inquiry` \| `builder_contact` \| `builder_project`) distinguishes them, not separate tables per form. Admin read via a dedicated policy — see [`supabase/lead_submissions_admin_policy.sql`](supabase/lead_submissions_admin_policy.sql), added because no admin-read policy existed before (only an owner-read policy, which anonymous submissions never satisfy). |
 | `profiles` | `grader.html` | One row per signed-in user: `is_admin` flag, `consented_at` (disclaimer/ConvertKit opt-in timestamp). |
 | `subscriptions` | Stripe webhook only | `$10/mo` portal access — `status`, Stripe customer/subscription IDs. Never written from the client. |
 | `properties` | `grader.html`, owner-scoped | The actual saved scorecards: answers, score, `share_token` (read-only share link), `agent_feedback` (written only via the `admin_set_feedback` RPC, not a direct column update). |
