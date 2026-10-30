@@ -16,8 +16,8 @@
 ## For developers and builders
 - https://dancruzhomes.com/developers.html
 - Dan Cruz, Illinois licensed real estate broker. Sponsoring brokerage named
-  on that page: Westward360. About 20 years in real estate. Based around
-  Joliet, Illinois and the Chicago suburbs. Known as the Blue Collar Whisperer.
+  on that page: Westward360. About 20 years in real estate. Serving
+  Chicagoland and the west suburbs. Known as the Blue Collar Whisperer.
 - Works with developers, builders, and investors on infill single-family,
   new construction, and small multi-unit product. Sells their finished homes
   and helps with land and infill sourcing, pricing, buyer demand, and speed
@@ -27,6 +27,11 @@
   (electricians, plumbers, linemen, union trades), who are a large share of
   new-construction buyers in this market. That is an audience he can talk to,
   not a restriction on who may buy.
+- Also on that page: software-first homebuilding at Fat Cat Asset Management
+  LLC (AI-assisted design, estimating, and scheduling, starting with small
+  pilots alongside local builders) and negotiation on land, lots, contractors,
+  buyers, and lenders. The page points to Negotiators on Demand. No public
+  URL for that service is published yet.
 - The page does not publish a phone number, a booking calendar, testimonials,
   sales totals, awards, or a list of past projects.
 
