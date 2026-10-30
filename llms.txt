@@ -31,7 +31,9 @@
   LLC (AI-assisted design, estimating, and scheduling, starting with small
   pilots alongside local builders) and negotiation on land, lots, contractors,
   buyers, and lenders. The page points to Negotiators on Demand. No public
-  URL for that service is published yet.
+  URL for that service is published yet. It also points at the tools he is
+  building, software-first, at $11/month. No public URL or launch status is
+  published for that yet.
 - The page does not publish a phone number, a booking calendar, testimonials,
   sales totals, awards, or a list of past projects.
 

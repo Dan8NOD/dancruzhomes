@@ -178,6 +178,8 @@ input:focus,textarea:focus{outline:none;border-color:var(--gold)}
 .ask{font-size:18px;color:var(--ink-2);max-width:54ch}
 .ask a{color:var(--gold-2);border-bottom:1px solid var(--gold)}
 .ask a:hover{color:var(--gold)}
+.software-cta{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);max-width:54ch}
+.software-cta .ask + .ask{margin-top:10px}
 
 footer{padding:48px var(--gutter);color:var(--muted);font-size:12px;letter-spacing:.12em;text-transform:uppercase;border-top:1px solid var(--line)}
 footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;max-width:var(--max);margin:0 auto}
@@ -361,6 +363,10 @@ footer .brokerage-line{font-size:14px;letter-spacing:.02em;text-transform:none;c
     <h2>Negotiation that protects your margin</h2>
     <p class="lede">Land, lots, contractors, buyers and lenders all come down to negotiation. I've spent about 20 years across the table, and I bring that to your project: structuring offers, handling counteroffers, and keeping deals moving when they get tense. Software-first homes plus a negotiator who has your back.</p>
     <p class="ask">Need a negotiator for a deal? <!-- TODO(dan): NOD_URL — Negotiators on Demand has no confirmed URL. This href is overwritten from the NOD_URL constant below. Placeholder is #book-a-call. Do not invent a URL. --><a data-nod href="#book-a-call">Negotiators on Demand</a></p>
+    <div class="software-cta">
+      <p class="ask">The tools I'm building, software-first, for $11/month.</p>
+      <p class="ask"><!-- TODO(dan): SOFTWARE_URL — No confirmed URL or launch status. Dan must confirm this link and that the price is $11/month. This href is overwritten from the SOFTWARE_URL constant below. Placeholder is #book-a-call. Do not invent a URL. --><a data-software href="#book-a-call">Try my software: just $11 a month.</a></p>
+    </div>
   </div>
 </section>
 
@@ -486,11 +492,15 @@ footer .brokerage-line{font-size:14px;letter-spacing:.02em;text-transform:none;c
   // NOD_URL — Negotiators on Demand. No confirmed URL yet. Leave
   // #book-a-call until Dan supplies the real link, then replace this
   // string. Do not invent one.
+  // SOFTWARE_URL — the tools Dan is building. No confirmed URL or launch
+  // status. Leave #book-a-call until Dan confirms the link. He must also
+  // confirm that the price is $11/month. Do not invent a URL.
   // TESTIMONIALS — do not add quotes, client names, project results, or
   // star ratings until Dan supplies them in writing. None are on this page.
   var CONTACT_EMAIL = '';
   var BOOKING_URL = '#book-a-call';
   var NOD_URL = '#book-a-call';
+  var SOFTWARE_URL = '#book-a-call';
 
   // BROKERAGE_LINE lives only in #brokerageLine (the footer sentence).
   // Do not copy that string into this script.
@@ -500,6 +510,9 @@ footer .brokerage-line{font-size:14px;letter-spacing:.02em;text-transform:none;c
   });
   document.querySelectorAll('[data-nod]').forEach(function(el){
     el.href = NOD_URL;
+  });
+  document.querySelectorAll('[data-software]').forEach(function(el){
+    el.href = SOFTWARE_URL;
   });
 
   function mailtoHref(subject, body){
