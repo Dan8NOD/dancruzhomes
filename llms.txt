@@ -51,6 +51,12 @@
   the newsletter signup on the homepage (https://dancruzhomes.com/#newsletter).
 
 ## Tools
+- Palm toy: https://dancruzhomes.com/palm.html
+  - A browser Palm Pilot for fun, aimed at buyers who remember the device.
+    Not a listing service and not a Dan Cruz Homes product you pay for.
+    The names and addresses already on the screen are fictional samples.
+    Notes the visitor types stay in that browser. An optional AI button
+    asks for the visitor's own API key and does not send that key here.
 - Property Readiness Grader: https://dancruzhomes.com/grader.html
   - Free and unlimited, any state, no account limit — a 6-part scorecard
     (condition, location, showing access, marketing, terms, pricing) with

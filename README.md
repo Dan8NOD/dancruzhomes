@@ -20,6 +20,11 @@ Pages (`CNAME`), `main` is live the moment it's pushed.
   **free and unlimited, no account needed to grade**. Google sign-in is
   only required to *save* a property, and unlocks the $10/mo portal (save,
   reopen, share a read-only link, get feedback from Dan).
+- **`palm.html`** — a Palm Pilot toy in one HTML file. Homepage section
+  `#palm` and the footer link to it. Sample people and addresses are
+  fictional, not inventory. Visitor notes stay in `localStorage`. The
+  optional HotSync button uses a key the visitor types; that key is not
+  sent to this site.
 - **`notes.html`** — Market Notes. Hand-authored posts (market updates,
   negotiation tactics, neighborhood spotlights) as `<article>` blocks on a
   single page — no CMS, no per-post files. Append new ones by hand.

@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="description" content="A Palm Pilot in the browser, for fun. Showings, names, a to-do list, and offer math. Sample names are not homes for sale.">
+<meta name="theme-color" content="#6b6a66">
+<title>Remember the Palm Pilot? — Dan Cruz Homes</title>
+<link rel="canonical" href="https://dancruzhomes.com/palm.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Dan Cruz Homes">
+<meta property="og:url" content="https://dancruzhomes.com/palm.html">
+<meta property="og:title" content="Remember the Palm Pilot?">
+<meta property="og:description" content="A pocket computer for house hunting, in the browser. The names inside are samples, not listings.">
+<meta property="og:image" content="https://dancruzhomes.com/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Remember the Palm Pilot?">
+<meta name="twitter:description" content="A pocket computer for house hunting, in the browser. The names inside are samples, not listings.">
+<meta name="twitter:image" content="https://dancruzhomes.com/og-card.png">
+<style>
+:root{
+  --plastic:#7a7872;--plastic-hi:#9a9790;--plastic-lo:#56544f;--bezel:#4a4945;
+  --lcd:#9eaa84;--ink:#1c2412;--sel:#3a5030;--sel-fg:#c8d4a8;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{
+  height:100%;
+  background:radial-gradient(ellipse at 50% 18%,#3a3834 0%,#1a1917 55%,#0c0c0b 100%);
+  font-family:Tahoma,Geneva,Verdana,sans-serif;color:var(--ink);
+  overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:manipulation;
+}
+.page{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:10px 12px 14px}
+.topbar{width:min(100%,420px);display:flex;justify-content:space-between;align-items:center;gap:10px;color:#cfc9bb;font-size:12px;letter-spacing:.06em}
+.topbar a{color:#e8e2d2;text-decoration:none;border-bottom:1px solid rgba(232,226,210,.35)}
+.hint{opacity:.75;font-size:11px;letter-spacing:.03em;text-align:right;max-width:30ch}
+.device{
+  width:min(100%,380px);
+  background:linear-gradient(160deg,var(--plastic-hi),var(--plastic) 40%,var(--plastic-lo));
+  border-radius:28px 28px 36px 36px;padding:18px 18px 14px;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.35),inset 0 -3px 0 rgba(0,0,0,.25),0 18px 40px rgba(0,0,0,.55);
+  position:relative;
+}
+.device::before{content:"";position:absolute;inset:8px;border-radius:22px 22px 30px 30px;border:1px solid rgba(0,0,0,.18);pointer-events:none}
+.brand{text-align:center;font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:#2e2d2a;text-shadow:0 1px 0 rgba(255,255,255,.25);margin-bottom:10px;font-weight:700}
+.screen-bezel{background:var(--bezel);border-radius:8px;padding:10px 10px 8px;box-shadow:inset 0 2px 6px rgba(0,0,0,.55),0 1px 0 rgba(255,255,255,.2)}
+.lcd{
+  background:linear-gradient(180deg,#a8b48c,#96a27a 40%,#8e9a74);height:330px;border-radius:3px;overflow:hidden;position:relative;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.35),inset 0 8px 18px rgba(40,50,20,.18);
+  cursor:crosshair;
+}
+.lcd::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.03) 2px,rgba(0,0,0,.03) 3px);pointer-events:none;mix-blend-mode:multiply}
+.titlebar{display:flex;align-items:center;justify-content:space-between;height:22px;padding:0 6px;background:rgba(28,36,18,.12);border-bottom:1px solid rgba(28,36,18,.25);font-size:12px;font-weight:700}
+.titlebar .clock{font-weight:400;font-variant-numeric:tabular-nums}
+.app-host{height:calc(100% - 22px);overflow:hidden;position:relative}
+.below{margin-top:10px;background:linear-gradient(180deg,#e4e0d4,#cfcabe);border-radius:6px;padding:6px;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),inset 0 -1px 0 rgba(0,0,0,.15)}
+.silk{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:6px}
+.silk button{appearance:none;border:0;background:transparent;font:inherit;color:#3a382e;cursor:pointer;padding:8px 2px 6px;border-radius:4px;display:flex;flex-direction:column;align-items:center;gap:2px;min-height:44px}
+.silk button:active,.silk button.on{background:rgba(0,0,0,.08)}
+.silk .ico{width:22px;height:18px;display:block}
+.silk span{font-size:9px;letter-spacing:.02em}
+.graffiti-wrap{display:grid;grid-template-columns:1fr 52px;gap:4px;height:92px}
+.graffiti{position:relative;background:linear-gradient(180deg,#ddd8cc,#c8c2b4);border:1px solid #8a8678;border-radius:4px;overflow:hidden;touch-action:none;cursor:crosshair}
+.graffiti canvas{display:block;width:100%;height:100%}
+.graffiti .guide{position:absolute;inset:0;pointer-events:none;display:grid;grid-template-columns:1fr 1fr;opacity:.35}
+.graffiti .guide .abc,.graffiti .guide .num{display:flex;align-items:flex-end;justify-content:center;padding-bottom:4px;font-size:10px;color:#5a5648;font-weight:700}
+.graffiti .guide .abc{border-right:1px dashed #8a8678}
+.mode-col{display:flex;flex-direction:column;gap:4px}
+.mode-col button{flex:1;border:1px solid #8a8678;border-radius:4px;background:linear-gradient(180deg,#efece3,#d5d0c2);color:#2e2c24;font-size:11px;font-weight:700;cursor:pointer}
+.mode-col button.on{background:#3a5030;color:#c8d4a8;border-color:#2a3a20}
+.hard-row{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding:0 10px 4px}
+.hw{width:36px;height:28px;border-radius:8px;border:0;background:radial-gradient(circle at 35% 30%,#5a5854,#2e2d2a);box-shadow:0 2px 0 #1a1917,inset 0 1px 0 rgba(255,255,255,.15);color:#bbb;font-size:12px;cursor:pointer}
+.hw:active,.power:active{transform:translateY(1px)}
+.power{width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#5a5854,#222);box-shadow:0 3px 0 #111,inset 0 1px 0 rgba(255,255,255,.2);border:0;color:#9a9;font-size:10px;letter-spacing:.06em;cursor:pointer}
+.legal{width:min(100%,420px);text-align:center;color:#8a8578;font-size:11px;letter-spacing:.04em;line-height:1.45}
+.legal a{color:#b8b09e;text-decoration:none}
+
+.panel{height:100%;display:flex;flex-direction:column;font-size:12px}
+.list{flex:1;overflow:auto;touch-action:pan-y}
+.row{display:flex;align-items:flex-start;gap:6px;padding:5px 6px;border-bottom:1px solid rgba(28,36,18,.15);cursor:pointer;min-height:24px}
+.row:active,.row.sel{background:var(--sel);color:var(--sel-fg)}
+.row .meta{opacity:.7;font-size:10px;margin-left:auto;white-space:nowrap}
+.toolbar{display:flex;gap:4px;padding:4px;border-top:1px solid rgba(28,36,18,.25);background:rgba(28,36,18,.06);flex-wrap:wrap}
+.toolbar button,.btn{border:1px solid rgba(28,36,18,.45);background:rgba(255,255,255,.18);color:var(--ink);font:inherit;font-size:11px;padding:4px 8px;border-radius:2px;cursor:pointer}
+.toolbar button:active,.btn:active{background:var(--sel);color:var(--sel-fg)}
+.toolbar .grow{margin-left:auto}
+.field{width:100%;border:1px solid rgba(28,36,18,.4);background:rgba(255,255,255,.22);color:var(--ink);font:inherit;font-size:12px;padding:4px 5px;border-radius:2px;outline:none}
+textarea.field{resize:none;min-height:72px;line-height:1.35}
+.label{font-size:10px;opacity:.75;margin:4px 6px 2px}
+.form{padding:4px 6px;display:flex;flex-direction:column;gap:2px;flex:1;overflow:auto}
+.empty{padding:20px 12px;text-align:center;opacity:.7;line-height:1.4}
+.check{width:14px;height:14px;border:1px solid var(--ink);border-radius:2px;flex:0 0 auto;margin-top:1px;display:grid;place-items:center;font-size:10px}
+.check.on{background:var(--ink);color:var(--lcd)}
+.done{text-decoration:line-through;opacity:.55}
+.launcher{height:100%;padding:6px;overflow:auto;touch-action:pan-y}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px 4px}
+.app-ico{display:flex;flex-direction:column;align-items:center;gap:3px;border:0;background:transparent;color:var(--ink);font:inherit;font-size:10px;cursor:pointer;padding:4px 2px;border-radius:3px}
+.app-ico:active{background:var(--sel);color:var(--sel-fg)}
+.app-ico svg{width:32px;height:32px;display:block}
+.app-ico span{text-align:center;line-height:1.15}
+.calc{height:100%;display:flex;flex-direction:column;padding:6px;gap:6px}
+.calc-disp{background:rgba(0,0,0,.12);border:1px solid rgba(28,36,18,.35);padding:8px 10px;text-align:right;font-size:20px;font-variant-numeric:tabular-nums;min-height:40px;border-radius:2px}
+.calc-keys{flex:1;display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.calc-keys button{border:1px solid rgba(28,36,18,.4);background:rgba(255,255,255,.2);font:inherit;font-size:13px;font-weight:700;color:var(--ink);border-radius:2px;cursor:pointer}
+.calc-keys button:active{background:var(--sel);color:var(--sel-fg)}
+.calc-keys .op{background:rgba(28,36,18,.12)}
+.notepad{height:100%;display:flex;flex-direction:column}
+.note-cv{flex:1;width:100%;display:block;touch-action:none;background:rgba(255,255,255,.12);cursor:crosshair}
+.note-tools{display:flex;gap:4px;padding:4px;border-top:1px solid rgba(28,36,18,.25);flex-wrap:wrap}
+.clock-app{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:12px;text-align:center}
+.big-time{font-size:34px;font-variant-numeric:tabular-nums;font-weight:700;letter-spacing:.04em}
+.big-date{font-size:13px;opacity:.8}
+.world{width:100%;margin-top:8px;font-size:11px}
+.world div{display:flex;justify-content:space-between;padding:3px 8px;border-top:1px solid rgba(28,36,18,.15)}
+.prefs{padding:8px 10px;display:flex;flex-direction:column;gap:8px;font-size:12px;line-height:1.4;overflow:auto;height:100%}
+.prefs h2{font-size:12px;margin-top:4px}
+.slider-row{display:flex;align-items:center;gap:8px}
+input[type=range]{flex:1;accent-color:var(--ink)}
+.cal-head{display:flex;align-items:center;justify-content:space-between;padding:4px 6px;font-weight:700}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;padding:0 4px 4px}
+.cal-grid .dow{text-align:center;font-size:9px;opacity:.65;padding:2px 0}
+.cal-grid .day{aspect-ratio:1;border:0;background:transparent;font:inherit;font-size:11px;color:var(--ink);cursor:pointer;border-radius:2px}
+.cal-grid .day:active,.cal-grid .day.on{background:var(--sel);color:var(--sel-fg)}
+.cal-grid .day.other{opacity:.35}
+.cal-grid .day.has::after{content:"";display:block;width:3px;height:3px;border-radius:50%;background:var(--ink);margin:1px auto 0}
+.cal-grid .day.on.has::after{background:var(--sel-fg)}
+.day-events{flex:1;overflow:auto;border-top:1px solid rgba(28,36,18,.25)}
+.chat{height:100%;display:flex;flex-direction:column}
+.chat-log{flex:1;overflow:auto;padding:6px;touch-action:pan-y}
+.bubble{margin:0 0 6px;padding:5px 6px;border-radius:2px;max-width:92%;white-space:pre-wrap;line-height:1.35}
+.bubble.user{background:var(--sel);color:var(--sel-fg);margin-left:auto}
+.bubble.ai{background:rgba(255,255,255,.22);border:1px solid rgba(28,36,18,.25)}
+.bubble.sys{opacity:.7;font-size:11px;text-align:center;background:transparent;border:0;max-width:100%}
+.chat-compose{display:flex;gap:4px;padding:4px;border-top:1px solid rgba(28,36,18,.25)}
+.chat-compose .field{flex:1}
+.toast{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);background:var(--ink);color:var(--lcd);font-size:11px;padding:4px 10px;border-radius:2px;opacity:0;pointer-events:none;transition:opacity .15s;z-index:5;white-space:nowrap}
+.toast.show{opacity:1}
+.boot{position:absolute;inset:0;background:var(--lcd);z-index:6;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;font-size:13px;font-weight:700}
+.boot.hidden{display:none}
+.boot .logo{font-size:20px;letter-spacing:.18em}
+.boot .bar{width:120px;height:6px;border:1px solid var(--ink);overflow:hidden}
+.boot .bar i{display:block;height:100%;width:0;background:var(--ink);animation:boot 1.05s ease-out forwards}
+@keyframes boot{to{width:100%}}
+.off .lcd{background:#2a2e22}
+.off .lcd>*:not(.boot){visibility:hidden}
+.off .boot{display:none}
+@media (max-height:720px){.lcd{height:290px}.graffiti-wrap{height:80px}.brand{margin-bottom:6px}}
+@media (max-width:380px){.device{border-radius:22px;padding:14px 12px 10px}.hint{display:none}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="topbar">
+    <a href="https://dancruzhomes.com" target="_blank" rel="noopener">Dan Cruz Homes</a>
+    <p class="hint">Finger = stylus. A toy. The names inside are not listings.</p>
+  </div>
+
+  <div class="device" id="device">
+    <div class="brand">dhc&nbsp;&nbsp;os</div>
+    <div class="screen-bezel">
+      <div class="lcd" id="lcd">
+        <div class="boot" id="boot">
+          <div class="logo">dhc os</div>
+          <div>HotSync&reg; to the deal</div>
+          <div class="bar"><i></i></div>
+        </div>
+        <div class="titlebar">
+          <span id="titleName">Applications</span>
+          <span class="clock" id="titleClock">12:00</span>
+        </div>
+        <div class="app-host" id="host"></div>
+        <div class="toast" id="toast"></div>
+      </div>
+    </div>
+
+    <div class="below">
+      <div class="silk" role="toolbar" aria-label="Silk buttons">
+        <button type="button" data-app="showings" aria-label="Showings">
+          <svg class="ico" viewBox="0 0 22 18" aria-hidden="true"><rect x="2" y="2" width="18" height="14" rx="1" fill="none" stroke="#3a382e" stroke-width="1.4"/><path d="M2 6h18M7 2v3M15 2v3" stroke="#3a382e" stroke-width="1.3"/><circle cx="8" cy="11" r="1.2" fill="#3a382e"/><circle cx="14" cy="11" r="1.2" fill="#3a382e"/></svg>
+          <span>Showings</span>
+        </button>
+        <button type="button" data-app="clients" aria-label="Clients">
+          <svg class="ico" viewBox="0 0 22 18" aria-hidden="true"><circle cx="11" cy="6" r="3" fill="none" stroke="#3a382e" stroke-width="1.4"/><path d="M4 16c1.5-4 12.5-4 14 0" fill="none" stroke="#3a382e" stroke-width="1.4"/></svg>
+          <span>Clients</span>
+        </button>
+        <button type="button" data-app="pipeline" aria-label="Pipeline">
+          <svg class="ico" viewBox="0 0 22 18" aria-hidden="true"><rect x="3" y="2" width="16" height="14" rx="1" fill="none" stroke="#3a382e" stroke-width="1.4"/><path d="M6 6h10M6 9h10M6 12h7" stroke="#3a382e" stroke-width="1.3"/></svg>
+          <span>Pipeline</span>
+        </button>
+        <button type="button" data-app="hotsync" aria-label="HotSync AI">
+          <svg class="ico" viewBox="0 0 22 18" aria-hidden="true"><path d="M4 12c0-4 3-7 7-7s7 3 7 7" fill="none" stroke="#3a382e" stroke-width="1.4"/><path d="M7 12l4-5 4 5" fill="none" stroke="#3a382e" stroke-width="1.4"/><circle cx="11" cy="14" r="1.3" fill="#3a382e"/></svg>
+          <span>HotSync AI</span>
+        </button>
+      </div>
+      <div class="graffiti-wrap">
+        <div class="graffiti" id="graffiti" aria-label="Graffiti writing area">
+          <canvas id="gCanvas"></canvas>
+          <div class="guide"><div class="abc">abc</div><div class="num">123</div></div>
+        </div>
+        <div class="mode-col">
+          <button type="button" id="shiftBtn" title="Shift">&#8679;</button>
+          <button type="button" id="helpBtn" title="Help">?</button>
+          <button type="button" id="homeBtn" title="Applications">Apps</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="hard-row">
+      <button class="hw" type="button" id="scrollUp" aria-label="Scroll up">&#9650;</button>
+      <button class="power" type="button" id="powerBtn" aria-label="Power">pwr</button>
+      <button class="hw" type="button" id="scrollDn" aria-label="Scroll down">&#9660;</button>
+    </div>
+  </div>
+
+  <footer class="legal">
+    A pocket toy. The people and addresses already on the screen are made up, not homes for sale.<br>
+    What you type stays in this browser. Parody · not affiliated with Palm, Inc.<br>
+    <a href="index.html">Dan Cruz Homes</a> · <a href="privacy.html">Privacy</a>
+  </footer>
+</div>
+
+<script>
+(function () {
+'use strict';
+
+var STORAGE_KEY = 'dhcOs.v1';
+var host = document.getElementById('host');
+var titleName = document.getElementById('titleName');
+var titleClock = document.getElementById('titleClock');
+var toastEl = document.getElementById('toast');
+var lcd = document.getElementById('lcd');
+var device = document.getElementById('device');
+var boot = document.getElementById('boot');
+var graffiti = document.getElementById('graffiti');
+var gCanvas = document.getElementById('gCanvas');
+var gctx = gCanvas.getContext('2d');
+var shiftBtn = document.getElementById('shiftBtn');
+var powerOn = true, shiftOn = false, graffitiTarget = null, toastTimer = null, currentApp = 'launcher', clockTimer = null;
+
+var SYSTEM_PROMPT =
+  'You are HotSync AI inside DHC OS, a playful Palm Pilot parody for Dan Cruz Homes (Chicago real estate). ' +
+  'Be concise, sharp, and slightly nostalgic 1999-PDA in tone. Help with showings, buyer/seller prep, offer strategy, ' +
+  'listing copy, negotiation framing, and Chicago-market common sense. Never invent sold comps as facts — label estimates as estimates. ' +
+  'Keep answers short enough to read on a tiny green LCD (usually under 120 words).';
+
+function esc(s) {
+  return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function todayISO() {
+  var d = new Date();
+  return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+}
+function pad(n) { return n < 10 ? '0' + n : '' + n; }
+function money(n) {
+  n = Math.round(Number(n) || 0);
+  return '$' + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+function defaultData() {
+  return {
+    owner: 'Dan Cruz',
+    brokerage: 'Dan Cruz Homes',
+    city: 'Chicago',
+    contrast: 55,
+    ai: {
+      baseUrl: 'https://api.openai.com',
+      apiKey: '',
+      model: 'gpt-4o-mini'
+    },
+    clients: [
+      { id: 1, last: 'Rivera', first: 'Maya', role: 'Buyer', phone: '312-555-0142', email: 'maya@example.com', note: 'Pilsen / Bridgeport · 2 bed max $425k' },
+      { id: 2, last: 'Nguyen', first: 'Chris', role: 'Seller', phone: '773-555-0199', email: 'chris@example.com', note: 'Logan Square 3/2 · wants 2 weeks to close' }
+    ],
+    pipeline: [
+      { id: 1, text: 'Write offer strategy for Rivera · Pilsen', done: false, pri: 1 },
+      { id: 2, text: 'Pull comps before Nguyen listing appointment', done: false, pri: 1 },
+      { id: 3, text: 'Confirm photographer Friday 10am', done: true, pri: 2 },
+      { id: 4, text: 'HotSync AI: draft open-house flyer blurb', done: false, pri: 3 }
+    ],
+    memos: [
+      { id: 1, title: 'DHC OS briefing', body: 'Welcome. This is a Palm Pilot, rebuilt for fun.\n\nSilk buttons: Showings, Clients, Pipeline, HotSync.\n\nThe people and addresses already here are samples. They are not homes for sale.\nAnything you add stays on this phone or computer.' },
+      { id: 2, title: 'Listing angles', body: '- Light + storage\n- Walk to transit\n- Outdoor space story\n- Negotiation: trade speed for price' }
+    ],
+    showings: [
+      { id: 1, date: todayISO(), time: '10:00', text: '1122 W 18th · Rivera tour' },
+      { id: 2, date: todayISO(), time: '14:30', text: 'Seller consult · Nguyen · Logan' }
+    ],
+    expenses: [
+      { id: 1, date: todayISO(), amount: '89.00', category: 'Marketing', note: 'Door hangers' },
+      { id: 2, date: todayISO(), amount: '24.00', category: 'Showing', note: 'Coffee + parking' }
+    ],
+    listings: [
+      { id: 1, address: '1122 W 18th St', neighborhood: 'Pilsen', beds: 2, baths: 1, price: 399000, status: 'Sample', note: 'Made-up example. Not a home for sale.' },
+      { id: 2, address: '2456 N Milwaukee', neighborhood: 'Logan Square', beds: 3, baths: 2, price: 625000, status: 'Sample', note: 'Made-up example. Not a home for sale.' }
+    ],
+    chat: [],
+    notepad: null,
+    nextId: 20
+  };
+}
+
+function load() {
+  try {
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return defaultData();
+    var data = JSON.parse(raw);
+    var base = defaultData();
+    Object.keys(base).forEach(function (k) {
+      if (data[k] == null) data[k] = base[k];
+    });
+    if (!data.ai) data.ai = base.ai;
+    Object.keys(base.ai).forEach(function (k) {
+      if (data.ai[k] == null) data.ai[k] = base.ai[k];
+    });
+    return data;
+  } catch (e) { return defaultData(); }
+}
+function save() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(db)); } catch (e) {}
+}
+var db = load();
+
+function toast(msg) {
+  toastEl.textContent = msg;
+  toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function () { toastEl.classList.remove('show'); }, 1400);
+}
+function nid() { db.nextId += 1; return db.nextId; }
+
+function updateClock() {
+  var d = new Date(), h = d.getHours(), m = d.getMinutes(), am = h < 12, h12 = h % 12;
+  if (h12 === 0) h12 = 12;
+  titleClock.textContent = h12 + ':' + pad(m) + (am ? ' am' : ' pm');
+}
+function applyContrast() {
+  var c = db.contrast / 100;
+  lcd.style.filter = 'contrast(' + (0.85 + c * 0.4) + ') brightness(' + (0.9 + c * 0.25) + ')';
+}
+
+function iconSvg(name) {
+  var map = {
+    showings: '<rect x="4" y="5" width="24" height="22" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 11h24M10 3v5M22 3v5" stroke="currentColor" stroke-width="2"/>',
+    clients: '<circle cx="16" cy="11" r="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M6 27c2-7 18-7 20 0" fill="none" stroke="currentColor" stroke-width="2"/>',
+    pipeline: '<rect x="5" y="4" width="22" height="24" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 12h14M9 17h14M9 22h10" stroke="currentColor" stroke-width="2"/>',
+    memos: '<path d="M8 4h14l6 6v18H8z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M22 4v6h6M11 15h12M11 20h12" stroke="currentColor" stroke-width="1.8"/>',
+    listings: '<path d="M6 26V12l10-7 10 7v14H6z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M13 26v-8h6v8" stroke="currentColor" stroke-width="2"/>',
+    offer: '<rect x="6" y="4" width="20" height="24" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 12h12M10 17h12M10 22h8" stroke="currentColor" stroke-width="1.8"/>',
+    hotsync: '<path d="M8 20c0-5 4-9 8-9s8 4 8 9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 20l4-6 4 6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="23" r="2" fill="currentColor"/>',
+    expense: '<rect x="6" y="5" width="20" height="22" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M11 12h10M11 17h10" stroke="currentColor" stroke-width="1.8"/>',
+    notepad: '<rect x="5" y="4" width="22" height="24" rx="1" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 10c4 2 10-2 14 2M9 16c5 3 9-1 14 3" fill="none" stroke="currentColor" stroke-width="1.6"/>',
+    clock: '<circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 9v8l5 3" fill="none" stroke="currentColor" stroke-width="2"/>',
+    prefs: '<circle cx="16" cy="16" r="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 3v4M16 25v4M3 16h4M25 16h4M6 6l3 3M23 23l3 3M26 6l-3 3M9 23l-3 3" stroke="currentColor" stroke-width="2"/>',
+    welcome: '<rect x="5" y="8" width="22" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 8V6a7 7 0 0 1 14 0v2" fill="none" stroke="currentColor" stroke-width="2"/>',
+    find: '<circle cx="14" cy="14" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M19 19l6 6" stroke="currentColor" stroke-width="2"/>'
+  };
+  return '<svg viewBox="0 0 32 32" aria-hidden="true">' + (map[name] || '') + '</svg>';
+}
+
+var apps = {};
+
+function openApp(name, opts) {
+  if (!powerOn) return;
+  if (typeof host._palmCleanup === 'function') {
+    try { host._palmCleanup(); } catch (e) {}
+    host._palmCleanup = null;
+  }
+  currentApp = name;
+  var def = apps[name] || apps.launcher;
+  titleName.textContent = def.title;
+  document.querySelectorAll('.silk button').forEach(function (b) {
+    b.classList.toggle('on', b.getAttribute('data-app') === name);
+  });
+  host.innerHTML = '';
+  graffitiTarget = null;
+  clearInterval(clockTimer);
+  def.render(host, opts || {});
+}
+
+/* ── AI HotSync (OpenAI-compatible) ── */
+function aiConfigured() {
+  return !!(db.ai && db.ai.apiKey && db.ai.baseUrl);
+}
+function aiChat(userText, extraSystem) {
+  if (!aiConfigured()) {
+    return Promise.reject(new Error('Set API base URL + key in Prefs'));
+  }
+  var url = db.ai.baseUrl.replace(/\/$/, '') + '/v1/chat/completions';
+  var messages = [
+    { role: 'system', content: SYSTEM_PROMPT + (extraSystem ? '\n\n' + extraSystem : '') }
+  ];
+  (db.chat || []).slice(-8).forEach(function (m) {
+    messages.push({ role: m.role === 'user' ? 'user' : 'assistant', content: m.text });
+  });
+  messages.push({ role: 'user', content: userText });
+
+  return fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + db.ai.apiKey
+    },
+    body: JSON.stringify({
+      model: db.ai.model || 'gpt-4o-mini',
+      temperature: 0.6,
+      max_tokens: 400,
+      messages: messages
+    })
+  }).then(function (res) {
+    return res.json().then(function (body) {
+      if (!res.ok) {
+        var msg = (body && body.error && body.error.message) || ('HTTP ' + res.status);
+        throw new Error(msg);
+      }
+      var text = body.choices && body.choices[0] && body.choices[0].message && body.choices[0].message.content;
+      if (!text) throw new Error('Empty model reply');
+      return String(text).trim();
+    });
+  });
+}
+
+apps.launcher = {
+  title: 'Applications',
+  render: function (el) {
+    var items = [
+      ['showings', 'Showings'], ['clients', 'Clients'], ['pipeline', 'Pipeline'], ['memos', 'Memo Pad'],
+      ['listings', 'Listings'], ['offer', 'Offer Calc'], ['hotsync', 'HotSync AI'], ['expense', 'Expense'],
+      ['notepad', 'Floor Plan'], ['clock', 'Clock'], ['prefs', 'Prefs'], ['find', 'Find'], ['welcome', 'Welcome']
+    ];
+    var html = '<div class="launcher"><div class="grid">';
+    items.forEach(function (it) {
+      html += '<button type="button" class="app-ico" data-open="' + it[0] + '">' + iconSvg(it[0]) + '<span>' + esc(it[1]) + '</span></button>';
+    });
+    html += '</div></div>';
+    el.innerHTML = html;
+    el.querySelectorAll('[data-open]').forEach(function (btn) {
+      btn.addEventListener('click', function () { openApp(btn.getAttribute('data-open')); });
+    });
+  }
+};
+
+apps.welcome = {
+  title: 'Welcome',
+  render: function (el) {
+    el.innerHTML = '<div class="prefs">' +
+      '<h2>DHC OS · ' + esc(db.owner) + '</h2>' +
+      '<p><strong>Dan Homes Computer</strong> — the pocket computer, for fun.</p>' +
+      '<p>Silk buttons: Showings, Clients, Pipeline, HotSync.</p>' +
+      '<p>The people and addresses already in here are samples, not homes for sale. Anything you add stays on this phone or computer.</p>' +
+      '<p>Prefs has an optional AI button. Skip it unless you want it. If you use it, you bring your own key, and that key stays in this browser.</p>' +
+      '<button type="button" class="btn" id="goApps">Applications</button> ' +
+      '<button type="button" class="btn" id="goAi">HotSync AI</button>' +
+      '</div>';
+    el.querySelector('#goApps').onclick = function () { openApp('launcher'); };
+    el.querySelector('#goAi').onclick = function () { openApp('hotsync'); };
+  }
+};
+
+apps.showings = {
+  title: 'Showings',
+  render: function (el, opts) {
+    var view = (opts && opts.date) || todayISO();
+    var parts = view.split('-').map(Number);
+    var state = { date: view, year: parts[0], month: parts[1] - 1 };
+    function forDay(iso) {
+      return db.showings.filter(function (e) { return e.date === iso; })
+        .sort(function (a, b) { return a.time < b.time ? -1 : 1; });
+    }
+    function paint() {
+      var first = new Date(state.year, state.month, 1);
+      var start = first.getDay();
+      var days = new Date(state.year, state.month + 1, 0).getDate();
+      var prevDays = new Date(state.year, state.month, 0).getDate();
+      var monthName = first.toLocaleString('en-US', { month: 'long', year: 'numeric' });
+      var cells = '';
+      ['S','M','T','W','T','F','S'].forEach(function (d) { cells += '<div class="dow">' + d + '</div>'; });
+      for (var i = 0; i < 42; i++) {
+        var dayNum, iso, cls = 'day';
+        if (i < start) {
+          dayNum = prevDays - start + i + 1;
+          var pm = state.month === 0 ? 11 : state.month - 1;
+          var py = state.month === 0 ? state.year - 1 : state.year;
+          iso = py + '-' + pad(pm + 1) + '-' + pad(dayNum); cls += ' other';
+        } else if (i >= start + days) {
+          dayNum = i - start - days + 1;
+          var nm = state.month === 11 ? 0 : state.month + 1;
+          var ny = state.month === 11 ? state.year + 1 : state.year;
+          iso = ny + '-' + pad(nm + 1) + '-' + pad(dayNum); cls += ' other';
+        } else {
+          dayNum = i - start + 1;
+          iso = state.year + '-' + pad(state.month + 1) + '-' + pad(dayNum);
+        }
+        if (iso === state.date) cls += ' on';
+        if (forDay(iso).length) cls += ' has';
+        cells += '<button type="button" class="' + cls + '" data-iso="' + iso + '">' + dayNum + '</button>';
+      }
+      var list = forDay(state.date);
+      var listHtml = list.length ? list.map(function (e) {
+        return '<div class="row" data-id="' + e.id + '"><strong>' + esc(e.time) + '</strong> ' + esc(e.text) + '</div>';
+      }).join('') : '<div class="empty">No showings. Tap New — or ask HotSync AI to plan the day.</div>';
+      el.innerHTML = '<div class="panel"><div class="cal-head"><button type="button" class="btn" id="prevM">&lt;</button><span>' + esc(monthName) + '</span><button type="button" class="btn" id="nextM">&gt;</button></div>' +
+        '<div class="cal-grid">' + cells + '</div><div class="day-events">' + listHtml + '</div>' +
+        '<div class="toolbar"><button type="button" id="newEv">New</button><button type="button" id="delEv">Delete</button><button type="button" id="aiDay">Ask AI</button><button type="button" class="grow" id="todayBtn">Today</button></div></div>';
+      el.querySelector('#prevM').onclick = function () { state.month -= 1; if (state.month < 0) { state.month = 11; state.year -= 1; } paint(); };
+      el.querySelector('#nextM').onclick = function () { state.month += 1; if (state.month > 11) { state.month = 0; state.year += 1; } paint(); };
+      el.querySelectorAll('[data-iso]').forEach(function (b) { b.onclick = function () { state.date = b.getAttribute('data-iso'); paint(); }; });
+      el.querySelector('#todayBtn').onclick = function () {
+        state.date = todayISO(); var p = state.date.split('-').map(Number); state.year = p[0]; state.month = p[1] - 1; paint();
+      };
+      var selectedId = null;
+      el.querySelectorAll('.day-events .row').forEach(function (r) {
+        r.onclick = function () {
+          el.querySelectorAll('.day-events .row').forEach(function (x) { x.classList.remove('sel'); });
+          r.classList.add('sel'); selectedId = Number(r.getAttribute('data-id'));
+        };
+      });
+      el.querySelector('#delEv').onclick = function () {
+        if (!selectedId) { toast('Select a showing'); return; }
+        db.showings = db.showings.filter(function (e) { return e.id !== selectedId; }); save(); paint();
+      };
+      el.querySelector('#aiDay').onclick = function () {
+        openApp('hotsync', { seed: 'Help me plan showings for ' + state.date + ' in ' + db.city + '. Current: ' + (list.map(function (e) { return e.time + ' ' + e.text; }).join('; ') || 'none yet') + '.' });
+      };
+      el.querySelector('#newEv').onclick = function () {
+        el.innerHTML = '<div class="panel"><div class="form"><div class="label">Date</div><input class="field" id="evDate" value="' + esc(state.date) + '"><div class="label">Time</div><input class="field" id="evTime" value="10:00"><div class="label">Showing</div><input class="field" id="evText" placeholder="Address · client"></div><div class="toolbar"><button type="button" id="saveEv">Save</button><button type="button" id="cancelEv">Cancel</button></div></div>';
+        graffitiTarget = el.querySelector('#evText'); graffitiTarget.focus();
+        el.querySelector('#cancelEv').onclick = paint;
+        el.querySelector('#saveEv').onclick = function () {
+          var t = el.querySelector('#evText').value.trim();
+          if (!t) { toast('Enter text'); return; }
+          db.showings.push({ id: nid(), date: el.querySelector('#evDate').value || state.date, time: el.querySelector('#evTime').value || '10:00', text: t });
+          save(); state.date = el.querySelector('#evDate').value || state.date; paint();
+        };
+      };
+    }
+    paint();
+  }
+};
+
+apps.clients = {
+  title: 'Clients',
+  render: function (el) {
+    var selected = null;
+    function list() {
+      var rows = db.clients.slice().sort(function (a, b) { return (a.last + a.first).localeCompare(b.last + b.first); });
+      var html = '<div class="panel"><div class="list">';
+      if (!rows.length) html += '<div class="empty">No clients yet</div>';
+      rows.forEach(function (c) {
+        html += '<div class="row" data-id="' + c.id + '"><div><strong>' + esc(c.last) + '</strong>, ' + esc(c.first) +
+          '<div class="meta" style="margin:0">' + esc(c.role) + (c.note ? ' · ' + esc(c.note) : '') + '</div></div></div>';
+      });
+      html += '</div><div class="toolbar"><button type="button" id="newC">New</button><button type="button" id="editC">Edit</button><button type="button" id="aiC">Ask AI</button><button type="button" id="delC">Delete</button></div></div>';
+      el.innerHTML = html;
+      el.querySelectorAll('.row').forEach(function (r) {
+        r.onclick = function () {
+          var id = Number(r.getAttribute('data-id'));
+          if (selected === id) { edit(id); return; }
+          el.querySelectorAll('.row').forEach(function (x) { x.classList.remove('sel'); });
+          r.classList.add('sel'); selected = id;
+        };
+      });
+      el.querySelector('#newC').onclick = function () { edit(null); };
+      el.querySelector('#editC').onclick = function () { if (!selected) { toast('Select a client'); return; } edit(selected); };
+      el.querySelector('#delC').onclick = function () {
+        if (!selected) { toast('Select a client'); return; }
+        db.clients = db.clients.filter(function (c) { return c.id !== selected; }); save(); selected = null; list();
+      };
+      el.querySelector('#aiC').onclick = function () {
+        if (!selected) { toast('Select a client'); return; }
+        var c = db.clients.filter(function (x) { return x.id === selected; })[0];
+        openApp('hotsync', { seed: 'Client brief: ' + c.first + ' ' + c.last + ' (' + c.role + '). Notes: ' + (c.note || 'none') + '. Give me 5 talking points for our next meeting.' });
+      };
+    }
+    function edit(id) {
+      var c = id ? db.clients.filter(function (x) { return x.id === id; })[0] : { last: '', first: '', role: 'Buyer', phone: '', email: '', note: '' };
+      el.innerHTML = '<div class="panel"><div class="form">' +
+        '<div class="label">Last</div><input class="field" id="cLast" value="' + esc(c.last) + '">' +
+        '<div class="label">First</div><input class="field" id="cFirst" value="' + esc(c.first) + '">' +
+        '<div class="label">Role</div><input class="field" id="cRole" value="' + esc(c.role) + '">' +
+        '<div class="label">Phone</div><input class="field" id="cPhone" value="' + esc(c.phone) + '">' +
+        '<div class="label">Email</div><input class="field" id="cEmail" value="' + esc(c.email) + '">' +
+        '<div class="label">Note</div><input class="field" id="cNote" value="' + esc(c.note) + '">' +
+        '</div><div class="toolbar"><button type="button" id="saveC">Done</button><button type="button" id="cancelC">Cancel</button></div></div>';
+      graffitiTarget = el.querySelector('#cLast'); graffitiTarget.focus();
+      el.querySelectorAll('.field').forEach(function (f) { f.onfocus = function () { graffitiTarget = f; }; });
+      el.querySelector('#cancelC').onclick = list;
+      el.querySelector('#saveC').onclick = function () {
+        var obj = {
+          id: id || nid(),
+          last: el.querySelector('#cLast').value.trim(),
+          first: el.querySelector('#cFirst').value.trim(),
+          role: el.querySelector('#cRole').value.trim() || 'Buyer',
+          phone: el.querySelector('#cPhone').value.trim(),
+          email: el.querySelector('#cEmail').value.trim(),
+          note: el.querySelector('#cNote').value.trim()
+        };
+        if (!obj.last && !obj.first) { toast('Need a name'); return; }
+        if (id) db.clients = db.clients.map(function (x) { return x.id === id ? obj : x; });
+        else db.clients.push(obj);
+        save(); list();
+      };
+    }
+    list();
+  }
+};
+
+apps.pipeline = {
+  title: 'Pipeline',
+  render: function (el) {
+    function paint() {
+      var rows = db.pipeline.slice().sort(function (a, b) {
+        if (a.done !== b.done) return a.done ? 1 : -1;
+        return a.pri - b.pri;
+      });
+      var html = '<div class="panel"><div class="list">';
+      if (!rows.length) html += '<div class="empty">Pipeline clear. Suspicious.</div>';
+      rows.forEach(function (t) {
+        html += '<div class="row" data-id="' + t.id + '"><div class="check' + (t.done ? ' on' : '') + '" data-check="' + t.id + '">' + (t.done ? '✓' : '') + '</div>' +
+          '<div class="' + (t.done ? 'done' : '') + '">' + esc(t.text) + '</div><span class="meta">P' + t.pri + '</span></div>';
+      });
+      html += '</div><div class="toolbar"><button type="button" id="newT">New</button><button type="button" id="delT">Delete</button><button type="button" id="aiT">Ask AI</button><button type="button" class="grow" id="clearDone">Purge</button></div></div>';
+      el.innerHTML = html;
+      var selected = null;
+      el.querySelectorAll('.row').forEach(function (r) {
+        r.onclick = function (ev) {
+          if (ev.target.getAttribute('data-check') != null) return;
+          el.querySelectorAll('.row').forEach(function (x) { x.classList.remove('sel'); });
+          r.classList.add('sel'); selected = Number(r.getAttribute('data-id'));
+        };
+      });
+      el.querySelectorAll('[data-check]').forEach(function (c) {
+        c.onclick = function (ev) {
+          ev.stopPropagation();
+          var id = Number(c.getAttribute('data-check'));
+          db.pipeline.forEach(function (t) { if (t.id === id) t.done = !t.done; });
+          save(); paint();
+        };
+      });
+      el.querySelector('#delT').onclick = function () {
+        if (!selected) { toast('Select an item'); return; }
+        db.pipeline = db.pipeline.filter(function (t) { return t.id !== selected; }); save(); paint();
+      };
+      el.querySelector('#clearDone').onclick = function () {
+        db.pipeline = db.pipeline.filter(function (t) { return !t.done; }); save(); paint();
+      };
+      el.querySelector('#aiT').onclick = function () {
+        var open = db.pipeline.filter(function (t) { return !t.done; }).map(function (t) { return t.text; }).join('; ');
+        openApp('hotsync', { seed: 'Prioritize my real estate pipeline for today in Chicago: ' + (open || 'empty') + '. Return a short ordered list.' });
+      };
+      el.querySelector('#newT').onclick = function () {
+        el.innerHTML = '<div class="panel"><div class="form"><div class="label">Task</div><input class="field" id="tText" placeholder="Call title company"><div class="label">Priority 1–5</div><input class="field" id="tPri" value="2"></div><div class="toolbar"><button type="button" id="saveT">Save</button><button type="button" id="cancelT">Cancel</button></div></div>';
+        graffitiTarget = el.querySelector('#tText'); graffitiTarget.focus();
+        el.querySelector('#cancelT').onclick = paint;
+        el.querySelector('#saveT').onclick = function () {
+          var text = el.querySelector('#tText').value.trim();
+          if (!text) { toast('Enter text'); return; }
+          var pri = parseInt(el.querySelector('#tPri').value, 10) || 2;
+          db.pipeline.push({ id: nid(), text: text, done: false, pri: Math.min(5, Math.max(1, pri)) });
+          save(); paint();
+        };
+      };
+    }
+    paint();
+  }
+};
+
+apps.memos = {
+  title: 'Memo Pad',
+  render: function (el, opts) {
+    function list() {
+      var html = '<div class="panel"><div class="list">';
+      if (!db.memos.length) html += '<div class="empty">No memos</div>';
+      db.memos.forEach(function (m) {
+        html += '<div class="row" data-id="' + m.id + '"><div><strong>' + esc(m.title || 'Untitled') + '</strong><div style="opacity:.7;font-size:11px">' + esc((m.body || '').split('\n')[0]) + '</div></div></div>';
+      });
+      html += '</div><div class="toolbar"><button type="button" id="newM">New</button><button type="button" id="openM">Open</button><button type="button" id="aiM">Polish AI</button><button type="button" id="delM">Delete</button></div></div>';
+      el.innerHTML = html;
+      var selected = null;
+      el.querySelectorAll('.row').forEach(function (r) {
+        r.onclick = function () {
+          var id = Number(r.getAttribute('data-id'));
+          if (selected === id) { edit(id); return; }
+          el.querySelectorAll('.row').forEach(function (x) { x.classList.remove('sel'); });
+          r.classList.add('sel'); selected = id;
+        };
+      });
+      el.querySelector('#newM').onclick = function () { edit(null); };
+      el.querySelector('#openM').onclick = function () { if (!selected) { toast('Select a memo'); return; } edit(selected); };
+      el.querySelector('#delM').onclick = function () {
+        if (!selected) { toast('Select a memo'); return; }
+        db.memos = db.memos.filter(function (m) { return m.id !== selected; }); save(); list();
+      };
+      el.querySelector('#aiM').onclick = function () {
+        if (!selected) { toast('Select a memo'); return; }
+        var m = db.memos.filter(function (x) { return x.id === selected; })[0];
+        openApp('hotsync', { seed: 'Polish this real estate memo for clarity (keep my voice): \nTitle: ' + m.title + '\n' + m.body });
+      };
+    }
+    function edit(id) {
+      var m = id ? db.memos.filter(function (x) { return x.id === id; })[0] : { title: '', body: '' };
+      el.innerHTML = '<div class="panel"><div class="form"><div class="label">Title</div><input class="field" id="mTitle" value="' + esc(m.title) + '"><div class="label">Memo</div><textarea class="field" id="mBody" style="flex:1;min-height:140px">' + esc(m.body) + '</textarea></div><div class="toolbar"><button type="button" id="saveM">Done</button><button type="button" id="cancelM">Cancel</button></div></div>';
+      var body = el.querySelector('#mBody'); graffitiTarget = body; body.focus();
+      el.querySelector('#mTitle').onfocus = function () { graffitiTarget = el.querySelector('#mTitle'); };
+      body.onfocus = function () { graffitiTarget = body; };
+      el.querySelector('#cancelM').onclick = list;
+      el.querySelector('#saveM').onclick = function () {
+        var obj = { id: id || nid(), title: el.querySelector('#mTitle').value.trim() || 'Untitled', body: body.value };
+        if (id) db.memos = db.memos.map(function (x) { return x.id === id ? obj : x; });
+        else db.memos.unshift(obj);
+        save(); list();
+      };
+    }
+    if (opts && opts.id) edit(opts.id); else list();
+  }
+};
+
+apps.listings = {
+  title: 'Listings',
+  render: function (el) {
+    function list() {
+      var html = '<div class="panel"><div class="list">';
+      db.listings.forEach(function (L) {
+        html += '<div class="row" data-id="' + L.id + '"><div><strong>' + esc(L.address) + '</strong><div style="opacity:.7;font-size:11px">' +
+          esc(L.neighborhood) + ' · ' + L.beds + '/' + L.baths + ' · ' + money(L.price) + ' · ' + esc(L.status) + '</div></div></div>';
+      });
+      html += '</div><div class="toolbar"><button type="button" id="newL">New</button><button type="button" id="editL">Edit</button><button type="button" id="aiL">AI blurb</button><button type="button" id="delL">Delete</button></div></div>';
+      el.innerHTML = html;
+      var selected = null;
+      el.querySelectorAll('.row').forEach(function (r) {
+        r.onclick = function () {
+          var id = Number(r.getAttribute('data-id'));
+          if (selected === id) { edit(id); return; }
+          el.querySelectorAll('.row').forEach(function (x) { x.classList.remove('sel'); });
+          r.classList.add('sel'); selected = id;
+        };
+      });
+      el.querySelector('#newL').onclick = function () { edit(null); };
+      el.querySelector('#editL').onclick = function () { if (!selected) { toast('Select a listing'); return; } edit(selected); };
+      el.querySelector('#delL').onclick = function () {
+        if (!selected) { toast('Select a listing'); return; }
+        db.listings = db.listings.filter(function (L) { return L.id !== selected; }); save(); list();
+      };
+      el.querySelector('#aiL').onclick = function () {
+        if (!selected) { toast('Select a listing'); return; }
+        var L = db.listings.filter(function (x) { return x.id === selected; })[0];
+        openApp('hotsync', { seed: 'Write a short MLS-style public remarks blurb (90 words max) for: ' + L.address + ', ' + L.neighborhood + ', ' + L.beds + ' bed / ' + L.baths + ' bath, listed at ' + money(L.price) + '. Notes: ' + (L.note || 'n/a') + '. Chicago voice, no hype spam.' });
+      };
+    }
+    function edit(id) {
+      var L = id ? db.listings.filter(function (x) { return x.id === id; })[0] : { address: '', neighborhood: 'Chicago', beds: 2, baths: 1, price: 0, status: 'Active', note: '' };
+      el.innerHTML = '<div class="panel"><div class="form">' +
+        '<div class="label">Address</div><input class="field" id="lAddr" value="' + esc(L.address) + '">' +
+        '<div class="label">Neighborhood</div><input class="field" id="lHood" value="' + esc(L.neighborhood) + '">' +
+        '<div class="label">Beds / Baths / Price</div><input class="field" id="lNums" value="' + esc(L.beds + ' / ' + L.baths + ' / ' + L.price) + '">' +
+        '<div class="label">Status</div><input class="field" id="lStatus" value="' + esc(L.status) + '">' +
+        '<div class="label">Note</div><input class="field" id="lNote" value="' + esc(L.note) + '">' +
+        '</div><div class="toolbar"><button type="button" id="saveL">Done</button><button type="button" id="cancelL">Cancel</button></div></div>';
+      graffitiTarget = el.querySelector('#lAddr'); graffitiTarget.focus();
+      el.querySelectorAll('.field').forEach(function (f) { f.onfocus = function () { graffitiTarget = f; }; });
+      el.querySelector('#cancelL').onclick = list;
+      el.querySelector('#saveL').onclick = function () {
+        var nums = el.querySelector('#lNums').value.split('/');
+        var obj = {
+          id: id || nid(),
+          address: el.querySelector('#lAddr').value.trim(),
+          neighborhood: el.querySelector('#lHood').value.trim() || 'Chicago',
+          beds: parseFloat(nums[0]) || 0,
+          baths: parseFloat(nums[1]) || 0,
+          price: parseFloat(String(nums[2] || '0').replace(/[^\d.]/g, '')) || 0,
+          status: el.querySelector('#lStatus').value.trim() || 'Active',
+          note: el.querySelector('#lNote').value.trim()
+        };
+        if (!obj.address) { toast('Need address'); return; }
+        if (id) db.listings = db.listings.map(function (x) { return x.id === id ? obj : x; });
+        else db.listings.push(obj);
+        save(); list();
+      };
+    }
+    list();
+  }
+};
+
+apps.offer = {
+  title: 'Offer Calc',
+  render: function (el) {
+    el.innerHTML = '<div class="panel"><div class="form">' +
+      '<div class="label">List price</div><input class="field" id="listP" value="399000">' +
+      '<div class="label">Offer %</div><input class="field" id="pct" value="97">' +
+      '<div class="label">Down payment %</div><input class="field" id="down" value="20">' +
+      '<div class="label">Rate % · Term years</div><input class="field" id="loan" value="6.5 / 30">' +
+      '<div class="label">Result</div><div class="calc-disp" id="out" style="font-size:13px;text-align:left;line-height:1.45">Tap Calc</div>' +
+      '</div><div class="toolbar"><button type="button" id="doCalc">Calc</button><button type="button" id="aiOffer">Ask AI</button></div></div>';
+    function num(id) { return parseFloat(String(document.getElementById(id).value).replace(/[^\d.]/g, '')) || 0; }
+    function run() {
+      var list = num('listP'), pct = num('pct'), downPct = num('down');
+      var loanParts = document.getElementById('loan').value.split('/');
+      var rate = parseFloat(loanParts[0]) || 0, years = parseFloat(loanParts[1]) || 30;
+      var offer = list * (pct / 100);
+      var down = offer * (downPct / 100);
+      var principal = Math.max(0, offer - down);
+      var r = rate / 100 / 12, n = years * 12;
+      var pmt = r === 0 ? principal / n : principal * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
+      document.getElementById('out').innerHTML =
+        'Offer ' + money(offer) + '<br>Down ' + money(down) + '<br>Loan ' + money(principal) + '<br>~P&amp;I/mo ' + money(pmt);
+      return { list: list, offer: offer, down: down, principal: principal, pmt: pmt, pct: pct };
+    }
+    el.querySelector('#doCalc').onclick = run;
+    el.querySelectorAll('.field').forEach(function (f) { f.onfocus = function () { graffitiTarget = f; }; });
+    el.querySelector('#aiOffer').onclick = function () {
+      var r = run();
+      openApp('hotsync', { seed: 'Buyer wants to offer ' + r.pct + '% of list ' + money(r.list) + ' (= ' + money(r.offer) + ') in Chicago. Down ' + money(r.down) + ', est P&I ' + money(r.pmt) + '/mo. Give a short negotiation framing: strength, risk, and one concession to ask for.' });
+    };
+    run();
+  }
+};
+
+apps.hotsync = {
+  title: 'HotSync AI',
+  render: function (el, opts) {
+    function paint() {
+      var log = '<div class="bubble sys">Cradle linked' + (aiConfigured() ? ' · ' + esc(db.ai.model) : ' · set API key in Prefs') + '</div>';
+      (db.chat || []).forEach(function (m) {
+        log += '<div class="bubble ' + (m.role === 'user' ? 'user' : 'ai') + '">' + esc(m.text) + '</div>';
+      });
+      if (!(db.chat || []).length) {
+        log += '<div class="bubble sys">Try: “Draft a showing follow-up text” or “Prioritize my pipeline.”</div>';
+      }
+      el.innerHTML = '<div class="chat"><div class="chat-log" id="chatLog">' + log + '</div>' +
+        '<div class="chat-compose"><input class="field" id="chatIn" placeholder="Ask HotSync…"><button type="button" class="btn" id="send">Send</button></div>' +
+        '<div class="toolbar"><button type="button" id="clearChat">Clear</button><button type="button" id="goPrefs">Prefs</button><button type="button" class="grow" id="quick1">Listing blurb</button></div></div>';
+      var logEl = el.querySelector('#chatLog');
+      logEl.scrollTop = logEl.scrollHeight;
+      var input = el.querySelector('#chatIn');
+      graffitiTarget = input; input.focus();
+      function send(text) {
+        text = (text || input.value || '').trim();
+        if (!text) return;
+        input.value = '';
+        db.chat.push({ role: 'user', text: text });
+        save(); paint();
+        var waiting = el.querySelector('#chatLog');
+        if (waiting) waiting.innerHTML += '<div class="bubble sys" id="thinking">HotSyncing…</div>';
+        aiChat(text).then(function (reply) {
+          db.chat.push({ role: 'ai', text: reply });
+          save(); paint();
+        }).catch(function (err) {
+          db.chat.push({ role: 'ai', text: 'HotSync failed: ' + err.message });
+          save(); paint();
+        });
+      }
+      el.querySelector('#send').onclick = function () { send(); };
+      input.addEventListener('keydown', function (ev) {
+        if (ev.key === 'Enter') { ev.preventDefault(); send(); }
+      });
+      el.querySelector('#clearChat').onclick = function () { db.chat = []; save(); paint(); };
+      el.querySelector('#goPrefs').onclick = function () { openApp('prefs'); };
+      el.querySelector('#quick1').onclick = function () {
+        send('Write a 2-sentence Instagram caption for a Dan Cruz Homes open house in Chicago. Playful, not cheesy.');
+      };
+    }
+    paint();
+    if (opts && opts.seed) {
+      setTimeout(function () {
+        var input = el.querySelector('#chatIn');
+        if (input) { input.value = opts.seed; el.querySelector('#send').click(); }
+      }, 50);
+    }
+  }
+};
+
+apps.expense = {
+  title: 'Expense',
+  render: function (el) {
+    function paint() {
+      var total = db.expenses.reduce(function (s, e) { return s + (parseFloat(e.amount) || 0); }, 0);
+      var html = '<div class="panel"><div class="list">';
+      db.expenses.slice().reverse().forEach(function (e) {
+        html += '<div class="row" data-id="' + e.id + '"><div><strong>$' + esc(e.amount) + '</strong> · ' + esc(e.category) +
+          '<div style="opacity:.7;font-size:11px">' + esc(e.note) + '</div></div><span class="meta">' + esc(e.date) + '</span></div>';
+      });
+      html += '</div><div class="toolbar"><button type="button" id="newE">New</button><button type="button" id="delE">Delete</button><span class="grow" style="font-size:11px;padding:4px">Total $' + total.toFixed(2) + '</span></div></div>';
+      el.innerHTML = html;
+      var selected = null;
+      el.querySelectorAll('.row').forEach(function (r) {
+        r.onclick = function () {
+          el.querySelectorAll('.row').forEach(function (x) { x.classList.remove('sel'); });
+          r.classList.add('sel'); selected = Number(r.getAttribute('data-id'));
+        };
+      });
+      el.querySelector('#delE').onclick = function () {
+        if (!selected) { toast('Select a row'); return; }
+        db.expenses = db.expenses.filter(function (e) { return e.id !== selected; }); save(); paint();
+      };
+      el.querySelector('#newE').onclick = function () {
+        el.innerHTML = '<div class="panel"><div class="form"><div class="label">Amount</div><input class="field" id="eAmt" value="0.00"><div class="label">Category</div><input class="field" id="eCat" value="Marketing"><div class="label">Note</div><input class="field" id="eNote" value=""><div class="label">Date</div><input class="field" id="eDate" value="' + todayISO() + '"></div><div class="toolbar"><button type="button" id="saveE">Save</button><button type="button" id="cancelE">Cancel</button></div></div>';
+        graffitiTarget = el.querySelector('#eAmt'); graffitiTarget.focus();
+        el.querySelectorAll('.field').forEach(function (f) { f.onfocus = function () { graffitiTarget = f; }; });
+        el.querySelector('#cancelE').onclick = paint;
+        el.querySelector('#saveE').onclick = function () {
+          db.expenses.push({
+            id: nid(),
+            amount: (parseFloat(el.querySelector('#eAmt').value) || 0).toFixed(2),
+            category: el.querySelector('#eCat').value.trim() || 'Other',
+            note: el.querySelector('#eNote').value.trim(),
+            date: el.querySelector('#eDate').value || todayISO()
+          });
+          save(); paint();
+        };
+      };
+    }
+    paint();
+  }
+};
+
+apps.notepad = {
+  title: 'Floor Plan',
+  render: function (el) {
+    el.innerHTML = '<div class="notepad"><canvas class="note-cv" id="noteCv"></canvas><div class="note-tools"><button type="button" id="pen">Pen</button><button type="button" id="eraser">Eraser</button><button type="button" id="clearN">Clear</button><button type="button" class="grow" id="saveN">Save</button></div></div>';
+    var cv = el.querySelector('#noteCv');
+    var ctx = cv.getContext('2d');
+    var drawing = false, erasing = false, last = null;
+    var ac = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    var sig = ac ? { signal: ac.signal } : undefined;
+    el._palmCleanup = function () { if (ac) ac.abort(); };
+    function resize() {
+      var r = cv.getBoundingClientRect();
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var cssW = Math.max(1, r.width), cssH = Math.max(1, r.height);
+      cv.width = Math.round(cssW * dpr); cv.height = Math.round(cssH * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+      if (db.notepad) {
+        var img = new Image();
+        img.onload = function () { ctx.drawImage(img, 0, 0, cssW, cssH); };
+        img.src = db.notepad;
+      }
+    }
+    requestAnimationFrame(resize);
+    function pos(ev) {
+      var r = cv.getBoundingClientRect();
+      var t = ev.touches ? ev.touches[0] : ev;
+      return { x: t.clientX - r.left, y: t.clientY - r.top };
+    }
+    function start(ev) { ev.preventDefault(); drawing = true; last = pos(ev); }
+    function move(ev) {
+      if (!drawing) return; ev.preventDefault();
+      var p = pos(ev);
+      ctx.strokeStyle = '#1c2412'; ctx.lineWidth = erasing ? 12 : 1.8;
+      ctx.globalCompositeOperation = erasing ? 'destination-out' : 'source-over';
+      ctx.beginPath(); ctx.moveTo(last.x, last.y); ctx.lineTo(p.x, p.y); ctx.stroke(); last = p;
+    }
+    function end() { drawing = false; last = null; }
+    cv.addEventListener('mousedown', start, sig);
+    cv.addEventListener('mousemove', move, sig);
+    window.addEventListener('mouseup', end, sig);
+    cv.addEventListener('touchstart', start, sig ? { passive: false, signal: ac.signal } : { passive: false });
+    cv.addEventListener('touchmove', move, sig ? { passive: false, signal: ac.signal } : { passive: false });
+    cv.addEventListener('touchend', end, sig);
+    el.querySelector('#pen').onclick = function () { erasing = false; toast('Pen'); };
+    el.querySelector('#eraser').onclick = function () { erasing = true; toast('Eraser'); };
+    el.querySelector('#clearN').onclick = function () {
+      var r = cv.getBoundingClientRect();
+      ctx.globalCompositeOperation = 'source-over'; ctx.clearRect(0, 0, r.width, r.height);
+      db.notepad = null; save();
+    };
+    el.querySelector('#saveN').onclick = function () {
+      db.notepad = cv.toDataURL('image/png'); save(); toast('Sketch saved');
+    };
+  }
+};
+
+apps.clock = {
+  title: 'Clock',
+  render: function (el) {
+    el.innerHTML = '<div class="clock-app"><div class="big-time" id="bt"></div><div class="big-date" id="bd"></div><div class="world" id="world"></div></div>';
+    function tick() {
+      var n = new Date(), h = n.getHours(), m = n.getMinutes(), s = n.getSeconds(), h12 = h % 12;
+      if (h12 === 0) h12 = 12;
+      var bt = el.querySelector('#bt'); if (!bt) return;
+      bt.textContent = h12 + ':' + pad(m) + ':' + pad(s) + (h < 12 ? ' am' : ' pm');
+      el.querySelector('#bd').textContent = n.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+      var cities = [['Chicago', -5], ['New York', -4], ['London', 0], ['Tokyo', 9]];
+      el.querySelector('#world').innerHTML = cities.map(function (c) {
+        var utc = n.getTime() + n.getTimezoneOffset() * 60000;
+        var local = new Date(utc + c[1] * 3600000);
+        return '<div><span>' + c[0] + '</span><span>' + pad(local.getHours()) + ':' + pad(local.getMinutes()) + '</span></div>';
+      }).join('');
+    }
+    tick();
+    clockTimer = setInterval(tick, 500);
+  }
+};
+
+apps.prefs = {
+  title: 'Preferences',
+  render: function (el) {
+    var keyMasked = db.ai.apiKey ? (db.ai.apiKey.slice(0, 4) + '…' + db.ai.apiKey.slice(-4)) : '';
+    el.innerHTML = '<div class="prefs">' +
+      '<h2>Broker</h2>' +
+      '<div class="label">Owner</div><input class="field" id="owner" value="' + esc(db.owner) + '">' +
+      '<div class="label">Brokerage</div><input class="field" id="brokerage" value="' + esc(db.brokerage) + '">' +
+      '<div class="label">City</div><input class="field" id="city" value="' + esc(db.city) + '">' +
+      '<h2>HotSync AI (OpenAI-compatible)</h2>' +
+      '<div class="label">Base URL</div><input class="field" id="baseUrl" value="' + esc(db.ai.baseUrl) + '" placeholder="https://api.openai.com">' +
+      '<div class="label">Model</div><input class="field" id="model" value="' + esc(db.ai.model) + '">' +
+      '<div class="label">API key' + (keyMasked ? ' · saved ' + esc(keyMasked) : '') + '</div><input class="field" id="apiKey" type="password" value="' + esc(db.ai.apiKey) + '" placeholder="sk-… or your provider key" autocomplete="off">' +
+      '<p style="opacity:.7;font-size:11px">Key stays in this browser. Calls go only to your Base URL + /v1/chat/completions.</p>' +
+      '<h2>Contrast</h2><div class="slider-row"><input type="range" id="contrast" min="0" max="100" value="' + db.contrast + '"><span id="cVal">' + db.contrast + '</span></div>' +
+      '<button type="button" class="btn" id="testAi">Test HotSync</button> ' +
+      '<button type="button" class="btn" id="savePrefs">Save</button> ' +
+      '<button type="button" class="btn" id="resetData">Reset data</button>' +
+      '</div>';
+    graffitiTarget = el.querySelector('#owner');
+    el.querySelectorAll('.field').forEach(function (f) { f.onfocus = function () { graffitiTarget = f; }; });
+    el.querySelector('#contrast').oninput = function () {
+      db.contrast = Number(el.querySelector('#contrast').value);
+      el.querySelector('#cVal').textContent = db.contrast;
+      applyContrast(); save();
+    };
+    el.querySelector('#savePrefs').onclick = function () {
+      db.owner = el.querySelector('#owner').value.trim() || 'Dan Cruz';
+      db.brokerage = el.querySelector('#brokerage').value.trim() || 'Dan Cruz Homes';
+      db.city = el.querySelector('#city').value.trim() || 'Chicago';
+      db.ai.baseUrl = el.querySelector('#baseUrl').value.trim() || 'https://api.openai.com';
+      db.ai.model = el.querySelector('#model').value.trim() || 'gpt-4o-mini';
+      db.ai.apiKey = el.querySelector('#apiKey').value.trim();
+      save(); toast('Prefs saved'); openApp('prefs');
+    };
+    el.querySelector('#testAi').onclick = function () {
+      el.querySelector('#savePrefs').click();
+      openApp('hotsync', { seed: 'Reply with one short sentence confirming HotSync AI is online for ' + db.brokerage + '.' });
+    };
+    el.querySelector('#resetData').onclick = function () {
+      if (!confirm('Erase all DHC OS data on this device?')) return;
+      var keepAi = db.ai;
+      db = defaultData();
+      db.ai = keepAi;
+      save(); applyContrast(); openApp('welcome'); toast('Fresh ROM');
+    };
+  }
+};
+
+apps.find = {
+  title: 'Find',
+  render: function (el) {
+    el.innerHTML = '<div class="panel"><div class="form"><div class="label">Find</div><input class="field" id="q" placeholder="Clients, listings, memos…"></div><div class="list" id="results"><div class="empty">Type a query</div></div></div>';
+    var q = el.querySelector('#q'); var results = el.querySelector('#results');
+    graffitiTarget = q; q.focus();
+    q.oninput = function () {
+      var term = q.value.trim().toLowerCase();
+      if (!term) { results.innerHTML = '<div class="empty">Type a query</div>'; return; }
+      var hits = [];
+      db.clients.forEach(function (c) {
+        if ((c.first + ' ' + c.last + ' ' + c.note + ' ' + c.role).toLowerCase().indexOf(term) >= 0)
+          hits.push({ kind: 'Client', label: c.last + ', ' + c.first, go: function () { openApp('clients'); } });
+      });
+      db.listings.forEach(function (L) {
+        if ((L.address + ' ' + L.neighborhood + ' ' + L.note).toLowerCase().indexOf(term) >= 0)
+          hits.push({ kind: 'Listing', label: L.address, go: function () { openApp('listings'); } });
+      });
+      db.memos.forEach(function (m) {
+        if ((m.title + ' ' + m.body).toLowerCase().indexOf(term) >= 0)
+          hits.push({ kind: 'Memo', label: m.title, go: function () { openApp('memos', { id: m.id }); } });
+      });
+      db.pipeline.forEach(function (t) {
+        if (t.text.toLowerCase().indexOf(term) >= 0)
+          hits.push({ kind: 'Pipeline', label: t.text, go: function () { openApp('pipeline'); } });
+      });
+      if (!hits.length) { results.innerHTML = '<div class="empty">No matches</div>'; return; }
+      results.innerHTML = hits.map(function (h, i) {
+        return '<div class="row" data-i="' + i + '"><div><strong>' + esc(h.kind) + '</strong> — ' + esc(h.label) + '</div></div>';
+      }).join('');
+      results.querySelectorAll('.row').forEach(function (r) {
+        r.onclick = function () { hits[Number(r.getAttribute('data-i'))].go(); };
+      });
+    };
+  }
+};
+
+apps.graffitihelp = {
+  title: 'Graffiti',
+  render: function (el) {
+    el.innerHTML = '<div class="prefs"><h2>Stroke guide</h2><p style="font-size:11px">Write in the silk pad. Left = letters, right = numbers. Horizontal = space. Left stroke = backspace. Tap = period.</p><p>HotSync AI needs an API key in Prefs. Works with OpenAI and other OpenAI-compatible hosts.</p><button type="button" class="btn" id="backHelp">Done</button></div>';
+    el.querySelector('#backHelp').onclick = function () { openApp('launcher'); };
+  }
+};
+
+/* Graffiti (simplified recognizer) */
+function resizeGraffiti() {
+  var r = graffiti.getBoundingClientRect();
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  gCanvas.width = Math.round(r.width * dpr); gCanvas.height = Math.round(r.height * dpr);
+  gCanvas.style.width = r.width + 'px'; gCanvas.style.height = r.height + 'px';
+  gctx.setTransform(dpr, 0, 0, dpr, 0, 0); gctx.lineCap = 'round'; gctx.lineJoin = 'round';
+}
+function clearGraffiti() {
+  var r = graffiti.getBoundingClientRect();
+  gctx.clearRect(0, 0, r.width, r.height);
+}
+var gStroke = [], gDrawing = false;
+function gPos(ev) {
+  var r = graffiti.getBoundingClientRect();
+  var t = ev.touches ? ev.touches[0] : ev;
+  return { x: t.clientX - r.left, y: t.clientY - r.top };
+}
+function startG(ev) {
+  ev.preventDefault(); gDrawing = true; gStroke = [gPos(ev)]; clearGraffiti();
+  gctx.strokeStyle = '#1c2412'; gctx.lineWidth = 2;
+  gctx.beginPath(); gctx.moveTo(gStroke[0].x, gStroke[0].y);
+}
+function moveG(ev) {
+  if (!gDrawing) return; ev.preventDefault();
+  var p = gPos(ev); gStroke.push(p); gctx.lineTo(p.x, p.y); gctx.stroke();
+  gctx.beginPath(); gctx.moveTo(p.x, p.y);
+}
+function endG(ev) {
+  if (!gDrawing) return; gDrawing = false;
+  if (ev && ev.cancelable) ev.preventDefault();
+  var ch = recognize(gStroke, graffiti.getBoundingClientRect());
+  clearGraffiti();
+  if (ch != null) insertChar(ch);
+}
+graffiti.addEventListener('mousedown', startG);
+graffiti.addEventListener('mousemove', moveG);
+window.addEventListener('mouseup', endG);
+graffiti.addEventListener('touchstart', startG, { passive: false });
+graffiti.addEventListener('touchmove', moveG, { passive: false });
+graffiti.addEventListener('touchend', endG, { passive: false });
+
+function insertChar(ch) {
+  if (ch === 'SHIFT') {
+    shiftOn = !shiftOn; shiftBtn.classList.toggle('on', shiftOn); return;
+  }
+  var target = graffitiTarget || host.querySelector('input:focus, textarea:focus') || host.querySelector('input.field, textarea.field');
+  if (!target) { toast(ch === '\n' ? 'return' : (ch === '\b' ? 'backspace' : ch)); return; }
+  target.focus();
+  var start = target.selectionStart != null ? target.selectionStart : target.value.length;
+  var end = target.selectionEnd != null ? target.selectionEnd : target.value.length;
+  var val = target.value;
+  if (ch === '\b') {
+    if (start === end && start > 0) { target.value = val.slice(0, start - 1) + val.slice(end); start -= 1; end = start; }
+    else { target.value = val.slice(0, start) + val.slice(end); end = start; }
+  } else {
+    var out = ch;
+    if (shiftOn && out.length === 1 && /[a-z]/.test(out)) {
+      out = out.toUpperCase(); shiftOn = false; shiftBtn.classList.remove('on');
+    }
+    target.value = val.slice(0, start) + out + val.slice(end);
+    start = end = start + out.length;
+  }
+  if (target.setSelectionRange) target.setSelectionRange(start, end);
+  target.dispatchEvent(new Event('input', { bubbles: true }));
+}
+
+function recognize(pts, rect) {
+  if (!pts.length) return null;
+  if (pts.length < 3) return pts[0].x > rect.width * 0.55 ? '.' : 'i';
+  var minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+  pts.forEach(function (p) {
+    if (p.x < minX) minX = p.x; if (p.y < minY) minY = p.y;
+    if (p.x > maxX) maxX = p.x; if (p.y > maxY) maxY = p.y;
+  });
+  var w = Math.max(1, maxX - minX), h = Math.max(1, maxY - minY);
+  var start = pts[0], end = pts[pts.length - 1];
+  var dx = end.x - start.x, dy = end.y - start.y;
+  var numSide = start.x > rect.width * 0.55;
+  var aspect = w / h;
+  if (h < 14 && w > 28 && Math.abs(dy) < 16) return ' ';
+  if (aspect > 1.6 && dx < -20 && Math.abs(dy) < h * 0.6) return '\b';
+  if (dx < -10 && dy > 20 && aspect < 1.4) return '\n';
+  if (w < 14 && h > 28 && dy > 0) return '\n';
+  var norm = pts.map(function (p) { return { x: (p.x - minX) / w, y: (p.y - minY) / h }; });
+  var sx = norm[0].x, sy = norm[0].y, ex = norm[norm.length - 1].x, ey = norm[norm.length - 1].y;
+  var closed = Math.hypot(norm[0].x - ex, norm[0].y - ey) < 0.3;
+  if (numSide) {
+    if (aspect < 0.45) return '1';
+    if (closed) return '0';
+    if (sy < 0.3 && ey > 0.7) return '2';
+    return '5';
+  }
+  if (closed) return 'o';
+  if (sy > 0.55 && ey > 0.55 && norm[Math.floor(norm.length / 2)].y < 0.35) return 'a';
+  if (aspect < 0.4) return 'i';
+  if (sx > 0.45 && sy < 0.4 && ey > 0.55) return 's';
+  if (sy < 0.3 && sx < 0.4 && ey > 0.7 && ex > 0.55) return 'l';
+  return 'e';
+}
+
+document.querySelectorAll('.silk button').forEach(function (btn) {
+  btn.addEventListener('click', function () { openApp(btn.getAttribute('data-app')); });
+});
+document.getElementById('homeBtn').onclick = function () { openApp('launcher'); };
+document.getElementById('helpBtn').onclick = function () { openApp('graffitihelp'); };
+shiftBtn.onclick = function () {
+  shiftOn = !shiftOn; shiftBtn.classList.toggle('on', shiftOn);
+};
+document.getElementById('scrollUp').onclick = function () {
+  var list = host.querySelector('.list, .launcher, .day-events, .prefs, .chat-log');
+  if (list) list.scrollTop -= 40;
+};
+document.getElementById('scrollDn').onclick = function () {
+  var list = host.querySelector('.list, .launcher, .day-events, .prefs, .chat-log');
+  if (list) list.scrollTop += 40;
+};
+document.getElementById('powerBtn').onclick = function () {
+  powerOn = !powerOn;
+  device.classList.toggle('off', !powerOn);
+  if (powerOn) {
+    boot.classList.remove('hidden');
+    boot.querySelector('i').style.animation = 'none';
+    void boot.querySelector('i').offsetWidth;
+    boot.querySelector('i').style.animation = '';
+    setTimeout(function () { boot.classList.add('hidden'); openApp('launcher'); }, 900);
+  }
+};
+
+window.addEventListener('resize', resizeGraffiti);
+applyContrast(); updateClock(); setInterval(updateClock, 1000); resizeGraffiti();
+setTimeout(function () { boot.classList.add('hidden'); openApp('welcome'); }, 1100);
+
+})();
+</script>
+</body>
+</html>
